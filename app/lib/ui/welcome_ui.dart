@@ -7,27 +7,46 @@ class WelcomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
+        constraints: BoxConstraints.expand(),
         decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage('assets/welcomebg.jpg'),
             fit: BoxFit.cover,
           ),
         ),
-        // child: Row(
-        //   children: [
-        //     InkWell(
-        //       onTap: () {
-        //         // Define the action you want to perform when the button/photo is tapped
-        //         print('Button tapped');
-        //       },
-        //       child: Image.asset(
-        //         'assets/logInButton.png',
-        //         width: 200,
-        //         height: 200,
-        //       ),
-        //     ),
-        //   ],
-        // ),
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            Positioned(
+              top: 500,
+              child: InkWell(
+                onTap: () {
+                  // Define the action you want to perform when the button/photo is tapped
+                  print('Button tapped');
+                },
+                child: Image.asset(
+                  'assets/logInButton.png',
+                  width: 200,
+                  height: 200,
+                ),
+              ),
+            ),
+            Positioned(
+              top: 580,
+              child: InkWell(
+                onTap: () {
+                  // Define the action you want to perform when the button/photo is tapped
+                  print('Button tapped');
+                },
+                child: Image.asset(
+                  'assets/signUpButton.png',
+                  width: 200,
+                  height: 200,
+                ),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
