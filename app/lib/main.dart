@@ -1,3 +1,5 @@
+import 'package:app/ui/login_ui.dart';
+import 'package:app/ui/signup_ui.dart';
 import 'package:app/ui/welcome_ui.dart';
 import 'package:flutter/material.dart';
 
@@ -70,6 +72,6 @@ class _MyHomePageState extends State<MyHomePage> {
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
-    return WelcomePage();
+    return SignUpPage();
   }
 }
