@@ -1,13 +1,39 @@
+import 'package:app/ui/welcome_ui.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+final FirebaseAuth _auth = FirebaseAuth.instance;
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+  const LoginPage({Key? key}) : super(key: key);
 
   @override
   State<LoginPage> createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  int _success = 1;
+  String _userEmail = "";
+
+  void _login() async {
+    final User? user = (await _auth.signInWithEmailAndPassword(
+            email: _emailController.text, password: _passwordController.text))
+        .user;
+
+    if (user != null) {
+      setState(() {
+        _success = 2; //means the login is successful
+        _userEmail = user.email!;
+      });
+    } else {
+      setState(() {
+        _success = 3;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,11 +48,22 @@ class _LoginPageState extends State<LoginPage> {
         child: Column(
           children: [
             Row(
-              children: const [
-                Icon(
-                  Icons.arrow_back_ios_rounded,
-                  size: 50,
-                  color: Colors.white,
+              children: [
+                IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (BuildContext context) {
+                        return const WelcomePage();
+                      }),
+                    );
+                    print('Icon btn is tapped');
+                  },
+                  icon: const Icon(
+                    Icons.arrow_back_ios_rounded,
+                    size: 50,
+                    color: Colors.white,
+                  ),
                 ),
               ],
             ),
@@ -56,22 +93,41 @@ class _LoginPageState extends State<LoginPage> {
                   child: Column(
                     children: [
                       TextField(
+                        controller: _emailController,
                         decoration: InputDecoration(
                           hintText: 'Enter your email',
                         ),
                       ),
                       TextField(
+                        controller: _passwordController,
                         decoration: InputDecoration(
                           hintText: 'Enter your password',
                         ),
                       ),
+                      // Row(
+                      //   mainAxisAlignment: MainAxisAlignment.center,
+                      //   children: [
+                      //     Image.asset(
+                      //       'assets/logInButton.png',
+                      //       width: 200,
+                      //       height: 200,
+                      //     ),
+                      //   ],
+                      // ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Image.asset(
-                            'assets/logInButton.png',
-                            width: 200,
-                            height: 200,
+                          GestureDetector(
+                            onTap: () async {
+                              _login();
+                            },
+                            child: Container(
+                              child: Image.asset(
+                                'assets/logInButton.png',
+                                width: 200,
+                                height: 200,
+                              ),
+                            ),
                           ),
                         ],
                       ),
@@ -80,6 +136,13 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
               ],
+            ),
+            Visibility(
+              visible: _success == 2,
+              child: Text(
+                'Successfully signed in $_userEmail',
+                style: TextStyle(color: Colors.green),
+              ),
             ),
           ],
         ),
