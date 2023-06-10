@@ -19,20 +19,54 @@ class _LoginPageState extends State<LoginPage> {
   bool _passwordVisible = false;
 
   void _login() async {
-    final User? user = (await _auth.signInWithEmailAndPassword(
-      email: _emailController.text,
-      password: _passwordController.text,
-    ))
-        .user;
+    final String email = _emailController.text;
+    final String password = _passwordController.text;
 
-    if (user != null) {
+    if (email.isEmpty || password.isEmpty) {
       setState(() {
-        _success = 2; //means the login is successful
-        _userEmail = user.email!;
+        _success = 3; // Email or password is empty
       });
-    } else {
+      return;
+    }
+
+    try {
+      final UserCredential userCredential =
+          await _auth.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      final User? user = userCredential.user;
+
+      if (user != null) {
+        setState(() {
+          _success = 2; // Login is successful
+          _userEmail = user.email!;
+        });
+      } else {
+        setState(() {
+          _success = 3; // Email or password doesn't match
+        });
+      }
+    } catch (e) {
+      print('Error signing in: $e');
       setState(() {
-        _success = 3;
+        _success = 3; // Email or password doesn't match
+      });
+    }
+  }
+
+  void _resetPassword() async {
+    String email = _emailController.text;
+
+    try {
+      await _auth.sendPasswordResetEmail(email: email);
+      setState(() {
+        _success = 4; // Password reset email sent successfully
+      });
+    } catch (e) {
+      print('Error sending password reset email: $e');
+      setState(() {
+        _success = 5; // Password reset email sending failed
       });
     }
   }
@@ -120,16 +154,6 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ),
                       ),
-                      // Row(
-                      //   mainAxisAlignment: MainAxisAlignment.center,
-                      //   children: [
-                      //     Image.asset(
-                      //       'assets/logInButton.png',
-                      //       width: 200,
-                      //       height: 200,
-                      //     ),
-                      //   ],
-                      // ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -147,18 +171,55 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ],
                       ),
-                      Text('Forgot Password?'),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          GestureDetector(
+                            onTap: () async {
+                              _resetPassword();
+                            },
+                            child: Text(
+                              'Forgot Password?',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      //Text('Forgot Password?'),
+                      Visibility(
+                        visible: _success == 2,
+                        child: Text(
+                          'Successfully signed in $_userEmail',
+                          style: TextStyle(color: Colors.green),
+                        ),
+                      ),
+                      Visibility(
+                        visible: _success == 4,
+                        child: Text(
+                          'Password reset email sent successfully',
+                          style: TextStyle(color: Colors.green),
+                        ),
+                      ),
+                      Visibility(
+                        visible: _success == 5,
+                        child: Text(
+                          'Failed to send password reset email',
+                          style: TextStyle(color: Colors.red),
+                        ),
+                      ),
+                      Visibility(
+                        visible: _success == 3,
+                        child: Text(
+                          'Incorrect email or password',
+                          style: TextStyle(color: Colors.red),
+                        ),
+                      ),
                     ],
                   ),
                 ),
               ],
-            ),
-            Visibility(
-              visible: _success == 2,
-              child: Text(
-                'Successfully signed in $_userEmail',
-                style: TextStyle(color: Colors.green),
-              ),
             ),
           ],
         ),
