@@ -1,7 +1,8 @@
-import 'package:app/ui/welcome_ui.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'login_ui.dart';
+import 'package:app/ui/welcome_ui.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -20,8 +21,18 @@ class _SignUpPageState extends State<SignUpPage> {
   late bool _success;
   late String _userEmail;
   String? _passwordError;
+  String? _emailError;
+  bool _passwordVisible = false;
 
   void _register() async {
+    if (!_validatePassword(_passwordController.text)) {
+      setState(() {
+        _passwordError =
+            "Password must be at least 8 characters long and contain at least one number and one special character.";
+      });
+      return;
+    }
+
     if (_passwordController.text != _confirmPasswordController.text) {
       setState(() {
         _passwordError = "Passwords do not match.";
@@ -53,6 +64,18 @@ class _SignUpPageState extends State<SignUpPage> {
     _emailController.clear();
     _passwordController.clear();
     _confirmPasswordController.clear();
+  }
+
+  bool _validateEmail(String email) {
+    final emailRegex = RegExp(
+        r'^[\w-]+(\.[\w-]+)*@[a-zA-Z\d-]+(\.[a-zA-Z\d-]+)*\.[a-zA-Z\d-]{2,}$');
+    return emailRegex.hasMatch(email);
+  }
+
+  bool _validatePassword(String password) {
+    final passwordRegex =
+        RegExp(r'^(?=.*?[A-Za-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
+    return passwordRegex.hasMatch(password);
   }
 
   @override
@@ -124,23 +147,41 @@ class _SignUpPageState extends State<SignUpPage> {
                       ),
                       TextField(
                         controller: _passwordController,
+                        obscureText: !_passwordVisible,
                         decoration: InputDecoration(
                           hintText: 'Enter your password',
+                          suffixIcon: IconButton(
+                            onPressed: () {
+                              setState(() {
+                                _passwordVisible = !_passwordVisible;
+                              });
+                            },
+                            icon: Icon(
+                              _passwordVisible
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                            ),
+                          ),
                         ),
-                        obscureText: true,
                       ),
                       TextField(
                         controller: _confirmPasswordController,
+                        obscureText: !_passwordVisible,
                         decoration: InputDecoration(
                           hintText: 'Confirm your password',
                         ),
-                        obscureText: true,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           GestureDetector(
                             onTap: () async {
+                              if (!_validateEmail(_emailController.text)) {
+                                setState(() {
+                                  _emailError = "Invalid email address.";
+                                });
+                                return;
+                              }
                               if (_passwordController.text !=
                                   _confirmPasswordController.text) {
                                 setState(() {
@@ -168,20 +209,40 @@ class _SignUpPageState extends State<SignUpPage> {
                             style: TextStyle(color: Colors.red),
                           ),
                         ),
-                      //const Text('Already have an account? Login'),
+                      if (_emailError != null)
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 16),
+                          child: Text(
+                            _emailError!,
+                            style: TextStyle(color: Colors.red),
+                          ),
+                        ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Text("Already have an account?"),
+                          Text(
+                            "Already have an account?",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.green,
+                            ),
+                          ),
                           GestureDetector(
                             onTap: () {
                               Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => const LoginPage()));
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const LoginPage()),
+                              );
                             },
-                            child: const Text("Login"),
-                          )
+                            child: Text(
+                              "Login",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.green,
+                              ),
+                            ),
+                          ),
                         ],
                       )
                     ],
