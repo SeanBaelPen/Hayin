@@ -16,10 +16,13 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _passwordController = TextEditingController();
   int _success = 1;
   String _userEmail = "";
+  bool _passwordVisible = false;
 
   void _login() async {
     final User? user = (await _auth.signInWithEmailAndPassword(
-            email: _emailController.text, password: _passwordController.text))
+      email: _emailController.text,
+      password: _passwordController.text,
+    ))
         .user;
 
     if (user != null) {
@@ -100,8 +103,21 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       TextField(
                         controller: _passwordController,
+                        obscureText: !_passwordVisible,
                         decoration: InputDecoration(
                           hintText: 'Enter your password',
+                          suffixIcon: IconButton(
+                            onPressed: () {
+                              setState(() {
+                                _passwordVisible = !_passwordVisible;
+                              });
+                            },
+                            icon: Icon(
+                              _passwordVisible
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                            ),
+                          ),
                         ),
                       ),
                       // Row(
