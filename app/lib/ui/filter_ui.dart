@@ -66,43 +66,49 @@ class _FilterPageState extends State<FilterPage> {
           ),
         ],
       ),
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-          color: Colors.black,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black26,
-              offset: Offset(0, -1),
-              blurRadius: 10,
+      bottomNavigationBar: BottomNavigationBar(
+        selectedItemColor:
+            Colors.orange, // Set the selected item color to orange
+        unselectedItemColor:
+            Colors.grey, // Set the unselected item color to grey
+        currentIndex: _currentIndex,
+        onTap: (int index) {
+          setState(() {
+            _currentIndex = index;
+          });
+        },
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.home_sharp,
+              size: 50,
             ),
-          ],
-        ),
-        child: BottomNavigationBar(
-          currentIndex: _currentIndex,
-          onTap: (int index) {
-            setState(() {
-              _currentIndex = index;
-            });
-          },
-          items: [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home, color: Colors.grey),
-              label: '',
+            label: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.search,
+              size: 50,
             ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.search, color: Colors.grey),
-              label: '',
+            label: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.location_on,
+              size: 50,
             ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.notifications, color: Colors.grey),
-              label: '',
+            label: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.account_circle_outlined,
+              size: 50,
             ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.person, color: Colors.grey),
-              label: '',
-            ),
-          ],
-        ),
+            label: '',
+          ),
+        ],
+        type: BottomNavigationBarType
+            .fixed, // make the icons stay in place when you tap on them
       ),
     );
   }
