@@ -11,8 +11,9 @@ class _FilterPageState extends State<FilterPage> {
   int _currentIndex =
       0; // Current index of the selected item in the bottom navigation bar
   int _selectedImageIndex = 0; // Index of the selected image
-  //var selectedRange = RangeValues(100, 300, 500, 1000);
   RangeValues selectedRange = const RangeValues(100, 300);
+  String _selectedButton =
+      ''; // Declare a variable to track the selected button
 
   @override
   Widget build(BuildContext context) {
@@ -73,8 +74,8 @@ class _FilterPageState extends State<FilterPage> {
                       child: Container(
                         decoration: BoxDecoration(
                           color: _selectedImageIndex == 0
-                              ? Colors.orange
-                              : const Color.fromARGB(255, 182, 180, 180),
+                              ? Color.fromARGB(255, 248, 102, 49)
+                              : Color.fromARGB(255, 218, 214, 214),
                           // Change color to orange when selected
                           borderRadius: BorderRadius.circular(8),
                         ),
@@ -99,8 +100,8 @@ class _FilterPageState extends State<FilterPage> {
                       child: Container(
                         decoration: BoxDecoration(
                           color: _selectedImageIndex == 1
-                              ? Colors.orange
-                              : const Color.fromARGB(255, 182, 180, 180),
+                              ? Color.fromARGB(255, 248, 102, 49)
+                              : Color.fromARGB(255, 218, 214, 214),
                           // Change color to orange when selected
                           borderRadius: BorderRadius.circular(8),
                         ),
@@ -125,8 +126,8 @@ class _FilterPageState extends State<FilterPage> {
                       child: Container(
                         decoration: BoxDecoration(
                           color: _selectedImageIndex == 2
-                              ? Colors.orange
-                              : const Color.fromARGB(255, 182, 180, 180),
+                              ? Color.fromARGB(255, 248, 102, 49)
+                              : Color.fromARGB(255, 218, 214, 214),
                           // Change color to orange when selected
                           borderRadius: BorderRadius.circular(8),
                         ),
@@ -171,13 +172,21 @@ class _FilterPageState extends State<FilterPage> {
                         // TODO: Add button 1 onPressed logic
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.grey, // Background color
+                        backgroundColor: Color.fromARGB(
+                            255, 218, 214, 214), // Background color
                         shape: RoundedRectangleBorder(
                           borderRadius:
                               BorderRadius.circular(10), // Rounded borders
                         ),
                       ),
-                      child: Text('Near Me'),
+                      child: Text(
+                        'Near Me',
+                        style: TextStyle(
+                          color: Colors.black, // Set text color to black
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                      ),
                     ),
                   ),
                   Container(
@@ -189,13 +198,21 @@ class _FilterPageState extends State<FilterPage> {
                         // TODO: Add PUP btn onPressed logic
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.grey, // Background color
+                        backgroundColor: Color.fromARGB(
+                            255, 218, 214, 214), // Background color
                         shape: RoundedRectangleBorder(
                           borderRadius:
                               BorderRadius.circular(10), // Rounded borders
                         ),
                       ),
-                      child: Text('PUP'),
+                      child: Text(
+                        'PUP',
+                        style: TextStyle(
+                          color: Colors.black, // Set text color to black
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                      ),
                     ),
                   ),
                   Container(
@@ -207,15 +224,21 @@ class _FilterPageState extends State<FilterPage> {
                         // TODO: Add Sta. Mesa St. onPressed logic
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.grey, // Background color
+                        backgroundColor: Color.fromARGB(
+                            255, 218, 214, 214), // Background color
                         shape: RoundedRectangleBorder(
                           borderRadius:
                               BorderRadius.circular(10), // Rounded borders
                         ),
                       ),
-                      child: Text(
+                      child: const Text(
                         'Sta. Mesa St.',
                         textAlign: TextAlign.center, // Align text at the center
+                        style: TextStyle(
+                          color: Colors.black, // Set text color to black
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
                       ),
                     ),
                   ),
@@ -234,7 +257,8 @@ class _FilterPageState extends State<FilterPage> {
                         // TODO: Add button 1 onPressed logic
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.grey, // Background color
+                        backgroundColor: Color.fromARGB(
+                            255, 218, 214, 214), // Background color
                         shape: RoundedRectangleBorder(
                           borderRadius:
                               BorderRadius.circular(10), // Rounded borders
@@ -252,7 +276,8 @@ class _FilterPageState extends State<FilterPage> {
                         // TODO: Add PUP btn onPressed logic
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.grey, // Background color
+                        backgroundColor: Color.fromARGB(
+                            255, 218, 214, 214), // Background color
                         shape: RoundedRectangleBorder(
                           borderRadius:
                               BorderRadius.circular(10), // Rounded borders
@@ -270,7 +295,8 @@ class _FilterPageState extends State<FilterPage> {
                         // TODO: Add Sta. Mesa St. onPressed logic
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.grey, // Background color
+                        backgroundColor: Color.fromARGB(
+                            255, 218, 214, 214), // Background color
                         shape: RoundedRectangleBorder(
                           borderRadius:
                               BorderRadius.circular(10), // Rounded borders
@@ -308,103 +334,85 @@ class _FilterPageState extends State<FilterPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Container(
-                    width: 120, // Set the desired width for the buttons
-                    padding: EdgeInsets.all(
-                        8), // Set the desired padding around the button and text
+                    width: 120,
+                    padding: EdgeInsets.all(8),
                     child: ElevatedButton(
                       onPressed: () {
-                        // TODO: Add Open btn onPressed logic
+                        setState(() {
+                          _selectedButton = 'Open';
+                        });
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.grey, // Background color
+                        backgroundColor: _selectedButton == 'Open'
+                            ? Color.fromARGB(255, 248, 102, 49)
+                            : Color.fromARGB(255, 218, 214, 214),
                         shape: RoundedRectangleBorder(
-                          borderRadius:
-                              BorderRadius.circular(10), // Rounded borders
+                          borderRadius: BorderRadius.circular(10),
                         ),
                       ),
-                      child: Text('Open'),
+                      child: const Text(
+                        'Open',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                      ),
                     ),
                   ),
                   Container(
-                    width: 120, // Set the desired width for the buttons
-                    padding: EdgeInsets.all(
-                        8), // Set the desired padding around the button and text
+                    width: 120,
+                    padding: EdgeInsets.all(8),
                     child: ElevatedButton(
                       onPressed: () {
-                        // TODO: Add Preferred btn onPressed logic
+                        setState(() {
+                          _selectedButton = 'Preferred';
+                        });
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.grey, // Background color
+                        backgroundColor: _selectedButton == 'Preferred'
+                            ? Color.fromARGB(255, 248, 102, 49)
+                            : Color.fromARGB(255, 218, 214, 214),
                         shape: RoundedRectangleBorder(
-                          borderRadius:
-                              BorderRadius.circular(10), // Rounded borders
+                          borderRadius: BorderRadius.circular(10),
                         ),
                       ),
-                      child: Text('Preferred'),
+                      child: Text(
+                        'Preferred',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                      ),
                     ),
                   ),
                   Container(
-                    width: 120, // Set the desired width for the buttons
-                    padding: EdgeInsets.all(
-                        8), // Set the desired padding around the button and text
+                    width: 120,
+                    padding: EdgeInsets.all(8),
                     child: ElevatedButton(
                       onPressed: () {
-                        // TODO: Add Sale btn onPressed logic
+                        setState(() {
+                          _selectedButton = 'Sale';
+                        });
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.grey, // Background color
+                        backgroundColor: _selectedButton == 'Sale'
+                            ? Color.fromARGB(255, 248, 102, 49)
+                            : Color.fromARGB(255, 218, 214, 214),
                         shape: RoundedRectangleBorder(
-                          borderRadius:
-                              BorderRadius.circular(10), // Rounded borders
+                          borderRadius: BorderRadius.circular(10),
                         ),
                       ),
-                      child: Text('Sale'),
-                    ),
-                  ),
-                ],
-              ),
-              //SizedBox(height: 10), // space between the rows of buttons
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      // TODO: Add button 4 onPressed logic
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.grey, // Background color
-                      shape: RoundedRectangleBorder(
-                        borderRadius:
-                            BorderRadius.circular(10), // Rounded borders
+                      child: Text(
+                        'Sale',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
                       ),
                     ),
-                    child: Text('Button 4'),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      // TODO: Add button 5 onPressed logic
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.grey, // Background color
-                      shape: RoundedRectangleBorder(
-                        borderRadius:
-                            BorderRadius.circular(10), // Rounded borders
-                      ),
-                    ),
-                    child: Text('Button 5'),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      // TODO: Add button 6 onPressed logic
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.grey, // Background color
-                      shape: RoundedRectangleBorder(
-                        borderRadius:
-                            BorderRadius.circular(10), // Rounded borders
-                      ),
-                    ),
-                    child: Text('Button 6'),
                   ),
                 ],
               ),
@@ -440,56 +448,58 @@ class _FilterPageState extends State<FilterPage> {
                         selectedRange = values;
                       });
                     },
+                    activeColor: Color.fromARGB(
+                        255, 248, 102, 49), // Set the active color to orange
                   ),
                   Positioned(
                     left: 20,
                     right: 20,
-                    bottom: 30,
+                    top: 35,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('0'),
-                        Text('125'),
-                        Text('250'),
-                        Text('1000'),
+                        Text('- ₱100'),
+                        Text('₱300'),
+                        Text('₱500'),
+                        Text('₱1000 +'),
                         //Text('500'),
                       ],
                     ),
                   ),
                 ],
               ),
-              // const SizedBox(height: 10),
-              // Stack(
-              //   alignment: Alignment.center,
-              //   children: [
-              //     Positioned(
-              //     top: 500,
-              //     InkWell(
-              //       onTap: () {
-              //         Navigator.push(
-              //           context,
-              //           MaterialPageRoute(builder: (BuildContext context) {
-              //             return const FilterPage();
-              //           }),
-              //         );
-              //         print('Login button tapped');
-              //       },
-              //       child: Image.asset(
-              //         'assets/applyBtn.jpg',
-              //         width: 70,
-              //         height: 70,
-              //       ),
-              //     ),
-              //     ),
-              //   ],
-              // ),
+              const SizedBox(height: 60),
+              Stack(
+                alignment: Alignment.center,
+                children: [
+                  Positioned(
+                    //top: 500,
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (BuildContext context) {
+                            return const FilterPage();
+                          }),
+                        );
+                        print('Apply button tapped');
+                      },
+                      child: Image.asset(
+                        'assets/applyBtn.jpg',
+                        width: 350,
+                        height: 50,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ],
           )
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
-        selectedItemColor:
-            Colors.orange, // Set the selected item color to orange
+        selectedItemColor: Color.fromARGB(
+            255, 248, 102, 49), // Set the selected item color to orange
         unselectedItemColor:
             Colors.grey, // Set the unselected item color to grey
         currentIndex: _currentIndex,
