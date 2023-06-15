@@ -156,95 +156,131 @@ class _FilterPageState extends State<FilterPage> {
               ),
             ),
           ),
-          SizedBox(height: 20), // space between the text and buttons
+          SizedBox(height: 10), // space between the text and buttons
           Column(
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      // TODO: Add button 1 onPressed logic
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.grey, // Background color
-                      shape: RoundedRectangleBorder(
-                        borderRadius:
-                            BorderRadius.circular(10), // Rounded borders
+                  Container(
+                    width: 120, // Set the desired width for the buttons
+                    padding: EdgeInsets.all(
+                        8), // Set the desired padding around the button and text
+                    child: ElevatedButton(
+                      onPressed: () {
+                        // TODO: Add button 1 onPressed logic
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.grey, // Background color
+                        shape: RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.circular(10), // Rounded borders
+                        ),
                       ),
+                      child: Text('Near Me'),
                     ),
-                    child: Text('Button 1'),
                   ),
-                  ElevatedButton(
-                    onPressed: () {
-                      // TODO: Add button 2 onPressed logic
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.grey, // Background color
-                      shape: RoundedRectangleBorder(
-                        borderRadius:
-                            BorderRadius.circular(10), // Rounded borders
+                  Container(
+                    width: 120, // Set the desired width for the buttons
+                    padding: EdgeInsets.all(
+                        8), // Set the desired padding around the button and text
+                    child: ElevatedButton(
+                      onPressed: () {
+                        // TODO: Add PUP btn onPressed logic
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.grey, // Background color
+                        shape: RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.circular(10), // Rounded borders
+                        ),
                       ),
+                      child: Text('PUP'),
                     ),
-                    child: Text('Button 2'),
                   ),
-                  ElevatedButton(
-                    onPressed: () {
-                      // TODO: Add button 3 onPressed logic
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.grey, // Background color
-                      shape: RoundedRectangleBorder(
-                        borderRadius:
-                            BorderRadius.circular(10), // Rounded borders
+                  Container(
+                    width: 120, // Set the desired width for the buttons
+                    padding: EdgeInsets.all(
+                        8), // Set the desired padding around the button and text
+                    child: ElevatedButton(
+                      onPressed: () {
+                        // TODO: Add Sta. Mesa St. onPressed logic
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.grey, // Background color
+                        shape: RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.circular(10), // Rounded borders
+                        ),
+                      ),
+                      child: Text(
+                        'Sta. Mesa St.',
+                        textAlign: TextAlign.center, // Align text at the center
                       ),
                     ),
-                    child: Text('Button 3'),
                   ),
                 ],
               ),
-              SizedBox(height: 20), // space between the rows of buttons
+              //SizedBox(height: 10), // space between the rows of buttons
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      // TODO: Add button 4 onPressed logic
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.grey, // Background color
-                      shape: RoundedRectangleBorder(
-                        borderRadius:
-                            BorderRadius.circular(10), // Rounded borders
+                  Container(
+                    width: 120, // Set the desired width for the buttons
+                    padding: EdgeInsets.all(
+                        8), // Set the desired padding around the button and text
+                    child: ElevatedButton(
+                      onPressed: () {
+                        // TODO: Add button 1 onPressed logic
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.grey, // Background color
+                        shape: RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.circular(10), // Rounded borders
+                        ),
                       ),
+                      child: Text('Near Me'),
                     ),
-                    child: Text('Button 4'),
                   ),
-                  ElevatedButton(
-                    onPressed: () {
-                      // TODO: Add button 5 onPressed logic
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.grey, // Background color
-                      shape: RoundedRectangleBorder(
-                        borderRadius:
-                            BorderRadius.circular(10), // Rounded borders
+                  Container(
+                    width: 120, // Set the desired width for the buttons
+                    padding: EdgeInsets.all(
+                        8), // Set the desired padding around the button and text
+                    child: ElevatedButton(
+                      onPressed: () {
+                        // TODO: Add PUP btn onPressed logic
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.grey, // Background color
+                        shape: RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.circular(10), // Rounded borders
+                        ),
                       ),
+                      child: Text('PUP'),
                     ),
-                    child: Text('Button 5'),
                   ),
-                  ElevatedButton(
-                    onPressed: () {
-                      // TODO: Add button 6 onPressed logic
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.grey, // Background color
-                      shape: RoundedRectangleBorder(
-                        borderRadius:
-                            BorderRadius.circular(10), // Rounded borders
+                  Container(
+                    width: 120, // Set the desired width for the buttons
+                    padding: EdgeInsets.all(
+                        8), // Set the desired padding around the button and text
+                    child: ElevatedButton(
+                      onPressed: () {
+                        // TODO: Add Sta. Mesa St. onPressed logic
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.grey, // Background color
+                        shape: RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.circular(10), // Rounded borders
+                        ),
+                      ),
+                      child: Text(
+                        'Sta. Mesa St.',
+                        textAlign: TextAlign.center, // Align text at the center
                       ),
                     ),
-                    child: Text('Button 6'),
                   ),
                 ],
               ),
@@ -265,54 +301,69 @@ class _FilterPageState extends State<FilterPage> {
               ),
             ),
           ),
-          SizedBox(height: 20), // space between the text and buttons
+          SizedBox(height: 10), // space between the text and buttons
           Column(
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      // TODO: Add button 1 onPressed logic
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.grey, // Background color
-                      shape: RoundedRectangleBorder(
-                        borderRadius:
-                            BorderRadius.circular(10), // Rounded borders
+                  Container(
+                    width: 120, // Set the desired width for the buttons
+                    padding: EdgeInsets.all(
+                        8), // Set the desired padding around the button and text
+                    child: ElevatedButton(
+                      onPressed: () {
+                        // TODO: Add Open btn onPressed logic
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.grey, // Background color
+                        shape: RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.circular(10), // Rounded borders
+                        ),
                       ),
+                      child: Text('Open'),
                     ),
-                    child: Text('Button 1'),
                   ),
-                  ElevatedButton(
-                    onPressed: () {
-                      // TODO: Add button 2 onPressed logic
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.grey, // Background color
-                      shape: RoundedRectangleBorder(
-                        borderRadius:
-                            BorderRadius.circular(10), // Rounded borders
+                  Container(
+                    width: 120, // Set the desired width for the buttons
+                    padding: EdgeInsets.all(
+                        8), // Set the desired padding around the button and text
+                    child: ElevatedButton(
+                      onPressed: () {
+                        // TODO: Add Preferred btn onPressed logic
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.grey, // Background color
+                        shape: RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.circular(10), // Rounded borders
+                        ),
                       ),
+                      child: Text('Preferred'),
                     ),
-                    child: Text('Button 2'),
                   ),
-                  ElevatedButton(
-                    onPressed: () {
-                      // TODO: Add button 3 onPressed logic
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.grey, // Background color
-                      shape: RoundedRectangleBorder(
-                        borderRadius:
-                            BorderRadius.circular(10), // Rounded borders
+                  Container(
+                    width: 120, // Set the desired width for the buttons
+                    padding: EdgeInsets.all(
+                        8), // Set the desired padding around the button and text
+                    child: ElevatedButton(
+                      onPressed: () {
+                        // TODO: Add Sale btn onPressed logic
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.grey, // Background color
+                        shape: RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.circular(10), // Rounded borders
+                        ),
                       ),
+                      child: Text('Sale'),
                     ),
-                    child: Text('Button 3'),
                   ),
                 ],
               ),
-              SizedBox(height: 20), // space between the rows of buttons
+              //SizedBox(height: 10), // space between the rows of buttons
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -364,10 +415,6 @@ class _FilterPageState extends State<FilterPage> {
                   20), // space between the filter buttons and the RangeSlider
           Column(
             children: [
-              // Text(
-              //   'Price: ${selectedRange.start.round()} - ${selectedRange.end.round()}',
-              //   style: TextStyle(fontSize: 16),
-              // ),
               Padding(
                 padding: const EdgeInsets.only(left: 15),
                 child: Align(
@@ -381,17 +428,61 @@ class _FilterPageState extends State<FilterPage> {
                   ),
                 ),
               ),
-              RangeSlider(
-                values: selectedRange,
-                min: 0,
-                max: 500,
-                divisions: 4,
-                onChanged: (RangeValues values) {
-                  setState(() {
-                    selectedRange = values;
-                  });
-                },
+              Stack(
+                children: [
+                  RangeSlider(
+                    values: selectedRange,
+                    min: 0,
+                    max: 1000,
+                    divisions: 3,
+                    onChanged: (RangeValues values) {
+                      setState(() {
+                        selectedRange = values;
+                      });
+                    },
+                  ),
+                  Positioned(
+                    left: 20,
+                    right: 20,
+                    bottom: 30,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text('0'),
+                        Text('125'),
+                        Text('250'),
+                        Text('1000'),
+                        //Text('500'),
+                      ],
+                    ),
+                  ),
+                ],
               ),
+              // const SizedBox(height: 10),
+              // Stack(
+              //   alignment: Alignment.center,
+              //   children: [
+              //     Positioned(
+              //     top: 500,
+              //     InkWell(
+              //       onTap: () {
+              //         Navigator.push(
+              //           context,
+              //           MaterialPageRoute(builder: (BuildContext context) {
+              //             return const FilterPage();
+              //           }),
+              //         );
+              //         print('Login button tapped');
+              //       },
+              //       child: Image.asset(
+              //         'assets/applyBtn.jpg',
+              //         width: 70,
+              //         height: 70,
+              //       ),
+              //     ),
+              //     ),
+              //   ],
+              // ),
             ],
           )
         ],
