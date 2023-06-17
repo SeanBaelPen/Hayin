@@ -1,6 +1,6 @@
 import 'package:app/ui/signup_ui.dart';
 import 'package:flutter/material.dart';
-import 'filter_ui.dart';
+// import 'filter_ui.dart';
 import 'login_ui.dart';
 
 class WelcomePage extends StatelessWidget {
