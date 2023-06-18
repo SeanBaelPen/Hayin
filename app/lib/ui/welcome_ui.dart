@@ -1,7 +1,10 @@
+import 'package:app/ui/signup_ui.dart';
 import 'package:flutter/material.dart';
+// import 'filter_ui.dart';
+import 'login_ui.dart';
 
 class WelcomePage extends StatelessWidget {
-  const WelcomePage({super.key});
+  const WelcomePage({Key? key});
 
   @override
   Widget build(BuildContext context) {
@@ -21,8 +24,13 @@ class WelcomePage extends StatelessWidget {
               top: 500,
               child: InkWell(
                 onTap: () {
-                  // Define the action you want to perform when the button/photo is tapped
-                  print('Button tapped');
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (BuildContext context) {
+                      return const LoginPage();
+                    }),
+                  );
+                  print('Login button tapped');
                 },
                 child: Image.asset(
                   'assets/logInButton.png',
@@ -35,8 +43,13 @@ class WelcomePage extends StatelessWidget {
               top: 580,
               child: InkWell(
                 onTap: () {
-                  // Define the action you want to perform when the button/photo is tapped
-                  print('Button tapped');
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (BuildContext context) {
+                      return const SignUpPage();
+                    }),
+                  );
+                  print('Sign-up button tapped');
                 },
                 child: Image.asset(
                   'assets/signUpButton.png',
@@ -44,7 +57,7 @@ class WelcomePage extends StatelessWidget {
                   height: 200,
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),

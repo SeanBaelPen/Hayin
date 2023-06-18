@@ -2,6 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'login_ui.dart';
 import 'package:app/ui/welcome_ui.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -13,10 +15,12 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
+  // text controllers
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController =
       TextEditingController();
+
   late bool _success;
   late String _userEmail;
   String? _passwordError;
@@ -39,6 +43,7 @@ class _SignUpPageState extends State<SignUpPage> {
       return;
     }
 
+// Create user
     final User? user = (await _auth.createUserWithEmailAndPassword(
       email: _emailController.text,
       password: _passwordController.text,
@@ -52,6 +57,10 @@ class _SignUpPageState extends State<SignUpPage> {
         _passwordError = null; // Reset the password error message
       });
       _clearTextFields(); // Clear the text fields
+      // Add the user email to Firestore
+      FirebaseFirestore.instance.collection('users').doc(user.uid).set({
+        'email': user.email,
+      });
     } else {
       setState(() {
         _success = false;
