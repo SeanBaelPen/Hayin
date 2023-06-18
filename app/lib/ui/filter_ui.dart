@@ -27,14 +27,14 @@ class _FilterPageState extends State<FilterPage> {
               child: Row(
                 children: [
                   Container(
-                    child: Icon(
+                    child: const Icon(
                       Icons.clear_sharp,
                       size: 50,
                       color: Colors.black,
                     ),
                   ),
-                  SizedBox(width: 10),
-                  Text(
+                  const SizedBox(width: 10),
+                  const Text(
                     'Filter',
                     style: TextStyle(
                       fontSize: 28,
@@ -45,8 +45,8 @@ class _FilterPageState extends State<FilterPage> {
                     child: Align(
                       alignment: Alignment.centerRight,
                       child: Container(
-                        margin: EdgeInsets.only(right: 10),
-                        child: Text(
+                        margin: const EdgeInsets.only(right: 10),
+                        child: const Text(
                           'Clear all',
                           style: TextStyle(
                             fontSize: 18,
@@ -74,17 +74,17 @@ class _FilterPageState extends State<FilterPage> {
                       child: Container(
                         decoration: BoxDecoration(
                           color: _selectedImageIndex == 0
-                              ? Color.fromARGB(255, 248, 102, 49)
-                              : Color.fromARGB(255, 218, 214, 214),
+                              ? const Color.fromARGB(255, 248, 102, 49)
+                              : const Color.fromARGB(255, 218, 214, 214),
                           // Change color to orange when selected
                           borderRadius: BorderRadius.circular(8),
                         ),
-                        padding: EdgeInsets.all(10),
+                        padding: const EdgeInsets.all(10),
                         child: Image.asset('assets/drinks.png'),
                       ),
                     ),
-                    SizedBox(height: 10),
-                    Text('Drinks'),
+                    const SizedBox(height: 10),
+                    const Text('Drinks'),
                   ],
                 ),
               ),
@@ -100,17 +100,17 @@ class _FilterPageState extends State<FilterPage> {
                       child: Container(
                         decoration: BoxDecoration(
                           color: _selectedImageIndex == 1
-                              ? Color.fromARGB(255, 248, 102, 49)
-                              : Color.fromARGB(255, 218, 214, 214),
+                              ? const Color.fromARGB(255, 248, 102, 49)
+                              : const Color.fromARGB(255, 218, 214, 214),
                           // Change color to orange when selected
                           borderRadius: BorderRadius.circular(8),
                         ),
-                        padding: EdgeInsets.all(10),
+                        padding: const EdgeInsets.all(10),
                         child: Image.asset('assets/desserts.png'),
                       ),
                     ),
-                    SizedBox(height: 10),
-                    Text('Desserts'),
+                    const SizedBox(height: 10),
+                    const Text('Desserts'),
                   ],
                 ),
               ),
@@ -126,17 +126,17 @@ class _FilterPageState extends State<FilterPage> {
                       child: Container(
                         decoration: BoxDecoration(
                           color: _selectedImageIndex == 2
-                              ? Color.fromARGB(255, 248, 102, 49)
-                              : Color.fromARGB(255, 218, 214, 214),
+                              ? const Color.fromARGB(255, 248, 102, 49)
+                              : const Color.fromARGB(255, 218, 214, 214),
                           // Change color to orange when selected
                           borderRadius: BorderRadius.circular(8),
                         ),
-                        padding: EdgeInsets.all(10),
+                        padding: const EdgeInsets.all(10),
                         child: Image.asset('assets/meal.png'),
                       ),
                     ),
-                    SizedBox(height: 10),
-                    Text('Meal'),
+                    const SizedBox(height: 10),
+                    const Text('Meal'),
                   ],
                 ),
               ),
@@ -144,8 +144,8 @@ class _FilterPageState extends State<FilterPage> {
           ),
           const SizedBox(
               height: 20), // space between the row of images and the text
-          Padding(
-            padding: const EdgeInsets.only(left: 15),
+          const Padding(
+            padding: EdgeInsets.only(left: 15),
             child: Align(
               alignment: Alignment.centerLeft,
               child: Text(
@@ -157,7 +157,7 @@ class _FilterPageState extends State<FilterPage> {
               ),
             ),
           ),
-          SizedBox(height: 10), // space between the text and buttons
+          const SizedBox(height: 10), // space between the text and buttons
           Column(
             children: [
               Row(
@@ -165,21 +165,21 @@ class _FilterPageState extends State<FilterPage> {
                 children: [
                   Container(
                     width: 120, // Set the desired width for the buttons
-                    padding: EdgeInsets.all(
+                    padding: const EdgeInsets.all(
                         8), // Set the desired padding around the button and text
                     child: ElevatedButton(
                       onPressed: () {
                         // TODO: Add button 1 onPressed logic
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Color.fromARGB(
+                        backgroundColor: const Color.fromARGB(
                             255, 218, 214, 214), // Background color
                         shape: RoundedRectangleBorder(
                           borderRadius:
                               BorderRadius.circular(10), // Rounded borders
                         ),
                       ),
-                      child: Text(
+                      child: const Text(
                         'Near Me',
                         style: TextStyle(
                           color: Colors.black, // Set text color to black
@@ -191,21 +191,21 @@ class _FilterPageState extends State<FilterPage> {
                   ),
                   Container(
                     width: 120, // Set the desired width for the buttons
-                    padding: EdgeInsets.all(
+                    padding: const EdgeInsets.all(
                         8), // Set the desired padding around the button and text
                     child: ElevatedButton(
                       onPressed: () {
                         // TODO: Add PUP btn onPressed logic
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Color.fromARGB(
+                        backgroundColor: const Color.fromARGB(
                             255, 218, 214, 214), // Background color
                         shape: RoundedRectangleBorder(
                           borderRadius:
                               BorderRadius.circular(10), // Rounded borders
                         ),
                       ),
-                      child: Text(
+                      child: const Text(
                         'PUP',
                         style: TextStyle(
                           color: Colors.black, // Set text color to black
@@ -217,14 +217,14 @@ class _FilterPageState extends State<FilterPage> {
                   ),
                   Container(
                     width: 120, // Set the desired width for the buttons
-                    padding: EdgeInsets.all(
+                    padding: const EdgeInsets.all(
                         8), // Set the desired padding around the button and text
                     child: ElevatedButton(
                       onPressed: () {
                         // TODO: Add Sta. Mesa St. onPressed logic
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Color.fromARGB(
+                        backgroundColor: const Color.fromARGB(
                             255, 218, 214, 214), // Background color
                         shape: RoundedRectangleBorder(
                           borderRadius:
@@ -250,59 +250,59 @@ class _FilterPageState extends State<FilterPage> {
                 children: [
                   Container(
                     width: 120, // Set the desired width for the buttons
-                    padding: EdgeInsets.all(
+                    padding: const EdgeInsets.all(
                         8), // Set the desired padding around the button and text
                     child: ElevatedButton(
                       onPressed: () {
                         // TODO: Add button 1 onPressed logic
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Color.fromARGB(
+                        backgroundColor: const Color.fromARGB(
                             255, 218, 214, 214), // Background color
                         shape: RoundedRectangleBorder(
                           borderRadius:
                               BorderRadius.circular(10), // Rounded borders
                         ),
                       ),
-                      child: Text('Near Me'),
+                      child: const Text('Near Me'),
                     ),
                   ),
                   Container(
                     width: 120, // Set the desired width for the buttons
-                    padding: EdgeInsets.all(
+                    padding: const EdgeInsets.all(
                         8), // Set the desired padding around the button and text
                     child: ElevatedButton(
                       onPressed: () {
                         // TODO: Add PUP btn onPressed logic
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Color.fromARGB(
+                        backgroundColor: const Color.fromARGB(
                             255, 218, 214, 214), // Background color
                         shape: RoundedRectangleBorder(
                           borderRadius:
                               BorderRadius.circular(10), // Rounded borders
                         ),
                       ),
-                      child: Text('PUP'),
+                      child: const Text('PUP'),
                     ),
                   ),
                   Container(
                     width: 120, // Set the desired width for the buttons
-                    padding: EdgeInsets.all(
+                    padding: const EdgeInsets.all(
                         8), // Set the desired padding around the button and text
                     child: ElevatedButton(
                       onPressed: () {
                         // TODO: Add Sta. Mesa St. onPressed logic
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Color.fromARGB(
+                        backgroundColor: const Color.fromARGB(
                             255, 218, 214, 214), // Background color
                         shape: RoundedRectangleBorder(
                           borderRadius:
                               BorderRadius.circular(10), // Rounded borders
                         ),
                       ),
-                      child: Text(
+                      child: const Text(
                         'Sta. Mesa St.',
                         textAlign: TextAlign.center, // Align text at the center
                       ),
@@ -314,8 +314,8 @@ class _FilterPageState extends State<FilterPage> {
           ),
           const SizedBox(
               height: 20), // space between the row of images and the text
-          Padding(
-            padding: const EdgeInsets.only(left: 15),
+          const Padding(
+            padding: EdgeInsets.only(left: 15),
             child: Align(
               alignment: Alignment.centerLeft,
               child: Text(
@@ -327,7 +327,7 @@ class _FilterPageState extends State<FilterPage> {
               ),
             ),
           ),
-          SizedBox(height: 10), // space between the text and buttons
+          const SizedBox(height: 10), // space between the text and buttons
           Column(
             children: [
               Row(
@@ -335,7 +335,7 @@ class _FilterPageState extends State<FilterPage> {
                 children: [
                   Container(
                     width: 120,
-                    padding: EdgeInsets.all(8),
+                    padding: const EdgeInsets.all(8),
                     child: ElevatedButton(
                       onPressed: () {
                         setState(() {
@@ -344,8 +344,8 @@ class _FilterPageState extends State<FilterPage> {
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: _selectedButton == 'Open'
-                            ? Color.fromARGB(255, 248, 102, 49)
-                            : Color.fromARGB(255, 218, 214, 214),
+                            ? const Color.fromARGB(255, 248, 102, 49)
+                            : const Color.fromARGB(255, 218, 214, 214),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
@@ -362,7 +362,7 @@ class _FilterPageState extends State<FilterPage> {
                   ),
                   Container(
                     width: 120,
-                    padding: EdgeInsets.all(8),
+                    padding: const EdgeInsets.all(8),
                     child: ElevatedButton(
                       onPressed: () {
                         setState(() {
@@ -371,13 +371,13 @@ class _FilterPageState extends State<FilterPage> {
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: _selectedButton == 'Preferred'
-                            ? Color.fromARGB(255, 248, 102, 49)
-                            : Color.fromARGB(255, 218, 214, 214),
+                            ? const Color.fromARGB(255, 248, 102, 49)
+                            : const Color.fromARGB(255, 218, 214, 214),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
                       ),
-                      child: Text(
+                      child: const Text(
                         'Preferred',
                         style: TextStyle(
                           color: Colors.black,
@@ -389,7 +389,7 @@ class _FilterPageState extends State<FilterPage> {
                   ),
                   Container(
                     width: 120,
-                    padding: EdgeInsets.all(8),
+                    padding: const EdgeInsets.all(8),
                     child: ElevatedButton(
                       onPressed: () {
                         setState(() {
@@ -398,13 +398,13 @@ class _FilterPageState extends State<FilterPage> {
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: _selectedButton == 'Sale'
-                            ? Color.fromARGB(255, 248, 102, 49)
-                            : Color.fromARGB(255, 218, 214, 214),
+                            ? const Color.fromARGB(255, 248, 102, 49)
+                            : const Color.fromARGB(255, 218, 214, 214),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
                       ),
-                      child: Text(
+                      child: const Text(
                         'Sale',
                         style: TextStyle(
                           color: Colors.black,
@@ -423,8 +423,8 @@ class _FilterPageState extends State<FilterPage> {
                   20), // space between the filter buttons and the RangeSlider
           Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 15),
+              const Padding(
+                padding: EdgeInsets.only(left: 15),
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
@@ -448,10 +448,10 @@ class _FilterPageState extends State<FilterPage> {
                         selectedRange = values;
                       });
                     },
-                    activeColor: Color.fromARGB(
+                    activeColor: const Color.fromARGB(
                         255, 248, 102, 49), // Set the active color to orange
                   ),
-                  Positioned(
+                  const Positioned(
                     left: 20,
                     right: 20,
                     top: 35,
@@ -498,7 +498,7 @@ class _FilterPageState extends State<FilterPage> {
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
-        selectedItemColor: Color.fromARGB(
+        selectedItemColor: const Color.fromARGB(
             255, 248, 102, 49), // Set the selected item color to orange
         unselectedItemColor:
             Colors.grey, // Set the unselected item color to grey
