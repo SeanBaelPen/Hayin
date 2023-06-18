@@ -6,7 +6,11 @@ import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
 class ProfilePage extends StatefulWidget {
+  //final String? email;
+
   const ProfilePage({Key? key}) : super(key: key);
+
+  get email => null;
 
   @override
   _ProfilePageState createState() => _ProfilePageState();
@@ -38,29 +42,44 @@ class _ProfilePageState extends State<ProfilePage> {
     setState(() {
       _firstName = userData['firstName'];
       _lastName = userData['lastName'];
-      _email = userData['email'];
+      _email =
+          userData['email'] ?? widget.email; // Use widget.email if available
       _rewardPoints = userData['rewardPoints'];
       _profilePictureUrl = userData['profilePictureUrl'];
     });
   }
 
-  Future<void> _updateUserProfile() async {
-    final userData = {
-      'firstName': _firstName,
-      'lastName': _lastName,
-      'email': _email,
-      'rewardPoints': _rewardPoints,
-      'profilePictureUrl': _profilePictureUrl,
-    };
-
-    await FirebaseFirestore.instance
+  Future<void> _loadUserData() async {
+    final userData = await FirebaseFirestore.instance
         .collection('users')
         .doc(_user!.uid)
-        .set(userData, SetOptions(merge: true));
+        .get();
 
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Profile updated successfully')),
-    );
+    setState(() {
+      _firstName = userData['firstName'];
+      _lastName = userData['lastName'];
+    });
+  }
+
+  Future<void> _updateUserProfile() async {
+    final userDoc =
+        FirebaseFirestore.instance.collection('users').doc(_user!.uid);
+    final userData = (await userDoc.get()).data() as Map<String, dynamic>?;
+
+    if (userData != null) {
+      userData['firstName'] = _firstName;
+      userData['lastName'] = _lastName;
+      userData['profilePictureUrl'] = _profilePictureUrl;
+      userData['_rewardPoints'] = _rewardPoints;
+      // Add any other fields that need to be updated
+
+      await userDoc.set(userData, SetOptions(merge: true));
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Profile updated successfully')),
+      );
+      await _loadUserData(); // Fetch the latest data after updating
+    }
   }
 
   Future<void> _updateProfilePicture() async {
@@ -105,18 +124,65 @@ class _ProfilePageState extends State<ProfilePage> {
                 end: Alignment.bottomCenter,
               ),
             ),
+            // child: Stack(
+            //   children: [
+            //     Positioned(
+            //       child: Text('My Profile'),
+            //     ),
+            //     Positioned(
+            //       child: _profilePictureUrl != null
+            //           ? Image.network(_profilePictureUrl!)
+            //           : Image.asset('assets/profile_pic_g.png'),
+            //     ),
+            //     Positioned(
+            //       child: Text('Name: $_firstName $_lastName'),
+            //     ),
+            //   ],
+            // ),
             child: Stack(
               children: [
                 Positioned(
-                  child: Text('My Profile'),
+                  top: 45,
+                  left: 0,
+                  right: 0,
+                  child: Center(
+                    child: Text(
+                      'My Profile',
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
                 ),
                 Positioned(
-                  child: _profilePictureUrl != null
-                      ? Image.network(_profilePictureUrl!)
-                      : Image.asset('assets/profile_pic_g.png'),
+                  top: 150,
+                  left: 0,
+                  right: 0,
+                  child: Center(
+                    child: _profilePictureUrl != null
+                        ? Image.network(_profilePictureUrl!)
+                        : Image.asset(
+                            'assets/profile_pic_g.png',
+                            width: 120,
+                            height: 120,
+                          ),
+                  ),
                 ),
                 Positioned(
-                  child: Text('Name: $_firstName $_lastName'),
+                  top: 290,
+                  left: 0,
+                  right: 0,
+                  child: Center(
+                    child: Text(
+                      'Name: $_firstName $_lastName',
+                      style: TextStyle(
+                        fontSize: 18,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
                 ),
               ],
             ),
