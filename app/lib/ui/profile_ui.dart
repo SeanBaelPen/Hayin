@@ -102,15 +102,15 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(400.0),
+        preferredSize: const Size.fromHeight(400.0),
         child: AppBar(
           leading: IconButton(
-            icon: Icon(Icons.arrow_back_ios_outlined),
+            icon: const Icon(Icons.arrow_back_ios_outlined),
             onPressed: () {},
           ),
           flexibleSpace: Container(
             height: 430,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(17),
                 bottomRight: Radius.circular(17),
@@ -245,7 +245,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 Icons.app_registration_rounded,
                 size: 24.0,
               ),
-              label: Text(
+              label: const Text(
                 'Edit Profile Name',
               ),
             ),
@@ -279,27 +279,27 @@ class _ProfilePageState extends State<ProfilePage> {
                 Icons.email_outlined,
                 size: 24.0,
               ),
-              label: Text(
+              label: const Text(
                 'Verify Email',
               ),
             ),
             ElevatedButton.icon(
               onPressed: () {},
-              icon: Icon(
+              icon: const Icon(
                 Icons.access_time_rounded,
                 size: 24.0,
               ),
-              label: Text(
+              label: const Text(
                 'Recently Viewed',
               ),
             ),
             ElevatedButton.icon(
               onPressed: () {},
-              icon: Icon(
+              icon: const Icon(
                 Icons.favorite_border,
                 size: 24.0,
               ),
-              label: Text(
+              label: const Text(
                 'Favorites',
               ),
             ),

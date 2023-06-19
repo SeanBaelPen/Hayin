@@ -1,5 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'login_ui.dart';
 import 'package:app/ui/welcome_ui.dart';
@@ -91,7 +90,7 @@ class _SignUpPageState extends State<SignUpPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        constraints: BoxConstraints.expand(),
+        constraints: const BoxConstraints.expand(),
         decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage('assets/signUpBackground.jpg'),
@@ -123,7 +122,7 @@ class _SignUpPageState extends State<SignUpPage> {
             Row(
               children: [
                 Container(
-                  margin: EdgeInsets.only(left: 45, top: 20),
+                  margin: const EdgeInsets.only(left: 45, top: 20),
                   child: const Text(
                     'Create \nAccount',
                     style: TextStyle(
@@ -139,7 +138,7 @@ class _SignUpPageState extends State<SignUpPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  margin: EdgeInsets.only(top: 50),
+                  margin: const EdgeInsets.only(top: 50),
                   width: 345,
                   height: 443,
                   decoration: BoxDecoration(
@@ -150,7 +149,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     children: [
                       TextField(
                         controller: _emailController,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           hintText: 'Enter your email',
                         ),
                       ),
@@ -176,7 +175,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       TextField(
                         controller: _confirmPasswordController,
                         obscureText: !_passwordVisible,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           hintText: 'Confirm your password',
                         ),
                       ),
@@ -212,24 +211,24 @@ class _SignUpPageState extends State<SignUpPage> {
                       ),
                       if (_passwordError != null)
                         Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 16),
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
                           child: Text(
                             _passwordError!,
-                            style: TextStyle(color: Colors.red),
+                            style: const TextStyle(color: Colors.red),
                           ),
                         ),
                       if (_emailError != null)
                         Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 16),
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
                           child: Text(
                             _emailError!,
-                            style: TextStyle(color: Colors.red),
+                            style: const TextStyle(color: Colors.red),
                           ),
                         ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(
+                          const Text(
                             "Already have an account?",
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
@@ -244,7 +243,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                     builder: (context) => const LoginPage()),
                               );
                             },
-                            child: Text(
+                            child: const Text(
                               "Login",
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,

@@ -75,7 +75,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        constraints: BoxConstraints.expand(),
+        constraints: const BoxConstraints.expand(),
         decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage('assets/signUpBackground.jpg'),
@@ -107,7 +107,7 @@ class _LoginPageState extends State<LoginPage> {
             Row(
               children: [
                 Container(
-                  margin: EdgeInsets.only(left: 45, top: 20),
+                  margin: const EdgeInsets.only(left: 45, top: 20),
                   child: const Text(
                     'Welcome \nBack',
                     style: TextStyle(
@@ -123,7 +123,7 @@ class _LoginPageState extends State<LoginPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  margin: EdgeInsets.only(top: 50),
+                  margin: const EdgeInsets.only(top: 50),
                   width: 345,
                   height: 443,
                   color: Colors.white,
@@ -131,7 +131,7 @@ class _LoginPageState extends State<LoginPage> {
                     children: [
                       TextField(
                         controller: _emailController,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           hintText: 'Enter your email',
                         ),
                       ),
@@ -178,7 +178,7 @@ class _LoginPageState extends State<LoginPage> {
                             onTap: () async {
                               _resetPassword();
                             },
-                            child: Text(
+                            child: const Text(
                               'Forgot Password?',
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
@@ -192,26 +192,26 @@ class _LoginPageState extends State<LoginPage> {
                         visible: _success == 2,
                         child: Text(
                           'Successfully signed in $_userEmail',
-                          style: TextStyle(color: Colors.green),
+                          style: const TextStyle(color: Colors.green),
                         ),
                       ),
                       Visibility(
                         visible: _success == 4,
-                        child: Text(
+                        child: const Text(
                           'Password reset email sent successfully',
                           style: TextStyle(color: Colors.green),
                         ),
                       ),
                       Visibility(
                         visible: _success == 5,
-                        child: Text(
+                        child: const Text(
                           'Failed to send password reset email',
                           style: TextStyle(color: Colors.red),
                         ),
                       ),
                       Visibility(
                         visible: _success == 3,
-                        child: Text(
+                        child: const Text(
                           'Incorrect email or password',
                           style: TextStyle(color: Colors.red),
                         ),
