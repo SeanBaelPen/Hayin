@@ -73,6 +73,13 @@ class _ProfilePageState extends State<ProfilePage> {
       userData['_rewardPoints'] = _rewardPoints;
       // Add any other fields that need to be updated
 
+      if (_email != null) {
+        userData['email'] = _email;
+        // Send email verification link
+        await _user!.updateEmail(_email!);
+        await _user!.sendEmailVerification();
+      }
+
       await userDoc.set(userData, SetOptions(merge: true));
 
       ScaffoldMessenger.of(context).showSnackBar(
@@ -124,21 +131,6 @@ class _ProfilePageState extends State<ProfilePage> {
                 end: Alignment.bottomCenter,
               ),
             ),
-            // child: Stack(
-            //   children: [
-            //     Positioned(
-            //       child: Text('My Profile'),
-            //     ),
-            //     Positioned(
-            //       child: _profilePictureUrl != null
-            //           ? Image.network(_profilePictureUrl!)
-            //           : Image.asset('assets/profile_pic_g.png'),
-            //     ),
-            //     Positioned(
-            //       child: Text('Name: $_firstName $_lastName'),
-            //     ),
-            //   ],
-            // ),
             child: Stack(
               children: [
                 Positioned(
@@ -255,7 +247,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 showDialog(
                   context: context,
                   builder: (context) => AlertDialog(
-                    title: Text('Update Email'),
+                    title: Text('Verify Email'),
                     content: TextFormField(
                       initialValue: _email,
                       decoration: InputDecoration(labelText: 'Email'),
@@ -269,7 +261,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           Navigator.pop(context);
                           _updateUserProfile();
                         },
-                        child: Text('Save'),
+                        child: Text('Verify'),
                       ),
                     ],
                   ),
