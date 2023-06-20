@@ -1,4 +1,7 @@
 import 'package:app/ui/catalogue_format.dart';
+import 'package:app/ui/location_ui.dart';
+import 'package:app/ui/profile_ui.dart';
+import 'package:app/ui/restaurant_details.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -13,9 +16,26 @@ class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
 
   void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
+    if (index == 1) {
+      // Home page is tapped
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ProfilePage(),
+        ),
+      );
+    } else if (index == 2) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => LocationPage(),
+        ),
+      );
+    } else {
+      setState(() {
+        _selectedIndex = index;
+      });
+    }
   }
 
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -32,7 +52,7 @@ class _HomePageState extends State<HomePage> {
         child: AppBar(
           leading: IconButton(
             icon: const Icon(
-              Icons.arrow_back_ios_outlined,
+              Icons.filter_list,
               size: 50,
             ),
             onPressed: () {},
@@ -134,6 +154,15 @@ class _HomePageState extends State<HomePage> {
                       return Catalogue(
                         image: document['image'],
                         name: document['name'],
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  RestaurantDetails(), // Replace NewPage with your desired page
+                            ),
+                          );
+                        },
                       );
                     },
                   );
