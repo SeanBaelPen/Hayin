@@ -1,9 +1,9 @@
+import 'package:app/ui/profile_ui.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'login_ui.dart';
 import 'package:app/ui/welcome_ui.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -20,6 +20,8 @@ class _SignUpPageState extends State<SignUpPage> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController =
       TextEditingController();
+  final TextEditingController _firstNameController = TextEditingController();
+  final TextEditingController _lastNameController = TextEditingController();
 
   late bool _success;
   late String _userEmail;
@@ -43,7 +45,7 @@ class _SignUpPageState extends State<SignUpPage> {
       return;
     }
 
-// Create user
+    // Create user
     final User? user = (await _auth.createUserWithEmailAndPassword(
       email: _emailController.text,
       password: _passwordController.text,
@@ -56,11 +58,14 @@ class _SignUpPageState extends State<SignUpPage> {
         _userEmail = user.email!;
         _passwordError = null; // Reset the password error message
       });
-      _clearTextFields(); // Clear the text fields
-      // Add the user email to Firestore
+
+      // Add the user email, firstName, and lastName to Firestore
       FirebaseFirestore.instance.collection('users').doc(user.uid).set({
         'email': user.email,
+        'firstName': _firstNameController.text,
+        'lastName': _lastNameController.text,
       });
+      _clearTextFields(); // Clear the text fields
     } else {
       setState(() {
         _success = false;
@@ -72,6 +77,8 @@ class _SignUpPageState extends State<SignUpPage> {
     _emailController.clear();
     _passwordController.clear();
     _confirmPasswordController.clear();
+    _firstNameController.clear();
+    _lastNameController.clear();
   }
 
   bool _validateEmail(String email) {
@@ -148,6 +155,18 @@ class _SignUpPageState extends State<SignUpPage> {
                   child: Column(
                     children: [
                       TextField(
+                        controller: _firstNameController,
+                        decoration: const InputDecoration(
+                          hintText: 'Enter your first name',
+                        ),
+                      ),
+                      TextField(
+                        controller: _lastNameController,
+                        decoration: const InputDecoration(
+                          hintText: 'Enter your last name',
+                        ),
+                      ),
+                      TextField(
                         controller: _emailController,
                         decoration: const InputDecoration(
                           hintText: 'Enter your email',
@@ -203,7 +222,7 @@ class _SignUpPageState extends State<SignUpPage> {
                               child: Image.asset(
                                 'assets/signUpButton.png',
                                 width: 200,
-                                height: 200,
+                                height: 170,
                               ),
                             ),
                           ),
@@ -240,7 +259,7 @@ class _SignUpPageState extends State<SignUpPage> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => const LoginPage()),
+                                    builder: (context) => const ProfilePage()),
                               );
                             },
                             child: const Text(
