@@ -1,9 +1,12 @@
+import 'package:app/ui/location_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
+
+import 'home_ui.dart';
 
 class ProfilePage extends StatefulWidget {
   //final String? email;
@@ -101,6 +104,32 @@ class _ProfilePageState extends State<ProfilePage> {
 
       setState(() {
         _profilePictureUrl = imageUrl;
+      });
+    }
+  }
+
+  int _selectedIndex = 1;
+
+   void _onItemTapped(int index) {
+    if (index == 0) {
+      // Home page is tapped
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => HomePage(),
+        ),
+      );
+    } else if (index == 2) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => LocationPage(),
+        ),
+      );
+    }
+     else {
+      setState(() {
+        _selectedIndex = index;
       });
     }
   }
@@ -207,14 +236,16 @@ class _ProfilePageState extends State<ProfilePage> {
                       children: [
                         TextFormField(
                           initialValue: _firstName,
-                          decoration: const InputDecoration(labelText: 'First Name'),
+                          decoration:
+                              const InputDecoration(labelText: 'First Name'),
                           onChanged: (value) {
                             _firstName = value;
                           },
                         ),
                         TextFormField(
                           initialValue: _lastName,
-                          decoration: const InputDecoration(labelText: 'Last Name'),
+                          decoration:
+                              const InputDecoration(labelText: 'Last Name'),
                           onChanged: (value) {
                             _lastName = value;
                           },
@@ -297,6 +328,25 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
           ],
         ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'Profile',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person_pin_circle),
+            label: 'Location',
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: Colors.blue,
+        onTap: _onItemTapped,
       ),
     );
   }
