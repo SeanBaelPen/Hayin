@@ -1,6 +1,6 @@
 import 'package:app/ui/catalogue_format.dart';
-import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -120,14 +120,14 @@ class _HomePageState extends State<HomePage> {
                 builder: (BuildContext context,
                     AsyncSnapshot<QuerySnapshot> snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return CircularProgressIndicator();
+                    return const CircularProgressIndicator();
                   }
                   if (snapshot.hasError) {
                     return Text('Error: ${snapshot.error}');
                   }
                   return ListView.builder(
                     shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
+                    physics: const NeverScrollableScrollPhysics(),
                     itemCount: snapshot.data!.docs.length,
                     itemBuilder: (BuildContext context, int index) {
                       DocumentSnapshot document = snapshot.data!.docs[index];
