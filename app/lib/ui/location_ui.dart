@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'package:app/ui/home_ui.dart';
+import 'package:app/ui/profile_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:geolocator/geolocator.dart';
@@ -20,13 +22,13 @@ class _LocationPageState extends State<LocationPage> {
   Position? userLocation;
 
   final List<Marker> _markers = <Marker>[
-    const Marker(
-      markerId: MarkerId('1'),
-      position: sourceLocation,
-      infoWindow: InfoWindow(
-        title: 'My Position',
-      ),
-    ),
+    // const Marker(
+    //   markerId: MarkerId('1'),
+    //   position: sourceLocation,
+    //   infoWindow: InfoWindow(
+    //     title: 'My Position',
+    //   ),
+    // ),
   ];
 
   List<LatLng> polyLineCoordinates = [];
@@ -54,6 +56,7 @@ class _LocationPageState extends State<LocationPage> {
       setState(() {
         userLocation = position;
         checkArrival();
+        updateLocationMarker();
       });
     }, onError: (error) {
       print(error);
@@ -63,6 +66,7 @@ class _LocationPageState extends State<LocationPage> {
       setState(() {
         userLocation = position;
         checkArrival();
+        updateLocationMarker();
       });
     });
   }
@@ -119,12 +123,54 @@ class _LocationPageState extends State<LocationPage> {
     }
   }
 
+  void updateLocationMarker() {
+    _markers.clear();
+    if (userLocation != null) {
+      _markers.add(
+        Marker(
+          markerId: const MarkerId('1'),
+          position: LatLng(userLocation!.latitude, userLocation!.longitude),
+          infoWindow: const InfoWindow(
+            title: 'My Position',
+          ),
+        ),
+      );
+    }
+    _markers.add(
+      Marker(
+        markerId: const MarkerId('2'),
+        position: sourceLocation,
+        infoWindow: const InfoWindow(
+          title: 'Pizza Dragon',
+        ),
+      ),
+    );
+  }
+
   int _selectedIndex = 2;
 
   void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
+    if (index == 0) {
+      // Home page is tapped
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => HomePage(),
+        ),
+      );
+    } else if (index == 1) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ProfilePage(),
+        ),
+      );
+    }
+     else {
+      setState(() {
+        _selectedIndex = index;
+      });
+    }
   }
 
   @override
