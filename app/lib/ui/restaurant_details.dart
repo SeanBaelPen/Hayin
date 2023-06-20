@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class RestaurantDetails extends StatelessWidget {
-  const RestaurantDetails({required this.image, super.key});
-
-  final String image;
+  const RestaurantDetails({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +13,7 @@ class RestaurantDetails extends StatelessWidget {
             expandedHeight: 200,
             flexibleSpace: FlexibleSpaceBar(
               background: Image.asset(
-                image,
+                'assets/Infinitea-Franchise.jpg',
                 fit: BoxFit.cover,
               ),
             ),
