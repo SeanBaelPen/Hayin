@@ -17,9 +17,41 @@ class RestaurantDetails extends StatelessWidget {
                 fit: BoxFit.cover,
               ),
             ),
-            leading: CircleAvatar(
-              backgroundColor: Colors.white,
-              child: SvgPicture.asset('assets/icons/back.svg'),
+            leading: Padding(
+              padding: const EdgeInsets.only(left: 16),
+              child: CircleAvatar(
+                backgroundColor: Colors.white,
+                child: Icon(Icons.arrow_back_ios),
+              ),
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: EdgeInsets.only(left: 15, top: 10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Infinitea',
+                    style: TextStyle(
+                        fontSize: 27,
+                        fontFamily: 'Montserrat',
+                        fontWeight: FontWeight.w500),
+                  ),
+                  Text(
+                    '100-200 · Desserts, Drinks, Pastries',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontFamily: 'Montserrat',
+                    ),
+                  ),
+                  Text('200+ ratings'),
+                  ElevatedButton(
+                    onPressed: () {},
+                    child: Text('Get Location'),
+                  ),
+                ],
+              ),
             ),
           ),
         ],
