@@ -15,12 +15,12 @@ class LocationPage extends StatefulWidget {
 
 class _LocationPageState extends State<LocationPage> {
   String apiKey = 'AIzaSyCdd21sfB3sTEaDQUF5PnSdag-396fNq6Y';
-  Completer<GoogleMapController> _controller = Completer();
+  final Completer<GoogleMapController> _controller = Completer();
   StreamSubscription<Position>? _positionStream;
   Position? userLocation;
 
   final List<Marker> _markers = <Marker>[
-    Marker(
+    const Marker(
       markerId: MarkerId('1'),
       position: sourceLocation,
       infoWindow: InfoWindow(
@@ -45,7 +45,7 @@ class _LocationPageState extends State<LocationPage> {
   }
 
   void _startTracking() {
-    final locationOptions =
+    const locationOptions =
         LocationSettings(accuracy: LocationAccuracy.high, distanceFilter: 10);
 
     _positionStream =
@@ -78,11 +78,11 @@ class _LocationPageState extends State<LocationPage> {
       );
 
       if (result.points.isNotEmpty) {
-        result.points.forEach(
-          (PointLatLng point) => polyLineCoordinates.add(
+        for (var point in result.points) {
+          polyLineCoordinates.add(
             LatLng(point.latitude, point.longitude),
-          ),
-        );
+          );
+        }
         setState(() {});
       }
     });
@@ -102,14 +102,14 @@ class _LocationPageState extends State<LocationPage> {
           context: context,
           builder: (context) {
             return AlertDialog(
-              title: Text('You have arrived!'),
-              content: Text('You have reached your destination.'),
+              title: const Text('You have arrived!'),
+              content: const Text('You have reached your destination.'),
               actions: [
                 TextButton(
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
-                  child: Text('OK'),
+                  child: const Text('OK'),
                 ),
               ],
             );
@@ -135,13 +135,13 @@ class _LocationPageState extends State<LocationPage> {
           child: Stack(
             children: [
               GoogleMap(
-                initialCameraPosition: CameraPosition(
+                initialCameraPosition: const CameraPosition(
                   target: sourceLocation,
                   zoom: 14,
                 ),
                 polylines: {
                   Polyline(
-                    polylineId: PolylineId("route"),
+                    polylineId: const PolylineId("route"),
                     points: polyLineCoordinates,
                     color: Colors.blue,
                     width: 5,
@@ -174,7 +174,7 @@ class _LocationPageState extends State<LocationPage> {
                       }) as GoogleMapController;
                     }
                   },
-                  child: Icon(Icons.location_on),
+                  child: const Icon(Icons.location_on),
                 ),
               )
             ],
