@@ -22,7 +22,7 @@ class Catalogue extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
+              SizedBox(
                 width: double.infinity,
                 height: 145,
                 child: Container(
@@ -40,7 +40,7 @@ class Catalogue extends StatelessWidget {
                     children: [
                       Text(
                         name,
-                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                        style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                         overflow: TextOverflow.ellipsis,
                       ),
                       // Text(
