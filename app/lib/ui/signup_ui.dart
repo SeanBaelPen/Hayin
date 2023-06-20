@@ -45,7 +45,7 @@ class _SignUpPageState extends State<SignUpPage> {
       return;
     }
 
-// Create user
+    // Create user
     final User? user = (await _auth.createUserWithEmailAndPassword(
       email: _emailController.text,
       password: _passwordController.text,
@@ -58,13 +58,14 @@ class _SignUpPageState extends State<SignUpPage> {
         _userEmail = user.email!;
         _passwordError = null; // Reset the password error message
       });
-      _clearTextFields(); // Clear the text fields
-      // Add the user email to Firestore
+
+      // Add the user email, firstName, and lastName to Firestore
       FirebaseFirestore.instance.collection('users').doc(user.uid).set({
         'email': user.email,
         'firstName': _firstNameController.text,
         'lastName': _lastNameController.text,
       });
+      _clearTextFields(); // Clear the text fields
     } else {
       setState(() {
         _success = false;
