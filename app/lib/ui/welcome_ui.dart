@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'login_ui.dart';
 
 class WelcomePage extends StatelessWidget {
-  const WelcomePage({Key? key});
+  const WelcomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
