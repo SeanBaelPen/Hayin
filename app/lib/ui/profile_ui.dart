@@ -64,7 +64,7 @@ class _ProfilePageState extends State<ProfilePage> {
   Future<void> _updateUserProfile() async {
     final userDoc =
         FirebaseFirestore.instance.collection('users').doc(_user!.uid);
-    final userData = (await userDoc.get()).data() as Map<String, dynamic>?;
+    final userData = (await userDoc.get()).data();
 
     if (userData != null) {
       userData['firstName'] = _firstName;
@@ -83,7 +83,7 @@ class _ProfilePageState extends State<ProfilePage> {
       await userDoc.set(userData, SetOptions(merge: true));
 
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Profile updated successfully')),
+        const SnackBar(content: Text('Profile updated successfully')),
       );
       await _loadUserData(); // Fetch the latest data after updating
     }
@@ -133,7 +133,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
             child: Stack(
               children: [
-                Positioned(
+                const Positioned(
                   top: 45,
                   left: 0,
                   right: 0,
@@ -169,7 +169,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   child: Center(
                     child: Text(
                       'Name: $_firstName $_lastName',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 18,
                         color: Colors.white,
                       ),
@@ -187,11 +187,11 @@ class _ProfilePageState extends State<ProfilePage> {
           children: [
             ElevatedButton.icon(
               onPressed: _updateProfilePicture,
-              icon: Icon(
+              icon: const Icon(
                 Icons.camera_alt_outlined,
                 size: 50.0,
               ),
-              label: Text(
+              label: const Text(
                 'Edit Profile Picture',
               ),
             ),
@@ -201,20 +201,20 @@ class _ProfilePageState extends State<ProfilePage> {
                 showDialog(
                   context: context,
                   builder: (context) => AlertDialog(
-                    title: Text('Update Name'),
+                    title: const Text('Update Name'),
                     content: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         TextFormField(
                           initialValue: _firstName,
-                          decoration: InputDecoration(labelText: 'First Name'),
+                          decoration: const InputDecoration(labelText: 'First Name'),
                           onChanged: (value) {
                             _firstName = value;
                           },
                         ),
                         TextFormField(
                           initialValue: _lastName,
-                          decoration: InputDecoration(labelText: 'Last Name'),
+                          decoration: const InputDecoration(labelText: 'Last Name'),
                           onChanged: (value) {
                             _lastName = value;
                           },
@@ -227,13 +227,13 @@ class _ProfilePageState extends State<ProfilePage> {
                           Navigator.pop(context);
                           _updateUserProfile();
                         },
-                        child: Text('Save'),
+                        child: const Text('Save'),
                       ),
                     ],
                   ),
                 );
               },
-              icon: Icon(
+              icon: const Icon(
                 Icons.app_registration_rounded,
                 size: 24.0,
               ),
@@ -247,10 +247,10 @@ class _ProfilePageState extends State<ProfilePage> {
                 showDialog(
                   context: context,
                   builder: (context) => AlertDialog(
-                    title: Text('Verify Email'),
+                    title: const Text('Verify Email'),
                     content: TextFormField(
                       initialValue: _email,
-                      decoration: InputDecoration(labelText: 'Email'),
+                      decoration: const InputDecoration(labelText: 'Email'),
                       onChanged: (value) {
                         _email = value;
                       },
@@ -261,13 +261,13 @@ class _ProfilePageState extends State<ProfilePage> {
                           Navigator.pop(context);
                           _updateUserProfile();
                         },
-                        child: Text('Verify'),
+                        child: const Text('Verify'),
                       ),
                     ],
                   ),
                 );
               },
-              icon: Icon(
+              icon: const Icon(
                 Icons.email_outlined,
                 size: 24.0,
               ),
