@@ -108,7 +108,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   int _selectedIndex = 1;
 
-   void _onItemTapped(int index) {
+  void _onItemTapped(int index) {
     if (index == 0) {
       // Home page is tapped
       Navigator.pushReplacement(
@@ -124,8 +124,7 @@ class _ProfilePageState extends State<ProfilePage> {
           builder: (context) => LocationPage(),
         ),
       );
-    }
-     else {
+    } else {
       setState(() {
         _selectedIndex = index;
       });
@@ -211,10 +210,10 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
       body: Column(
         children: [
-          SizedBox(height: 5),
+          SizedBox(height: 7),
           SizedBox(
             width: double.infinity,
-            height: 60,
+            height: 55,
             child: ElevatedButton(
               onPressed: _updateProfilePicture,
               style: ElevatedButton.styleFrom(
@@ -244,10 +243,10 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
             ),
           ),
-          SizedBox(height: 5),
+          SizedBox(height: 7),
           SizedBox(
             width: double.infinity,
-            height: 60,
+            height: 55,
             child: ElevatedButton(
               onPressed: () {
                 // Show a dialog to update first name and last name
@@ -315,10 +314,10 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
             ),
           ),
-          SizedBox(height: 5),
+          SizedBox(height: 7),
           SizedBox(
             width: double.infinity,
-            height: 60,
+            height: 55,
             child: ElevatedButton(
               onPressed: () {
                 //Show a dialog to verify email
@@ -383,10 +382,10 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
             ),
           ),
-          SizedBox(height: 5),
+          SizedBox(height: 7),
           SizedBox(
             width: double.infinity,
-            height: 60,
+            height: 55,
             child: ElevatedButton(
               onPressed: () {},
               style: ElevatedButton.styleFrom(
@@ -417,10 +416,10 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
             ),
           ),
-          SizedBox(height: 5),
+          SizedBox(height: 7),
           SizedBox(
             width: double.infinity,
-            height: 60,
+            height: 55,
             child: ElevatedButton(
               onPressed: () {},
               style: ElevatedButton.styleFrom(
@@ -448,7 +447,7 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
             ),
           ),
-          SizedBox(height: 5),
+          SizedBox(height: 7),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
