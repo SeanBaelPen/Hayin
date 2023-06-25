@@ -6,8 +6,6 @@ import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
 class ProfilePage extends StatefulWidget {
-  //final String? email;
-
   const ProfilePage({Key? key}) : super(key: key);
 
   get email => null;
@@ -67,11 +65,11 @@ class _ProfilePageState extends State<ProfilePage> {
     final userData = (await userDoc.get()).data();
 
     if (userData != null) {
+      // fields that need to be updated
       userData['firstName'] = _firstName;
       userData['lastName'] = _lastName;
       userData['profilePictureUrl'] = _profilePictureUrl;
       userData['_rewardPoints'] = _rewardPoints;
-      // Add any other fields that need to be updated
 
       if (_email != null) {
         userData['email'] = _email;
@@ -182,20 +180,46 @@ class _ProfilePageState extends State<ProfilePage> {
           backgroundColor: Colors.transparent,
         ),
       ),
-      body: Container(
-        child: Column(
-          children: [
-            ElevatedButton.icon(
+      body: Column(
+        children: [
+          SizedBox(height: 5),
+          SizedBox(
+            width: double.infinity,
+            height: 60,
+            child: ElevatedButton(
               onPressed: _updateProfilePicture,
-              icon: const Icon(
-                Icons.camera_alt_outlined,
-                size: 50.0,
+              style: ElevatedButton.styleFrom(
+                padding: EdgeInsets.zero,
+                primary: Colors.white,
+                onPrimary: Colors.black,
+                elevation: 2,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
               ),
-              label: const Text(
-                'Edit Profile Picture',
+              child: Row(
+                children: const [
+                  SizedBox(width: 24),
+                  Icon(
+                    Icons.camera_alt_outlined,
+                    size: 40.0,
+                  ),
+                  SizedBox(width: 20),
+                  Text(
+                    'Edit Profile Picture',
+                    style: TextStyle(
+                      fontSize: 18,
+                    ),
+                  ),
+                ],
               ),
             ),
-            ElevatedButton.icon(
+          ),
+          SizedBox(height: 5),
+          SizedBox(
+            width: double.infinity,
+            height: 60,
+            child: ElevatedButton(
               onPressed: () {
                 // Show a dialog to update first name and last name
                 showDialog(
@@ -207,14 +231,16 @@ class _ProfilePageState extends State<ProfilePage> {
                       children: [
                         TextFormField(
                           initialValue: _firstName,
-                          decoration: const InputDecoration(labelText: 'First Name'),
+                          decoration:
+                              const InputDecoration(labelText: 'First Name'),
                           onChanged: (value) {
                             _firstName = value;
                           },
                         ),
                         TextFormField(
                           initialValue: _lastName,
-                          decoration: const InputDecoration(labelText: 'Last Name'),
+                          decoration:
+                              const InputDecoration(labelText: 'Last Name'),
                           onChanged: (value) {
                             _lastName = value;
                           },
@@ -233,21 +259,55 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                 );
               },
-              icon: const Icon(
-                Icons.app_registration_rounded,
-                size: 24.0,
+              style: ElevatedButton.styleFrom(
+                padding: EdgeInsets.zero,
+                primary: Colors.white,
+                onPrimary: Colors.black,
+                elevation: 2,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
               ),
-              label: const Text(
-                'Edit Profile Name',
+              child: Row(
+                children: const [
+                  SizedBox(width: 24),
+                  Icon(
+                    Icons.app_registration_rounded,
+                    size: 40.0,
+                  ),
+                  SizedBox(width: 20),
+                  Text(
+                    'Edit Profile Name',
+                    style: TextStyle(
+                      fontSize: 18,
+                    ),
+                  ),
+                ],
               ),
             ),
-            ElevatedButton.icon(
+          ),
+          SizedBox(height: 5),
+          SizedBox(
+            width: double.infinity,
+            height: 60,
+            child: ElevatedButton(
               onPressed: () {
-                // Show a dialog to update email
+                //Show a dialog to verify email
                 showDialog(
                   context: context,
                   builder: (context) => AlertDialog(
-                    title: const Text('Verify Email'),
+                    title: Row(
+                      children: [
+                        IconButton(
+                          icon: const Icon(Icons.close),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                        ),
+                        const SizedBox(width: 8),
+                        const Text('Verify Email'),
+                      ],
+                    ),
                     content: TextFormField(
                       initialValue: _email,
                       decoration: const InputDecoration(labelText: 'Email'),
@@ -267,36 +327,100 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                 );
               },
-              icon: const Icon(
-                Icons.email_outlined,
-                size: 24.0,
+              style: ElevatedButton.styleFrom(
+                padding: EdgeInsets.zero,
+                primary: Colors.white,
+                onPrimary: Colors.black,
+                elevation: 2,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
               ),
-              label: const Text(
-                'Verify Email',
+              child: Row(
+                children: const [
+                  SizedBox(width: 24),
+                  Icon(
+                    Icons.email_outlined,
+                    size: 40.0,
+                  ),
+                  SizedBox(width: 20),
+                  Text(
+                    'Verify Email',
+                    style: TextStyle(
+                      fontSize: 18,
+                    ),
+                  ),
+                ],
               ),
             ),
-            ElevatedButton.icon(
+          ),
+          SizedBox(height: 5),
+          SizedBox(
+            width: double.infinity,
+            height: 60,
+            child: ElevatedButton(
               onPressed: () {},
-              icon: const Icon(
-                Icons.access_time_rounded,
-                size: 24.0,
+              style: ElevatedButton.styleFrom(
+                padding: EdgeInsets.zero,
+                primary: Colors.white,
+                onPrimary: Colors.black,
+                elevation: 2,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
               ),
-              label: const Text(
-                'Recently Viewed',
+              child: Row(
+                children: const [
+                  SizedBox(width: 24),
+                  Icon(
+                    Icons.access_time_rounded,
+                    size: 40.0,
+                  ),
+                  SizedBox(width: 20),
+                  Text(
+                    'Recently Viewed',
+                    style: TextStyle(
+                      fontSize:
+                          18, // Adjust the font size as per your requirement
+                    ),
+                  ),
+                ],
               ),
             ),
-            ElevatedButton.icon(
+          ),
+          SizedBox(height: 5),
+          SizedBox(
+            width: double.infinity,
+            height: 60,
+            child: ElevatedButton(
               onPressed: () {},
-              icon: const Icon(
-                Icons.favorite_border,
-                size: 24.0,
+              style: ElevatedButton.styleFrom(
+                padding: EdgeInsets.zero,
+                primary: Colors.white,
+                onPrimary: Colors.black,
+                elevation: 2,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
               ),
-              label: const Text(
-                'Favorites',
+              child: Row(
+                children: const [
+                  SizedBox(width: 24),
+                  Icon(
+                    Icons.favorite_border,
+                    size: 40.0,
+                  ),
+                  SizedBox(width: 20),
+                  Text('Favorites',
+                      style: TextStyle(
+                        fontSize: 18,
+                      )),
+                ],
               ),
             ),
-          ],
-        ),
+          ),
+          SizedBox(height: 5),
+        ],
       ),
     );
   }
