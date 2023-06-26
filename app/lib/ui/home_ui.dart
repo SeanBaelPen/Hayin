@@ -12,8 +12,22 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage>
+    with SingleTickerProviderStateMixin {
+  late TabController _tabController;
   int _selectedIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 2, vsync: this);
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
 
   void _onItemTapped(int index) {
     if (index == 1) {
@@ -42,6 +56,10 @@ class _HomePageState extends State<HomePage> {
 
   Stream<QuerySnapshot> getCollectionStream() {
     return firestore.collection('restaurants').snapshots();
+  }
+
+  Stream<QuerySnapshot> getFoodStallsStream() {
+    return firestore.collection('foodStalls').snapshots();
   }
 
   @override
@@ -117,8 +135,9 @@ class _HomePageState extends State<HomePage> {
           backgroundColor: Colors.transparent,
         ),
       ),
-      body: SingleChildScrollView(
-        child: Container(
+      body: Container(
+        child: DefaultTabController(
+          length: 2,
           child: Column(
             children: [
               Container(
@@ -130,43 +149,144 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
               ),
-              const Text(
-                'Popular Resturants',
-                textAlign: TextAlign.start,
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              TabBar(
+                controller: _tabController,
+                tabs: const [
+                  Tab(
+                    child: Text(
+                      'Restaurants',
+                      style: TextStyle(
+                        fontFamily: 'Monserrat',
+                        fontSize: 20,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                  Tab(
+                    child: Text(
+                      'Food Stalls',
+                      style: TextStyle(
+                        fontFamily: 'Monserrat',
+                        fontSize: 20,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                ],
               ),
-              StreamBuilder<QuerySnapshot>(
-                stream: getCollectionStream(),
-                builder: (BuildContext context,
-                    AsyncSnapshot<QuerySnapshot> snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const CircularProgressIndicator();
-                  }
-                  if (snapshot.hasError) {
-                    return Text('Error: ${snapshot.error}');
-                  }
-                  return ListView.builder(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: snapshot.data!.docs.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      DocumentSnapshot document = snapshot.data!.docs[index];
-                      return Catalogue(
-                        image: document['image'],
-                        name: document['name'],
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  RestaurantDetails(), // Replace NewPage with your desired page
-                            ),
+              // const Text(
+              //   'Popular Resturants',
+              //   textAlign: TextAlign.start,
+              //   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              // ),
+              // StreamBuilder<QuerySnapshot>(
+              //   stream: getCollectionStream(),
+              //   builder: (BuildContext context,
+              //       AsyncSnapshot<QuerySnapshot> snapshot) {
+              //     if (snapshot.connectionState == ConnectionState.waiting) {
+              //       return const CircularProgressIndicator();
+              //     }
+              //     if (snapshot.hasError) {
+              //       return Text('Error: ${snapshot.error}');
+              //     }
+              //     return ListView.builder(
+              //       shrinkWrap: true,
+              //       physics: const NeverScrollableScrollPhysics(),
+              //       itemCount: snapshot.data!.docs.length,
+              //       itemBuilder: (BuildContext context, int index) {
+              //         DocumentSnapshot document = snapshot.data!.docs[index];
+              //         return Catalogue(
+              //           image: document['image'],
+              //           name: document['name'],
+              //           onTap: () {
+              //             Navigator.push(
+              //               context,
+              //               MaterialPageRoute(
+              //                 builder: (context) =>
+              //                     RestaurantDetails(), // Replace NewPage with your desired page
+              //               ),
+              //             );
+              //           },
+              //         );
+              //       },
+              //     );
+              //   },
+              // ),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 13.0, left: 5, right: 5),
+                  child: TabBarView(
+                    controller: _tabController,
+                    children: [
+                      StreamBuilder<QuerySnapshot>(
+                        stream: getCollectionStream(),
+                        builder: (BuildContext context,
+                            AsyncSnapshot<QuerySnapshot> snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const CircularProgressIndicator();
+                          }
+                          if (snapshot.hasError) {
+                            return Text('Error: ${snapshot.error}');
+                          }
+                          return ListView.builder(
+                            itemCount: snapshot.data!.docs.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              DocumentSnapshot document =
+                                  snapshot.data!.docs[index];
+                              return Catalogue(
+                                image: document['image'],
+                                name: document['name'],
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          RestaurantDetails(), // Replace NewPage with your desired page
+                                    ),
+                                  );
+                                },
+                              );
+                            },
                           );
                         },
-                      );
-                    },
-                  );
-                },
+                      ),
+                      StreamBuilder<QuerySnapshot>(
+                        stream: getFoodStallsStream(),
+                        builder: (BuildContext context,
+                            AsyncSnapshot<QuerySnapshot> snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const CircularProgressIndicator();
+                          }
+                          if (snapshot.hasError) {
+                            return Text('Error: ${snapshot.error}');
+                          }
+                          return ListView.builder(
+                            itemCount: snapshot.data!.docs.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              DocumentSnapshot document =
+                                  snapshot.data!.docs[index];
+                              return Catalogue(
+                                image: document['image'],
+                                name: document['name'],
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          RestaurantDetails(), // Replace NewPage with your desired page
+                                    ),
+                                  );
+                                },
+                              );
+                            },
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ],
           ),
