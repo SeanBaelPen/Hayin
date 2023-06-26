@@ -22,9 +22,11 @@ class RestaurantDetails extends StatelessWidget {
               ),
             ),
             leading: Padding(
-              padding: const EdgeInsets.all(10),
+              padding: const EdgeInsets.only(left: 15),
               child: GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  Navigator.of(context).pop();
+                },
                 child: Container(
                   width: 40,
                   height: 40,
