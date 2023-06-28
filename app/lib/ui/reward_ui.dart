@@ -106,7 +106,7 @@ class _RewardPageState extends State<RewardPage> {
                     ],
                   ),
                 ),
-                SizedBox(height: 25),
+                SizedBox(height: 18),
                 Container(
                   child: Stack(
                     alignment: Alignment.center,
@@ -134,11 +134,11 @@ class _RewardPageState extends State<RewardPage> {
                       ),
                       Positioned(
                         bottom: 90,
-                        left: 20,
+                        left: 25,
                         child: Row(
                           children: [
                             Image.asset(
-                              'assets/shopping_bag.png',
+                              'assets/orange_star.png',
                               width: 30,
                               height: 30,
                             ),
@@ -155,7 +155,7 @@ class _RewardPageState extends State<RewardPage> {
                       ),
                       Positioned(
                         bottom: 50,
-                        left: 20,
+                        left: 25,
                         child: Row(
                           children: [
                             Image.asset(
@@ -176,7 +176,7 @@ class _RewardPageState extends State<RewardPage> {
                       ),
                       Positioned(
                         bottom: 10,
-                        left: 20,
+                        left: 25,
                         child: Row(
                           children: [
                             Image.asset(
@@ -193,6 +193,130 @@ class _RewardPageState extends State<RewardPage> {
                               ),
                             ),
                           ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 15),
+                const Text(
+                  'Redeem your points',
+                  style: TextStyle(
+                    fontSize: 23,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: 10),
+                Container(
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 16),
+                        child: Image.asset(
+                          'assets/redeemPts1.png',
+                        ),
+                      ),
+                      Positioned(
+                        left: 17,
+                        child: Image.asset(
+                          'assets/redeemPts2.png',
+                        ),
+                      ),
+                      Positioned(
+                        left: 25,
+                        child: Image.asset(
+                          'assets/pizzaDragon.png',
+                          width: 100,
+                        ),
+                      ),
+                      const Positioned(
+                        left: 180,
+                        child: Text(
+                          'Pizza Dragon',
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 10),
+                Container(
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 16),
+                        child: Image.asset(
+                          'assets/redeemPts1.png',
+                        ),
+                      ),
+                      Positioned(
+                        left: 17,
+                        child: Image.asset(
+                          'assets/redeemPts2.png',
+                        ),
+                      ),
+                      Positioned(
+                        top: .1,
+                        left: 25,
+                        child: Image.asset(
+                          'assets/jakeu_cafe_logo.png',
+                          width: 100,
+                        ),
+                      ),
+                      const Positioned(
+                        left: 185,
+                        child: Text(
+                          'Jakeu Cafe',
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 10),
+                Container(
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 16),
+                        child: Image.asset(
+                          'assets/redeemPts1.png',
+                        ),
+                      ),
+                      Positioned(
+                        left: 17,
+                        child: Image.asset(
+                          'assets/redeemPts2.png',
+                        ),
+                      ),
+                      Positioned(
+                        left: 25,
+                        child: Image.asset(
+                          'assets/master_buffalo_logo.png',
+                          width: 100,
+                        ),
+                      ),
+                      const Positioned(
+                        left: 170,
+                        child: Text(
+                          'Master Buffalo',
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ],
