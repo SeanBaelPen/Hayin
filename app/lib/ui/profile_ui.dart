@@ -408,8 +408,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   Text(
                     'Recently Viewed',
                     style: TextStyle(
-                      fontSize:
-                          18, // Adjust the font size as per your requirement
+                      fontSize: 18,
                     ),
                   ),
                 ],
