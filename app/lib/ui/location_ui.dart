@@ -143,7 +143,7 @@ class _LocationPageState extends State<LocationPage> {
         infoWindow: const InfoWindow(
           title: 'Pizza Dragon',
         ),
-      ),
+      ), 
     );
   }
 
