@@ -1,7 +1,10 @@
 import 'dart:async';
+import 'dart:typed_data';
 import 'package:app/ui/home_ui.dart';
 import 'package:app/ui/profile_ui.dart';
+import 'package:app/ui/reward_ui.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -9,7 +12,11 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 const LatLng sourceLocation = LatLng(14.599824160787243, 121.0125234295981);
 
 class LocationPage extends StatefulWidget {
-  const LocationPage({super.key});
+  final LatLng destination;
+  const LocationPage({
+    super.key,
+    required this.destination,
+  });
 
   @override
   State<LocationPage> createState() => _LocationPageState();
@@ -21,15 +28,7 @@ class _LocationPageState extends State<LocationPage> {
   StreamSubscription<Position>? _positionStream;
   Position? userLocation;
 
-  final List<Marker> _markers = <Marker>[
-    // const Marker(
-    //   markerId: MarkerId('1'),
-    //   position: sourceLocation,
-    //   infoWindow: InfoWindow(
-    //     title: 'My Position',
-    //   ),
-    // ),
-  ];
+  final List<Marker> _markers = <Marker>[];
 
   List<LatLng> polyLineCoordinates = [];
 
@@ -77,7 +76,7 @@ class _LocationPageState extends State<LocationPage> {
     Geolocator.getCurrentPosition().then((value) async {
       PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
         apiKey,
-        PointLatLng(sourceLocation.latitude, sourceLocation.longitude),
+        PointLatLng(widget.destination.latitude, widget.destination.longitude),
         PointLatLng(value.latitude, value.longitude),
       );
 
@@ -97,8 +96,8 @@ class _LocationPageState extends State<LocationPage> {
       final double distanceToDestination = Geolocator.distanceBetween(
         userLocation!.latitude,
         userLocation!.longitude,
-        sourceLocation.latitude,
-        sourceLocation.longitude,
+        widget.destination.latitude,
+        widget.destination.longitude,
       );
 
       if (distanceToDestination <= 10) {
@@ -141,9 +140,45 @@ class _LocationPageState extends State<LocationPage> {
         markerId: const MarkerId('2'),
         position: sourceLocation,
         infoWindow: const InfoWindow(
+          title: 'Kiosk Stuffed Sizzling House',
+        ),
+      ),
+    );
+    _markers.add(
+      Marker(
+        markerId: const MarkerId('3'),
+        position: LatLng(14.599674023129621, 121.01244949899714),
+        infoWindow: const InfoWindow(
+          title: 'Doña Teresa',
+        ),
+      ),
+    );
+    _markers.add(
+      Marker(
+        markerId: const MarkerId('4'),
+        position: LatLng(14.59995775278342, 121.01258723128379),
+        infoWindow: const InfoWindow(
+          title: 'Takoyakiks',
+        ),
+      ),
+    );
+    _markers.add(
+      Marker(
+        markerId: const MarkerId('5'),
+        position: LatLng(14.600039967103752, 121.01251345185655),
+        infoWindow: const InfoWindow(
+          title: 'The Coffee Realm',
+        ),
+      ),
+    );
+    _markers.add(
+      Marker(
+        markerId: const MarkerId('6'),
+        position: LatLng(14.599400196778275, 121.01193926805622),
+        infoWindow: const InfoWindow(
           title: 'Pizza Dragon',
         ),
-      ), 
+      ),
     );
   }
 
@@ -165,8 +200,14 @@ class _LocationPageState extends State<LocationPage> {
           builder: (context) => ProfilePage(),
         ),
       );
-    }
-     else {
+    } else if (index == 3) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => RewardPage(),
+        ),
+      );
+    } else {
       setState(() {
         _selectedIndex = index;
       });
@@ -241,8 +282,13 @@ class _LocationPageState extends State<LocationPage> {
             icon: Icon(Icons.person_pin_circle),
             label: 'Location',
           ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.star_border_outlined),
+            label: 'Rewards',
+          ),
         ],
         currentIndex: _selectedIndex,
+        unselectedItemColor: Colors.grey,
         selectedItemColor: Colors.blue,
         onTap: _onItemTapped,
       ),
