@@ -1,8 +1,11 @@
 import 'package:app/ui/location_ui.dart';
+import 'package:app/ui/reward_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
@@ -24,10 +27,12 @@ class _ProfilePageState extends State<ProfilePage> {
   String? _email;
   int? _rewardPoints;
   String? _profilePictureUrl;
+  Position? userLocation;
 
   @override
   void initState() {
     super.initState();
+    _getCurrentLocation();
     _user = FirebaseAuth.instance.currentUser;
     if (_user != null) {
       _loadUserProfile();
@@ -106,6 +111,15 @@ class _ProfilePageState extends State<ProfilePage> {
     }
   }
 
+  Future<void> _getCurrentLocation() async {
+    Position position = await Geolocator.getCurrentPosition(
+      desiredAccuracy: LocationAccuracy.high,
+    );
+    setState(() {
+      userLocation = position;
+    });
+  }
+
   int _selectedIndex = 1;
 
   void _onItemTapped(int index) {
@@ -118,10 +132,22 @@ class _ProfilePageState extends State<ProfilePage> {
         ),
       );
     } else if (index == 2) {
+      if (userLocation != null) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => LocationPage(
+              destination:
+                  LatLng(userLocation!.latitude, userLocation!.longitude),
+            ),
+          ),
+        );
+      }
+    } else if (index == 3) {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => LocationPage(),
+          builder: (context) => RewardPage(),
         ),
       );
     } else {
@@ -463,8 +489,13 @@ class _ProfilePageState extends State<ProfilePage> {
             icon: Icon(Icons.person_pin_circle),
             label: 'Location',
           ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.star_border_outlined),
+            label: 'Rewards',
+          ),
         ],
         currentIndex: _selectedIndex,
+        unselectedItemColor: Colors.grey,
         selectedItemColor: Colors.blue,
         onTap: _onItemTapped,
       ),
