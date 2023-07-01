@@ -1,12 +1,55 @@
 import 'package:app/ui/location_ui.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-import '../MenuCards/pizza_dragon_menu.dart';
-import '../MenuModel/pizza_dragon.dart';
+import '../MenuCards/menu_card.dart';
+import '../MenuModel/menu_model.dart';
 
-class RestaurantDetails extends StatelessWidget {
+class RestaurantDetails extends StatefulWidget {
   const RestaurantDetails({super.key});
+
+  @override
+  State<RestaurantDetails> createState() => _RestaurantDetailsState();
+}
+
+class _RestaurantDetailsState extends State<RestaurantDetails> {
+  double? destinationLatitude;
+  double? destinationLongitude;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchDestinationCoordinates();
+  }
+
+  Future<void> fetchDestinationCoordinates() async {
+    DocumentSnapshot snapshot = await FirebaseFirestore.instance
+        .collection('restaurants')
+        .doc('RyLBEVoG3jjegqxfSqXY')
+        .get();
+
+    if (snapshot.exists) {
+      GeoPoint destinationLocation = snapshot['destinationLocation'];
+      setState(() {
+        destinationLatitude = destinationLocation.latitude;
+        destinationLongitude = destinationLocation.longitude;
+      });
+    }
+  }
+
+  void navigateToLocationPage() {
+    if (destinationLatitude != null && destinationLongitude != null) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => LocationPage(
+            destination: LatLng(destinationLatitude!, destinationLongitude!),
+          ),
+        ),
+      );
+    } else {}
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -64,14 +107,7 @@ class RestaurantDetails extends StatelessWidget {
                   ),
                   Text('200+ ratings'),
                   ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => LocationPage(),
-                        ),
-                      );
-                    },
+                    onPressed: navigateToLocationPage,
                     child: Text('Get Location'),
                   ),
                 ],

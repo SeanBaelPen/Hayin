@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../MenuModel/pizza_dragon.dart';
+import '../MenuModel/menu_model.dart';
 
 class MenuCard extends StatelessWidget {
   final PizzaDragon pizza;

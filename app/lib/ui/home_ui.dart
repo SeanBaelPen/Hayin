@@ -2,8 +2,11 @@ import 'package:app/ui/catalogue_format.dart';
 import 'package:app/ui/location_ui.dart';
 import 'package:app/ui/profile_ui.dart';
 import 'package:app/ui/restaurant_details.dart';
+import 'package:app/ui/reward_ui.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -16,11 +19,22 @@ class _HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
   int _selectedIndex = 0;
+  Position? userLocation;
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
+    _getCurrentLocation();
+  }
+
+  Future<void> _getCurrentLocation() async {
+    Position position = await Geolocator.getCurrentPosition(
+      desiredAccuracy: LocationAccuracy.high,
+    );
+    setState(() {
+      userLocation = position;
+    });
   }
 
   @override
@@ -39,10 +53,22 @@ class _HomePageState extends State<HomePage>
         ),
       );
     } else if (index == 2) {
+      if (userLocation != null) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => LocationPage(
+              destination:
+                  LatLng(userLocation!.latitude, userLocation!.longitude),
+            ),
+          ),
+        );
+      }
+    } else if (index == 3) {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => LocationPage(),
+          builder: (context) => RewardPage(),
         ),
       );
     } else {
@@ -306,8 +332,13 @@ class _HomePageState extends State<HomePage>
             icon: Icon(Icons.person_pin_circle),
             label: 'Location',
           ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.star_border_outlined),
+            label: 'Rewards',
+          ),
         ],
         currentIndex: _selectedIndex,
+        unselectedItemColor: Colors.grey,
         selectedItemColor: Colors.blue,
         onTap: _onItemTapped,
       ),
