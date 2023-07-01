@@ -39,7 +39,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         Navigator.pop(context); // Navigates back when pressed
                       },
                     ),
-                    SizedBox(width: 10), // Adjust the spacing as desired
+                    SizedBox(width: 10),
                     Text(
                       'Settings',
                       style: TextStyle(
@@ -52,16 +52,15 @@ class _SettingsPageState extends State<SettingsPage> {
                 ),
               ),
             ),
-            SizedBox(height: 10), // Adjust the spacing as desired
+            SizedBox(height: 10),
             Align(
               alignment: Alignment.centerLeft,
               child: Row(
                 children: [
                   Padding(
-                    padding: EdgeInsets.only(
-                        left: 60, top: 25), // Adjust the spacing as desired
+                    padding: EdgeInsets.only(left: 60, top: 25),
                     child: Image.asset(
-                      'assets/icon_user_black.png', // Replace with the actual path to your image
+                      'assets/icon_user_black.png',
                       width: 80,
                       height: 80,
                     ),
@@ -71,7 +70,7 @@ class _SettingsPageState extends State<SettingsPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Name', // The text you want to display
+                        'Name',
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 20,
@@ -79,11 +78,10 @@ class _SettingsPageState extends State<SettingsPage> {
                         ),
                       ),
                       SizedBox(
-                        height:
-                            5, // Adjust the spacing between the text and additional text as desired
+                        height: 5,
                       ),
                       Text(
-                        'hello@gmail.com', // Additional text you want to display
+                        'hello@gmail.com',
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 18,
@@ -105,15 +103,163 @@ class _SettingsPageState extends State<SettingsPage> {
                         'assets/rectangle_settings.png',
                       ),
                     ),
-                    const Positioned(
+                    Positioned(
+                      bottom: 60,
+                      left: 30,
+                      child: Row(
+                        children: [
+                          Image.asset(
+                            'assets/logout.png',
+                          ),
+                          const SizedBox(width: 25),
+                          const Text(
+                            'Logout',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Positioned(
                       top: 80,
-                      left: 50,
-                      child: Text(
-                        'Notifications',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
+                      left: 10,
+                      child: SizedBox(
+                        width: MediaQuery.of(context).size.width - 100,
+                        child: PhysicalModel(
+                          elevation: 4,
+                          shadowColor: Colors.black.withOpacity(0.8),
+                          borderRadius: BorderRadius.circular(8),
+                          color: Colors.transparent,
+                          child: InkWell(
+                            onTap: () {
+                              // Handle button tap here
+                            },
+                            child: Container(
+                              width: double
+                                  .infinity, // Stretch the button to fit the width
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              padding: EdgeInsets.symmetric(
+                                  vertical: 8, horizontal: 16),
+                              child: Row(
+                                children: [
+                                  Text(
+                                    'Notifications',
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  SizedBox(width: 110),
+                                  Icon(
+                                    Icons.arrow_forward_ios,
+                                    color: Colors.black,
+                                    size: 24,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 5),
+                    Positioned(
+                      top: 130,
+                      left: 10,
+                      child: SizedBox(
+                        width: MediaQuery.of(context).size.width - 100,
+                        child: PhysicalModel(
+                          elevation: 4,
+                          shadowColor: Colors.black.withOpacity(0.8),
+                          borderRadius: BorderRadius.circular(8),
+                          color: Colors.transparent,
+                          child: InkWell(
+                            onTap: () {
+                              // Handle button tap here
+                            },
+                            child: Container(
+                              width: double
+                                  .infinity, // Stretch the button to fit the width
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              padding: EdgeInsets.symmetric(
+                                  vertical: 8, horizontal: 16),
+                              child: Row(
+                                children: [
+                                  Text(
+                                    'Language',
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  SizedBox(width: 140),
+                                  Icon(
+                                    Icons.arrow_forward_ios,
+                                    color: Colors.black,
+                                    size: 24,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 5),
+                    Positioned(
+                      top: 180,
+                      left: 10,
+                      child: SizedBox(
+                        width: MediaQuery.of(context).size.width - 100,
+                        child: PhysicalModel(
+                          elevation: 4,
+                          shadowColor: Colors.black.withOpacity(0.8),
+                          borderRadius: BorderRadius.circular(8),
+                          color: Colors.transparent,
+                          child: InkWell(
+                            onTap: () {
+                              // Handle button tap here
+                            },
+                            child: Container(
+                              width: double
+                                  .infinity, // Stretch the button to fit the width
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              padding: EdgeInsets.symmetric(
+                                  vertical: 8, horizontal: 16),
+                              child: Row(
+                                children: [
+                                  Text(
+                                    'Help and Support',
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  SizedBox(width: 70),
+                                  Icon(
+                                    Icons.arrow_forward_ios,
+                                    color: Colors.black,
+                                    size: 24,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
                         ),
                       ),
                     ),
