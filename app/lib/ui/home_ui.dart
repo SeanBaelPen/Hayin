@@ -1,4 +1,5 @@
 import 'package:app/ui/catalogue_format.dart';
+import 'package:app/ui/filter_ui.dart';
 import 'package:app/ui/location_ui.dart';
 import 'package:app/ui/profile_ui.dart';
 import 'package:app/ui/restaurant_details.dart';
@@ -99,7 +100,14 @@ class _HomePageState extends State<HomePage>
               Icons.filter_list,
               size: 50,
             ),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => FilterPage(),
+                ),
+              );
+            },
           ),
           flexibleSpace: Container(
             height: 430,
@@ -263,12 +271,15 @@ class _HomePageState extends State<HomePage>
                               return Catalogue(
                                 image: document['image'],
                                 name: document['name'],
+                                categories: document['categories'],
                                 onTap: () {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) =>
-                                          RestaurantDetails(), // Replace NewPage with your desired page
+                                      builder: (context) => RestaurantDetails(
+                                        restaurantName: document['name'],
+                                        restaurantImage: document['image'],
+                                      ), // Replace NewPage with your desired page
                                     ),
                                   );
                                 },
@@ -293,15 +304,19 @@ class _HomePageState extends State<HomePage>
                             itemBuilder: (BuildContext context, int index) {
                               DocumentSnapshot document =
                                   snapshot.data!.docs[index];
+                              List<dynamic> categories = document['categories'];
                               return Catalogue(
                                 image: document['image'],
                                 name: document['name'],
+                                categories: categories,
                                 onTap: () {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) =>
-                                          RestaurantDetails(), // Replace NewPage with your desired page
+                                      builder: (context) => RestaurantDetails(
+                                        restaurantName: document['name'],
+                                        restaurantImage: document['image'],
+                                      ), // Replace NewPage with your desired page
                                     ),
                                   );
                                 },
