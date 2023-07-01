@@ -7,7 +7,14 @@ import '../MenuCards/menu_card.dart';
 import '../MenuModel/menu_model.dart';
 
 class RestaurantDetails extends StatefulWidget {
-  const RestaurantDetails({super.key});
+  final String restaurantName;
+  final String restaurantImage;
+
+  const RestaurantDetails({
+    super.key,
+    required this.restaurantName,
+    required this.restaurantImage,
+  });
 
   @override
   State<RestaurantDetails> createState() => _RestaurantDetailsState();
@@ -60,7 +67,7 @@ class _RestaurantDetailsState extends State<RestaurantDetails> {
             expandedHeight: 200,
             flexibleSpace: FlexibleSpaceBar(
               background: Image.network(
-                'https://lh5.googleusercontent.com/p/AF1QipPLJnOGebslG5wusfjMptBtOpHdXKfujqUtJJ9K=w284-h160-k-no',
+                widget.restaurantImage,
                 fit: BoxFit.cover,
               ),
             ),
@@ -92,7 +99,7 @@ class _RestaurantDetailsState extends State<RestaurantDetails> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Pizza Dragon',
+                    widget.restaurantName,
                     style: TextStyle(
                         fontSize: 27,
                         fontFamily: 'Montserrat',
