@@ -5,10 +5,13 @@ class Catalogue extends StatelessWidget {
     Key? key,
     required this.image,
     required this.name,
+    required this.categories,
     required this.onTap,
   }) : super(key: key);
 
-  String image, name;
+  final String image;
+  final String name;
+  final List<dynamic> categories;
   final VoidCallback onTap;
 
   @override
@@ -21,7 +24,6 @@ class Catalogue extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.only(right: 10, top: 5, left: 10),
           child: Container(
-      
             //padding: EdgeInsets.all(10),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -31,29 +33,48 @@ class Catalogue extends StatelessWidget {
                   height: 145,
                   child: Container(
                     decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image: NetworkImage(image),
-                            fit: BoxFit.cover)),
+                      image: DecorationImage(
+                        image: NetworkImage(image),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
                   ),
                 ),
-                Row(
-                  children: [
-                    Column(
-                      crossAxisAlignment:
-                      CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          name,
-                          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                          overflow: TextOverflow.ellipsis,
+                Expanded(
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              name,
+                              style: const TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            Wrap(
+                              spacing: 5,
+                              runSpacing: 5,
+                              children: categories.map((category) {
+                                final String label = category is String
+                                    ? category
+                                    : category.toString();
+                                return Chip(
+                                  label: Text(label),
+                                  backgroundColor: Colors.grey,
+                                );
+                              }).toList(),
+                            )
+                            // Text(
+                            //   text2,
+                            //   overflow: TextOverflow.ellipsis,
+                            // ),
+                          ],
                         ),
-                        // Text(
-                        //   text2,
-                        //   overflow: TextOverflow.ellipsis,
-                        // ),
-                      ],
-                    )
-                  ],
+                      )
+                    ],
+                  ),
                 ),
               ],
             ),

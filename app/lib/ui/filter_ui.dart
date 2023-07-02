@@ -27,10 +27,15 @@ class _FilterPageState extends State<FilterPage> {
               child: Row(
                 children: [
                   Container(
-                    child: const Icon(
-                      Icons.clear_sharp,
-                      size: 50,
-                      color: Colors.black,
+                    child: IconButton(
+                      icon: const Icon(
+                        Icons.clear_sharp,
+                        size: 50,
+                        color: Colors.black,
+                      ),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
                     ),
                   ),
                   const SizedBox(width: 10),
@@ -497,50 +502,50 @@ class _FilterPageState extends State<FilterPage> {
           )
         ],
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        selectedItemColor: const Color.fromARGB(
-            255, 248, 102, 49), // Set the selected item color to orange
-        unselectedItemColor:
-            Colors.grey, // Set the unselected item color to grey
-        currentIndex: _currentIndex,
-        onTap: (int index) {
-          setState(() {
-            _currentIndex = index;
-          });
-        },
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.home_sharp,
-              size: 50,
-            ),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.search,
-              size: 50,
-            ),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.location_on,
-              size: 50,
-            ),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.account_circle_outlined,
-              size: 50,
-            ),
-            label: '',
-          ),
-        ],
-        type: BottomNavigationBarType
-            .fixed, // make the icons stay in place when you tap on them
-      ),
+      // bottomNavigationBar: BottomNavigationBar(
+      //   selectedItemColor: const Color.fromARGB(
+      //       255, 248, 102, 49), // Set the selected item color to orange
+      //   unselectedItemColor:
+      //       Colors.grey, // Set the unselected item color to grey
+      //   currentIndex: _currentIndex,
+      //   onTap: (int index) {
+      //     setState(() {
+      //       _currentIndex = index;
+      //     });
+      //   },
+      //   items: const [
+      //     BottomNavigationBarItem(
+      //       icon: Icon(
+      //         Icons.home_sharp,
+      //         size: 50,
+      //       ),
+      //       label: '',
+      //     ),
+      //     BottomNavigationBarItem(
+      //       icon: Icon(
+      //         Icons.search,
+      //         size: 50,
+      //       ),
+      //       label: '',
+      //     ),
+      //     BottomNavigationBarItem(
+      //       icon: Icon(
+      //         Icons.location_on,
+      //         size: 50,
+      //       ),
+      //       label: '',
+      //     ),
+      //     BottomNavigationBarItem(
+      //       icon: Icon(
+      //         Icons.account_circle_outlined,
+      //         size: 50,
+      //       ),
+      //       label: '',
+      //     ),
+      //   ],
+      //   type: BottomNavigationBarType
+      //       .fixed, // make the icons stay in place when you tap on them
+      // ),
     );
   }
 }
