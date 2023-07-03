@@ -6,10 +6,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../ViewModels/authViewModel.dart';
 import '../../ViewModels/restaurantsViewModel.dart';
-import '../Auth/login_ui.dart';
-import '../../common/MenuCards/catalogue_format.dart';
+import '../../common/catalogue_format.dart';
+import '../../common/restaurant_details.dart';
 import '../filter_ui.dart';
-import '../../common/MenuCards/restaurant_details.dart';
 
 class HomeView extends ConsumerStatefulWidget {
   const HomeView({super.key});
@@ -171,6 +170,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
                                         builder: (context) => RestaurantDetails(
                                           restaurantName: document['name'],
                                           restaurantImage: document['image'],
+                                          restaurantID: document.id,
                                         ), // Replace NewPage with your desired page
                                       ),
                                     );
@@ -202,6 +202,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
                                         builder: (context) => RestaurantDetails(
                                           restaurantName: document['name'],
                                           restaurantImage: document['image'],
+                                          restaurantID: document.id,
                                         ), // Replace NewPage with your desired page
                                       ),
                                     );

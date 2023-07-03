@@ -5,9 +5,7 @@ import 'package:app/ui/home_ui.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'login_ui.dart';
 import 'package:app/ui/Auth/welcome_ui.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -27,8 +25,6 @@ class _SignUpPageState extends State<SignUpPage> {
   final TextEditingController _firstNameController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
 
-  late bool _success;
-  late String _userEmail;
   String? _passwordError;
   String? _emailError;
   bool _passwordVisible = false;

@@ -68,17 +68,19 @@ class _RewardPageState extends ConsumerState<RewardPage> {
                             ),
                           ),
                           Positioned(
-                            top: 15,
-                            left: 15,
-                            child: data.data()!['profilePictureUrl'] != null
-                                ? Image.network(
-                                    data.data()!['profilePictureUrl'])
-                                : Image.asset(
-                                    'assets/profile_pic_g.png',
-                                    width: 80,
-                                    height: 80,
-                                  ),
-                          ),
+                              top: 15,
+                              left: 15,
+                              child: CircleAvatar(
+                                radius: 40,
+                                backgroundImage:
+                                    data.data()!['profilePictureUrl'] != null
+                                        ? NetworkImage(
+                                            data.data()!['profilePictureUrl'],
+                                          )
+                                        : const AssetImage(
+                                            'assets/profile_pic_g.png',
+                                          ) as ImageProvider,
+                              )),
                           Positioned(
                             left: 105,
                             top: 10,

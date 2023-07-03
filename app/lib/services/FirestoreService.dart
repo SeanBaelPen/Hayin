@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:app/models/review_model..dart';
 import 'package:app/services/AuthService.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -15,6 +16,7 @@ class FirestoreService {
       'email': FirebaseAuth.instance.currentUser!.email,
       'firstName': firstName,
       'lastName': lastName,
+      'profilePictureUrl': '',
     });
   }
 
@@ -27,13 +29,31 @@ class FirestoreService {
 
   Future<void> updateProfilePicture() async {
     final pickedFile =
-        await ImagePicker().getImage(source: ImageSource.gallery);
+        await ImagePicker().pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       final imageFile = await FirebaseStorage.instance
           .ref('profile_pictures/${AuthService().getID()}.png')
           .putFile(File(pickedFile.path));
 
       final imageUrl = await imageFile.ref.getDownloadURL();
+
+      FirebaseFirestore.instance
+          .collection("users")
+          .doc(AuthService().getID())
+          .update({
+        "profilePictureUrl": imageUrl,
+      });
     }
+  }
+
+  void submitReview(ReviewModel review) {
+    FirebaseFirestore.instance.collection("ratings").doc().set({
+      'rating': review.rating,
+      'review': review.review,
+      'userName': review.userName,
+      'userImg': review.userImg,
+      'restaurantId': review.restaurantId,
+      'timestamp': review.timestamp,
+    });
   }
 }

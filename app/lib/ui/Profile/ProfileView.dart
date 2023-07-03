@@ -1,18 +1,10 @@
 import 'package:app/services/FirestoreService.dart';
-import 'package:app/ui/Location/location_ui.dart';
-import 'package:app/ui/Rewards/RewardView.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:image_picker/image_picker.dart';
-import 'dart:io';
 
 import '../../ViewModels/userViewModel.dart';
-import '../home_ui.dart';
 
 class ProfilePage extends ConsumerStatefulWidget {
   const ProfilePage({super.key});
@@ -87,14 +79,14 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                       left: 0,
                       right: 0,
                       child: Center(
-                        child: _profilePictureUrl != null
-                            ? Image.network(_profilePictureUrl!)
-                            : Image.asset(
+                          child: CircleAvatar(
+                        radius: 60,
+                        backgroundImage: _profilePictureUrl != null
+                            ? NetworkImage(_profilePictureUrl!)
+                            : const AssetImage(
                                 'assets/profile_pic_g.png',
-                                width: 120,
-                                height: 120,
-                              ),
-                      ),
+                              ) as ImageProvider,
+                      )),
                     ),
                     Positioned(
                       top: 290,

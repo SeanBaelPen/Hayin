@@ -1,16 +1,9 @@
-import 'package:app/common/MenuCards/catalogue_format.dart';
-import 'package:app/services/GeolocatorService.dart';
-import 'package:app/ui/filter_ui.dart';
 import 'package:app/ui/Home/HomeView.dart';
-import 'package:app/ui/Location/location_ui.dart';
 import 'package:app/ui/Profile/ProfileView.dart';
-import 'package:app/common/MenuCards/restaurant_details.dart';
 import 'package:app/ui/Rewards/RewardView.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
@@ -21,7 +14,6 @@ class HomePage extends ConsumerStatefulWidget {
 
 class _HomePageState extends ConsumerState<HomePage> {
   int _selectedIndex = 0;
-  Position? userLocation;
 
   @override
   void initState() {
@@ -36,15 +28,15 @@ class _HomePageState extends ConsumerState<HomePage> {
     return Scaffold(
       body: IndexedStack(
         index: _selectedIndex,
-        children: [
-          const HomeView(),
-          const ProfilePage(),
+        children: const [
+          HomeView(),
+          ProfilePage(),
           /* LocationPage(
             destination: LatLng(ref.read(locationProvider)!.latitude,
                 ref.read(locationProvider)!.longitude),
           ), */
           SizedBox(),
-          const RewardPage(),
+          RewardPage(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(

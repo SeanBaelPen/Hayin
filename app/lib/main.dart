@@ -1,5 +1,4 @@
 import 'package:app/ui/home_ui.dart';
-import 'package:app/common/MenuCards/restaurant_details.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
