@@ -1,11 +1,14 @@
+import 'package:app/common/reward_item_format.dart';
 import 'package:app/ui/Location/location_ui.dart';
 import 'package:app/ui/Profile/ProfileView.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../ViewModels/userViewModel.dart';
+import '../../common/reward_shop_item.dart';
 import '../home_ui.dart';
 
 class RewardPage extends ConsumerStatefulWidget {
@@ -24,6 +27,10 @@ class _RewardPageState extends ConsumerState<RewardPage> {
   @override
   Widget build(BuildContext context) {
     var userDetails = ref.watch(userProvider);
+    final FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+    Stream<QuerySnapshot> rewardItemsStream =
+        FirebaseFirestore.instance.collection('rewardsShops').snapshots();
 
     return Scaffold(
       appBar: AppBar(
@@ -220,7 +227,7 @@ class _RewardPageState extends ConsumerState<RewardPage> {
                     ),
                     const SizedBox(height: 15),
                     const Text(
-                      'Redeem your points',
+                      'Redeem your items',
                       style: TextStyle(
                         fontSize: 23,
                         color: Colors.black,
@@ -228,120 +235,198 @@ class _RewardPageState extends ConsumerState<RewardPage> {
                       ),
                     ),
                     const SizedBox(height: 10),
-                    Container(
-                      child: Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(left: 16),
-                            child: Image.asset(
-                              'assets/redeemPts1.png',
-                            ),
-                          ),
-                          Positioned(
-                            left: 17,
-                            child: Image.asset(
-                              'assets/redeemPts2.png',
-                            ),
-                          ),
-                          Positioned(
-                            left: 25,
-                            child: Image.asset(
-                              'assets/pizzaDragon.png',
-                              width: 100,
-                            ),
-                          ),
-                          const Positioned(
-                            left: 180,
-                            child: Text(
-                              'Pizza Dragon',
-                              style: TextStyle(
-                                fontSize: 20,
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    Container(
-                      child: Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(left: 16),
-                            child: Image.asset(
-                              'assets/redeemPts1.png',
-                            ),
-                          ),
-                          Positioned(
-                            left: 17,
-                            child: Image.asset(
-                              'assets/redeemPts2.png',
-                            ),
-                          ),
-                          Positioned(
-                            top: .1,
-                            left: 25,
-                            child: Image.asset(
-                              'assets/jakeu_cafe_logo.png',
-                              width: 100,
-                            ),
-                          ),
-                          const Positioned(
-                            left: 185,
-                            child: Text(
-                              'Jakeu Cafe',
-                              style: TextStyle(
-                                fontSize: 20,
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    Container(
-                      child: Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(left: 16),
-                            child: Image.asset(
-                              'assets/redeemPts1.png',
-                            ),
-                          ),
-                          Positioned(
-                            left: 17,
-                            child: Image.asset(
-                              'assets/redeemPts2.png',
-                            ),
-                          ),
-                          Positioned(
-                            left: 25,
-                            child: Image.asset(
-                              'assets/master_buffalo_logo.png',
-                              width: 100,
-                            ),
-                          ),
-                          const Positioned(
-                            left: 170,
-                            child: Text(
-                              'Master Buffalo',
-                              style: TextStyle(
-                                fontSize: 20,
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
+                    StreamBuilder<QuerySnapshot>(
+                      stream: rewardItemsStream,
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          List<DocumentSnapshot> documents =
+                              snapshot.data!.docs;
+
+                          return ListView.builder(
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            itemCount: documents.length,
+                            itemBuilder: (context, index) {
+                              var document = documents[index].data()
+                                  as Map<String, dynamic>;
+
+                              return RewardShopItem(
+                                imagePath: document['image'],
+                                shopName: document['name'],
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => RewardsItemPage(),
+                                    ),
+                                  );
+                                },
+                              );
+                            },
+                          );
+                        } else if (snapshot.hasError) {
+                          return Text('Error: ${snapshot.error}');
+                        } else {
+                          return CircularProgressIndicator();
+                        }
+                      },
                     )
+                    // RewardShopItem(
+                    //   imagePath: 'assets/pizzaDragon.png',
+                    //   shopName: 'Pizza Dragon',
+                    //   onTap: () {
+                    //     Navigator.push(
+                    //       context,
+                    //       MaterialPageRoute(
+                    //         builder: ((context) => RewardsItemPage()),
+                    //       ),
+                    //     );
+                    //   },
+                    // ),
+
+                    // const SizedBox(height: 10),
+
+                    // RewardShopItem(
+                    //   imagePath: 'assets/jakeu_cafe_logo.png',
+                    //   shopName: 'Jakeu Cafe',
+                    //   onTap: () {
+                    //     Navigator.push(
+                    //       context,
+                    //       MaterialPageRoute(
+                    //         builder: ((context) => RewardsItemPage()),
+                    //       ),
+                    //     );
+                    //   },
+                    // ),
+
+                    // const SizedBox(height: 10),
+
+                    // RewardShopItem(
+                    //   imagePath: 'assets/master_buffalo_logo.png',
+                    //   shopName: 'Master Buffalo',
+                    //   onTap: () {
+                    //     Navigator.push(
+                    //       context,
+                    //       MaterialPageRoute(
+                    //         builder: ((context) => RewardsItemPage()),
+                    //       ),
+                    //     );
+                    //   },
+                    // ),
+                    // Container(
+                    //   child: Stack(
+                    //     alignment: Alignment.center,
+                    //     children: [
+                    //       Padding(
+                    //         padding: const EdgeInsets.only(left: 16),
+                    //         child: Image.asset(
+                    //           'assets/redeemPts1.png',
+                    //         ),
+                    //       ),
+                    //       Positioned(
+                    //         left: 17,
+                    //         child: Image.asset(
+                    //           'assets/redeemPts2.png',
+                    //         ),
+                    //       ),
+                    //       Positioned(
+                    //         left: 25,
+                    //         child: Image.asset(
+                    //           'assets/pizzaDragon.png',
+                    //           width: 100,
+                    //         ),
+                    //       ),
+                    //       const Positioned(
+                    //         left: 180,
+                    //         child: Text(
+                    //           'Pizza Dragon',
+                    //           style: TextStyle(
+                    //             fontSize: 20,
+                    //             color: Colors.black,
+                    //             fontWeight: FontWeight.bold,
+                    //           ),
+                    //         ),
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
+                    // const SizedBox(height: 10),
+                    // Container(
+                    //   child: Stack(
+                    //     alignment: Alignment.center,
+                    //     children: [
+                    //       Padding(
+                    //         padding: const EdgeInsets.only(left: 16),
+                    //         child: Image.asset(
+                    //           'assets/redeemPts1.png',
+                    //         ),
+                    //       ),
+                    //       Positioned(
+                    //         left: 17,
+                    //         child: Image.asset(
+                    //           'assets/redeemPts2.png',
+                    //         ),
+                    //       ),
+                    //       Positioned(
+                    //         top: .1,
+                    //         left: 25,
+                    //         child: Image.asset(
+                    //           'assets/jakeu_cafe_logo.png',
+                    //           width: 100,
+                    //         ),
+                    //       ),
+                    //       const Positioned(
+                    //         left: 185,
+                    //         child: Text(
+                    //           'Jakeu Cafe',
+                    //           style: TextStyle(
+                    //             fontSize: 20,
+                    //             color: Colors.black,
+                    //             fontWeight: FontWeight.bold,
+                    //           ),
+                    //         ),
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
+                    // const SizedBox(height: 10),
+                    // Container(
+                    //   child: Stack(
+                    //     alignment: Alignment.center,
+                    //     children: [
+                    //       Padding(
+                    //         padding: const EdgeInsets.only(left: 16),
+                    //         child: Image.asset(
+                    //           'assets/redeemPts1.png',
+                    //         ),
+                    //       ),
+                    //       Positioned(
+                    //         left: 17,
+                    //         child: Image.asset(
+                    //           'assets/redeemPts2.png',
+                    //         ),
+                    //       ),
+                    //       Positioned(
+                    //         left: 25,
+                    //         child: Image.asset(
+                    //           'assets/master_buffalo_logo.png',
+                    //           width: 100,
+                    //         ),
+                    //       ),
+                    //       const Positioned(
+                    //         left: 170,
+                    //         child: Text(
+                    //           'Master Buffalo',
+                    //           style: TextStyle(
+                    //             fontSize: 20,
+                    //             color: Colors.black,
+                    //             fontWeight: FontWeight.bold,
+                    //           ),
+                    //         ),
+                    //       ),
+                    //     ],
+                    //   ),
+                    // )
                   ],
                 ),
               ),
