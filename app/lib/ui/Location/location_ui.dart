@@ -53,7 +53,6 @@ class _LocationPageState extends State<LocationPage> {
         userLocation = position;
         checkArrival();
         updateLocationMarker();
-        getPolyPoints();
       });
     }, onError: (error) {
       print(error);
@@ -64,11 +63,14 @@ class _LocationPageState extends State<LocationPage> {
         userLocation = position;
         checkArrival();
         updateLocationMarker();
+        polyLineCoordinates = [];
+        getPolyPoints();
       });
     });
   }
 
   void getPolyPoints() async {
+    polyLineCoordinates = [];
     PolylinePoints polylinePoints = PolylinePoints();
 
     Geolocator.getCurrentPosition().then((value) async {

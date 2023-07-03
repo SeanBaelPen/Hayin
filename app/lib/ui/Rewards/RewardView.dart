@@ -107,7 +107,7 @@ class _RewardPageState extends ConsumerState<RewardPage> {
                                 const SizedBox(height: 3),
                                 Text(
                                   "${data.data()!['_rewardPoints']}",
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 18,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.black,
