@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../MenuModel/menu_model.dart';
+import '../../models/menu_model.dart';
 
 class MenuCard extends StatelessWidget {
   final PizzaDragon pizza;
@@ -8,7 +8,7 @@ class MenuCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-   return Card(
+    return Card(
       elevation: 4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -31,20 +31,20 @@ class MenuCard extends StatelessWidget {
                 children: [
                   Text(
                     pizza.menuItem,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  SizedBox(height: 8),
+                  const SizedBox(height: 8),
                   Text(
                     pizza.description,
-                    style: TextStyle(fontSize: 16),
+                    style: const TextStyle(fontSize: 16),
                   ),
-                  SizedBox(height: 8),
+                  const SizedBox(height: 8),
                   Text(
                     '\₱${pizza.price}',
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                       color: Colors.green,

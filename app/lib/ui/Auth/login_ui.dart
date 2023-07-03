@@ -1,4 +1,4 @@
-import 'package:app/ui/welcome_ui.dart';
+import 'package:app/ui/Auth/welcome_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 

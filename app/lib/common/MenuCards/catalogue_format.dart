@@ -18,7 +18,7 @@ class Catalogue extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: 360,
-      height: 220,
+      height: 250,
       child: InkWell(
         onTap: onTap,
         child: Padding(

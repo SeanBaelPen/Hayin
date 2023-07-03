@@ -1,0 +1,231 @@
+import 'package:app/ViewModels/foodStallViewModel.dart';
+import 'package:app/ui/Auth/welcome_ui.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../../ViewModels/authViewModel.dart';
+import '../../ViewModels/restaurantsViewModel.dart';
+import '../Auth/login_ui.dart';
+import '../../common/MenuCards/catalogue_format.dart';
+import '../filter_ui.dart';
+import '../../common/MenuCards/restaurant_details.dart';
+
+class HomeView extends ConsumerStatefulWidget {
+  const HomeView({super.key});
+
+  @override
+  ConsumerState<ConsumerStatefulWidget> createState() => _HomeViewState();
+}
+
+class _HomeViewState extends ConsumerState<HomeView> {
+  @override
+  Widget build(BuildContext context) {
+    var restaurantsStream = ref.watch(streamProvider);
+    var foodStallsStream = ref.watch(foodStallProvider);
+    var authState = ref.watch(authStateProvider);
+
+    return Scaffold(
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(400.0),
+        child: AppBar(
+          leading: IconButton(
+            icon: const Icon(
+              Icons.filter_list,
+              size: 50,
+            ),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const FilterPage(),
+                ),
+              );
+            },
+          ),
+          flexibleSpace: Container(
+            height: 430,
+            decoration: const BoxDecoration(
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(17),
+                bottomRight: Radius.circular(17),
+              ),
+              gradient: LinearGradient(
+                colors: [
+                  Color.fromRGBO(255, 133, 74, 1),
+                  Color.fromRGBO(255, 62, 53, 1),
+                ],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+              ),
+            ),
+            child: Stack(
+              children: [
+                Positioned(
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  child: Image.asset(
+                    'assets/profile_pic_g.png',
+                  ),
+                ),
+                const Positioned(
+                  top: 270,
+                  left: 0,
+                  right: 0,
+                  child: Text(
+                    'Name',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontFamily: 'Sans Serif',
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+                const Positioned(
+                  top: 300,
+                  left: 0,
+                  right: 0,
+                  child: Text(
+                    'Where do you want to eat today?',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontFamily: 'Sans Serif',
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          backgroundColor: Colors.transparent,
+        ),
+      ),
+      body: authState.when(
+        data: (authData) {
+          if (authData?.uid == null) {
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const WelcomePage()));
+            });
+          }
+          return DefaultTabController(
+            length: 2,
+            child: Column(
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(10),
+                  child: const TextField(
+                    decoration: InputDecoration(
+                      hintText: 'Search...',
+                      prefixIcon: Icon(Icons.search),
+                    ),
+                  ),
+                ),
+                const TabBar(
+                  tabs: [
+                    Tab(
+                      child: Text(
+                        'Restaurants',
+                        style: TextStyle(
+                          fontFamily: 'Monserrat',
+                          fontSize: 20,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                    Tab(
+                      child: Text(
+                        'Food Stalls',
+                        style: TextStyle(
+                          fontFamily: 'Monserrat',
+                          fontSize: 20,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Expanded(
+                  child: Padding(
+                    padding:
+                        const EdgeInsets.only(top: 13.0, left: 5, right: 5),
+                    child: TabBarView(
+                      children: [
+                        restaurantsStream.when(
+                          data: (data) {
+                            return ListView.builder(
+                              itemCount: data.docs.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                DocumentSnapshot document = data.docs[index];
+                                return Catalogue(
+                                  image: document['image'],
+                                  name: document['name'],
+                                  categories: document['categories'],
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => RestaurantDetails(
+                                          restaurantName: document['name'],
+                                          restaurantImage: document['image'],
+                                        ), // Replace NewPage with your desired page
+                                      ),
+                                    );
+                                  },
+                                );
+                              },
+                            );
+                          },
+                          loading: () =>
+                              const Center(child: CircularProgressIndicator()),
+                          error: (error, stackTrace) =>
+                              Center(child: Text('Error: $error')),
+                        ),
+                        foodStallsStream.when(
+                          data: (data) {
+                            return ListView.builder(
+                              itemCount: data.docs.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                DocumentSnapshot document = data.docs[index];
+                                //List<dynamic> categories = document['categories'];
+                                return Catalogue(
+                                  image: document['image'],
+                                  name: document['name'],
+                                  categories: [],
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => RestaurantDetails(
+                                          restaurantName: document['name'],
+                                          restaurantImage: document['image'],
+                                        ), // Replace NewPage with your desired page
+                                      ),
+                                    );
+                                  },
+                                );
+                              },
+                            );
+                          },
+                          loading: () =>
+                              const Center(child: CircularProgressIndicator()),
+                          error: (error, stackTrace) =>
+                              Center(child: Text('Error: $error')),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
+        loading: () => const Center(child: CircularProgressIndicator()),
+        error: (error, stackTrace) => Center(child: Text('Error: $error')),
+      ),
+    );
+  }
+}

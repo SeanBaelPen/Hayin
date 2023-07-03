@@ -1,8 +1,12 @@
-import 'package:app/ui/profile_ui.dart';
+import 'package:app/services/AuthService.dart';
+import 'package:app/services/FirestoreService.dart';
+import 'package:app/ui/Profile/ProfileView.dart';
+import 'package:app/ui/home_ui.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'login_ui.dart';
-import 'package:app/ui/welcome_ui.dart';
+import 'package:app/ui/Auth/welcome_ui.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -31,45 +35,34 @@ class _SignUpPageState extends State<SignUpPage> {
 
   void _register() async {
     if (!_validatePassword(_passwordController.text)) {
-      setState(() {
-        _passwordError =
-            "Password must be at least 8 characters long and contain at least one number and one special character.";
-      });
+      Fluttertoast.showToast(
+          msg:
+              "Password must be at least 8 characters long and contain at least one number and one special character.");
       return;
     }
 
     if (_passwordController.text != _confirmPasswordController.text) {
-      setState(() {
-        _passwordError = "Passwords do not match.";
-      });
+      Fluttertoast.showToast(msg: "Passwords do not match.");
       return;
     }
 
-    // Create user
-    final User? user = (await _auth.createUserWithEmailAndPassword(
-      email: _emailController.text,
-      password: _passwordController.text,
-    ))
-        .user;
+    bool authRequest = await AuthService()
+        .signUp(_emailController.text, _passwordController.text);
 
-    if (user != null) {
-      setState(() {
-        _success = true;
-        _userEmail = user.email!;
-        _passwordError = null; // Reset the password error message
-      });
-
+    if (authRequest == true) {
       // Add the user email, firstName, and lastName to Firestore
-      FirebaseFirestore.instance.collection('users').doc(user.uid).set({
-        'email': user.email,
-        'firstName': _firstNameController.text,
-        'lastName': _lastNameController.text,
-      });
+      FirestoreService()
+          .createUser(_firstNameController.text, _lastNameController.text);
       _clearTextFields(); // Clear the text fields
+
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (BuildContext context) {
+          return const HomePage();
+        }),
+      );
     } else {
-      setState(() {
-        _success = false;
-      });
+      Fluttertoast.showToast(msg: "Error creating account.");
     }
   }
 
