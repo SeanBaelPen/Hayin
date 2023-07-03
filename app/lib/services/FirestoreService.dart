@@ -20,11 +20,14 @@ class FirestoreService {
     });
   }
 
-  Future<void> updateUserProfile() async {
+  Future<void> updateUserProfile(fName, lName) async {
     final userDoc = FirebaseFirestore.instance
         .collection('users')
-        .doc(AuthService().getID());
-    final userData = (await userDoc.get()).data();
+        .doc(AuthService().getID())
+        .update({
+      'firstName': fName,
+      'lastName': lName,
+    });
   }
 
   Future<void> updateProfilePicture() async {

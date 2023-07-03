@@ -5,6 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
 
+import '../ViewModels/authViewModel.dart';
+import 'Auth/welcome_ui.dart';
+
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
 
@@ -22,23 +25,40 @@ class _HomePageState extends ConsumerState<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    var authState = ref.watch(authStateProvider);
 /*     ref.read(locationProvider.notifier).getCurrentLocation();
     ref.watch(locationProvider); */
 
     return Scaffold(
-      body: IndexedStack(
-        index: _selectedIndex,
-        children: const [
-          HomeView(),
-          ProfilePage(),
-          /* LocationPage(
+      body: authState.when(data: (data) {
+        if (data?.uid == null) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const WelcomePage()));
+          });
+        }
+        return IndexedStack(
+          index: _selectedIndex,
+          children: const [
+            HomeView(),
+            ProfilePage(),
+            /* LocationPage(
             destination: LatLng(ref.read(locationProvider)!.latitude,
                 ref.read(locationProvider)!.longitude),
           ), */
-          SizedBox(),
-          RewardPage(),
-        ],
-      ),
+            SizedBox(),
+            RewardPage(),
+          ],
+        );
+      }, error: (error, stack) {
+        return Center(
+          child: Text(error.toString()),
+        );
+      }, loading: () {
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
+      }),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(

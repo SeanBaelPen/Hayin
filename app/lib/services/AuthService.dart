@@ -38,7 +38,12 @@ class AuthService {
   }
 
   void resetPassword(email) {
-    FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+    try {
+      FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+      Fluttertoast.showToast(msg: 'Password reset email sent.');
+    } catch (e) {
+      Fluttertoast.showToast(msg: 'No user found for that email.');
+    }
   }
 
   String getID() {
