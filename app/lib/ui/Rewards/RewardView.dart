@@ -257,7 +257,9 @@ class _RewardPageState extends ConsumerState<RewardPage> {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => RewardsItemPage(),
+                                      builder: (context) => RewardsItemPage(
+                                        shopID: documents[index].id,
+                                      ),
                                     ),
                                   );
                                 },

@@ -17,6 +17,7 @@ class FirestoreService {
       'firstName': firstName,
       'lastName': lastName,
       'profilePictureUrl': '',
+      '_rewardPoints': 0,
     });
   }
 
@@ -57,6 +58,24 @@ class FirestoreService {
       'userImg': review.userImg,
       'restaurantId': review.restaurantId,
       'timestamp': review.timestamp,
+    });
+  }
+
+  void redeemItem(pointsToDeduct) {
+    FirebaseFirestore.instance
+        .collection("users")
+        .doc(AuthService().getID())
+        .update({
+      '_rewardPoints': FieldValue.increment(-pointsToDeduct),
+    });
+  }
+
+  void claimPoints() {
+    FirebaseFirestore.instance
+        .collection("users")
+        .doc(AuthService().getID())
+        .update({
+      '_rewardPoints': FieldValue.increment(5),
     });
   }
 }
