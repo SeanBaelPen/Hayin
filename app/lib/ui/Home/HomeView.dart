@@ -6,10 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../ViewModels/authViewModel.dart';
+import '../../ViewModels/filterViewModel.dart';
 import '../../ViewModels/restaurantsViewModel.dart';
 import '../../common/catalogue_format.dart';
 import '../../common/restaurant_details.dart';
 import '../filter_ui.dart';
+import 'package:collection/collection.dart';
 
 class HomeView extends ConsumerStatefulWidget {
   const HomeView({super.key});
@@ -24,6 +26,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
     var restaurantsStream = ref.watch(streamProvider);
     var foodStallsStream = ref.watch(foodStallProvider);
     var userDetails = ref.watch(userProvider);
+    Map<String, dynamic> filterTracker = ref.watch(filterProvider);
 
     return Scaffold(
       appBar: PreferredSize(
@@ -35,7 +38,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
               size: 50,
             ),
             onPressed: () {
-              Navigator.push(
+              Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
                   builder: (context) => const FilterPage(),
@@ -201,10 +204,76 @@ class _HomeViewState extends ConsumerState<HomeView> {
                   children: [
                     restaurantsStream.when(
                       data: (data) {
+                        Iterable<MapEntry<String, dynamic>> booleanFilters =
+                            filterTracker.entries
+                                .where((entry) => entry.value is bool)
+                                .map((entry) => entry);
+
+                        List<dynamic> trueValues = booleanFilters
+                            .where((entry) => entry.value == true)
+                            .map((entry) => entry.key)
+                            .toList();
+
+                        print("ENABLED FILTERS: ${trueValues}");
+
+                        var filteredData = data.docs.where((element) {
+                          bool passesFilter = true;
+                          for (int i = 0; i < trueValues.length; i++) {
+                            print(element[trueValues[i]]);
+                            if (element[trueValues[i]] != true) {
+                              passesFilter = false;
+                            }
+                          }
+
+                          print(
+                              "${element.data()["minPrice"]} : ${filterTracker["minPrice"]}");
+
+                          if (element.data()["minPrice"] <
+                              filterTracker["minPrice"]) {
+                            passesFilter = false;
+                          }
+
+                          print(
+                              "${element.data()["maxPrice"]} : ${filterTracker["maxPrice"]}");
+
+                          if (element.data()["maxPrice"] >
+                              filterTracker["maxPrice"]) {
+                            passesFilter = false;
+                          }
+
+                          return passesFilter;
+                        }).toList();
+
+                        var filteredPrice = data.docs.where((element) {
+                          bool passesFilter = true;
+
+                          print(
+                              "${element.data()["minPrice"]} : ${filterTracker["minPrice"]}");
+
+                          if (element.data()["minPrice"] <
+                              filterTracker["minPrice"]) {
+                            passesFilter = false;
+                          }
+
+                          print(
+                              "${element.data()["maxPrice"]} : ${filterTracker["maxPrice"]}");
+
+                          if (element.data()["maxPrice"] >
+                              filterTracker["maxPrice"]) {
+                            passesFilter = false;
+                          }
+
+                          return passesFilter;
+                        }).toList();
+
                         return ListView.builder(
-                          itemCount: data.docs.length,
+                          itemCount: trueValues.isEmpty
+                              ? filteredPrice.length
+                              : filteredData.length,
                           itemBuilder: (BuildContext context, int index) {
-                            DocumentSnapshot document = data.docs[index];
+                            DocumentSnapshot document = trueValues.isEmpty
+                                ? filteredPrice[index]
+                                : filteredData[index];
                             return Catalogue(
                               image: document['image'],
                               name: document['name'],
