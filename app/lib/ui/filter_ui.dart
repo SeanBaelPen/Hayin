@@ -68,7 +68,7 @@ class _FilterPageState extends ConsumerState<FilterPage> {
               ),
             ),
           ),
-          const SizedBox(height: 15),
+          const SizedBox(height: 30),
           Row(
             children: [
               Expanded(
@@ -154,177 +154,7 @@ class _FilterPageState extends ConsumerState<FilterPage> {
             ],
           ),
           const SizedBox(
-              height: 20), // space between the row of images and the text
-          const Padding(
-            padding: EdgeInsets.only(left: 15),
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                'Location',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 23,
-                ),
-              ),
-            ),
-          ),
-          const SizedBox(height: 10), // space between the text and buttons
-          Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Container(
-                    width: 120, // Set the desired width for the buttons
-                    padding: const EdgeInsets.all(
-                        8), // Set the desired padding around the button and text
-                    child: ElevatedButton(
-                      onPressed: () {
-                        // TODO: Add button 1 onPressed logic
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color.fromARGB(
-                            255, 218, 214, 214), // Background color
-                        shape: RoundedRectangleBorder(
-                          borderRadius:
-                              BorderRadius.circular(10), // Rounded borders
-                        ),
-                      ),
-                      child: const Text(
-                        'Near Me',
-                        style: TextStyle(
-                          color: Colors.black, // Set text color to black
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
-                      ),
-                    ),
-                  ),
-                  Container(
-                    width: 120, // Set the desired width for the buttons
-                    padding: const EdgeInsets.all(
-                        8), // Set the desired padding around the button and text
-                    child: ElevatedButton(
-                      onPressed: () {
-                        // TODO: Add PUP btn onPressed logic
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color.fromARGB(
-                            255, 218, 214, 214), // Background color
-                        shape: RoundedRectangleBorder(
-                          borderRadius:
-                              BorderRadius.circular(10), // Rounded borders
-                        ),
-                      ),
-                      child: const Text(
-                        'PUP',
-                        style: TextStyle(
-                          color: Colors.black, // Set text color to black
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
-                      ),
-                    ),
-                  ),
-                  Container(
-                    width: 120, // Set the desired width for the buttons
-                    padding: const EdgeInsets.all(
-                        8), // Set the desired padding around the button and text
-                    child: ElevatedButton(
-                      onPressed: () {
-                        // TODO: Add Sta. Mesa St. onPressed logic
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color.fromARGB(
-                            255, 218, 214, 214), // Background color
-                        shape: RoundedRectangleBorder(
-                          borderRadius:
-                              BorderRadius.circular(10), // Rounded borders
-                        ),
-                      ),
-                      child: const Text(
-                        'Sta. Mesa St.',
-                        textAlign: TextAlign.center, // Align text at the center
-                        style: TextStyle(
-                          color: Colors.black, // Set text color to black
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              //SizedBox(height: 10), // space between the rows of buttons
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Container(
-                    width: 120, // Set the desired width for the buttons
-                    padding: const EdgeInsets.all(
-                        8), // Set the desired padding around the button and text
-                    child: ElevatedButton(
-                      onPressed: () {
-                        // TODO: Add button 1 onPressed logic
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color.fromARGB(
-                            255, 218, 214, 214), // Background color
-                        shape: RoundedRectangleBorder(
-                          borderRadius:
-                              BorderRadius.circular(10), // Rounded borders
-                        ),
-                      ),
-                      child: const Text('Near Me'),
-                    ),
-                  ),
-                  Container(
-                    width: 120, // Set the desired width for the buttons
-                    padding: const EdgeInsets.all(
-                        8), // Set the desired padding around the button and text
-                    child: ElevatedButton(
-                      onPressed: () {
-                        // TODO: Add PUP btn onPressed logic
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color.fromARGB(
-                            255, 218, 214, 214), // Background color
-                        shape: RoundedRectangleBorder(
-                          borderRadius:
-                              BorderRadius.circular(10), // Rounded borders
-                        ),
-                      ),
-                      child: const Text('PUP'),
-                    ),
-                  ),
-                  Container(
-                    width: 120, // Set the desired width for the buttons
-                    padding: const EdgeInsets.all(
-                        8), // Set the desired padding around the button and text
-                    child: ElevatedButton(
-                      onPressed: () {
-                        // TODO: Add Sta. Mesa St. onPressed logic
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color.fromARGB(
-                            255, 218, 214, 214), // Background color
-                        shape: RoundedRectangleBorder(
-                          borderRadius:
-                              BorderRadius.circular(10), // Rounded borders
-                        ),
-                      ),
-                      child: const Text(
-                        'Sta. Mesa St.',
-                        textAlign: TextAlign.center, // Align text at the center
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-          const SizedBox(
-              height: 20), // space between the row of images and the text
+              height: 50), // space between the row of images and the text
           const Padding(
             padding: EdgeInsets.only(left: 15),
             child: Align(
@@ -339,101 +169,101 @@ class _FilterPageState extends ConsumerState<FilterPage> {
             ),
           ),
           const SizedBox(height: 10), // space between the text and buttons
-          Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Container(
-                    width: 120,
-                    padding: const EdgeInsets.all(8),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        ref
-                            .read(filterProvider.notifier)
-                            .changeFilter('open', !filterTracker['open']);
-                        setState(() {});
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: filterTracker['open'] == true
-                            ? const Color.fromARGB(255, 248, 102, 49)
-                            : const Color.fromARGB(255, 218, 214, 214),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
+          Container(
+            width: double.infinity,
+            child: Column(
+              children: [
+                Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.all(8),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      ref
+                          .read(filterProvider.notifier)
+                          .changeFilter('open', !filterTracker['open']);
+                      setState(() {});
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: filterTracker['open'] == true
+                          ? const Color.fromARGB(255, 248, 102, 49)
+                          : const Color.fromARGB(255, 218, 214, 214),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
                       ),
-                      child: const Text(
-                        'Open',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
+                    ),
+                    child: const Text(
+                      'Open',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
                       ),
                     ),
                   ),
-                  Container(
-                    width: 120,
-                    padding: const EdgeInsets.all(8),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        ref.read(filterProvider.notifier).changeFilter(
-                            'preferred', !filterTracker['preferred']);
-                        setState(() {});
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: filterTracker['preferred'] == true
-                            ? const Color.fromARGB(255, 248, 102, 49)
-                            : const Color.fromARGB(255, 218, 214, 214),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
+                ),
+                const SizedBox(height: 5),
+                Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.all(8),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      ref.read(filterProvider.notifier).changeFilter(
+                          'preferred', !filterTracker['preferred']);
+                      setState(() {});
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: filterTracker['preferred'] == true
+                          ? const Color.fromARGB(255, 248, 102, 49)
+                          : const Color.fromARGB(255, 218, 214, 214),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
                       ),
-                      child: const Text(
-                        'Preferred',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
+                    ),
+                    child: const Text(
+                      'Preferred',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
                       ),
                     ),
                   ),
-                  Container(
-                    width: 120,
-                    padding: const EdgeInsets.all(8),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        ref
-                            .read(filterProvider.notifier)
-                            .changeFilter('sale', !filterTracker['sale']);
-                        setState(() {});
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: filterTracker['sale'] == true
-                            ? const Color.fromARGB(255, 248, 102, 49)
-                            : const Color.fromARGB(255, 218, 214, 214),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
+                ),
+                const SizedBox(height: 5), // space between the buttons
+                Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.all(8),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      ref
+                          .read(filterProvider.notifier)
+                          .changeFilter('sale', !filterTracker['sale']);
+                      setState(() {});
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: filterTracker['sale'] == true
+                          ? const Color.fromARGB(255, 248, 102, 49)
+                          : const Color.fromARGB(255, 218, 214, 214),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
                       ),
-                      child: const Text(
-                        'Sale',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
+                    ),
+                    child: const Text(
+                      'Sale',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
                       ),
                     ),
                   ),
-                ],
-              ),
-            ],
+                ),
+              ],
+            ),
           ),
           const SizedBox(
               height:
-                  20), // space between the filter buttons and the RangeSlider
+                  50), // space between the filter buttons and the RangeSlider
           Column(
             children: [
               const Padding(
@@ -457,8 +287,8 @@ class _FilterPageState extends ConsumerState<FilterPage> {
                       filterTracker['maxPrice'],
                     ),
                     min: 0,
-                    max: 1000,
-                    divisions: 3,
+                    max: 500, // Set the maximum value to 500
+                    divisions: 2, // Set the number of divisions to 2
                     onChanged: (RangeValues values) {
                       ref
                           .read(filterProvider.notifier)
@@ -471,18 +301,18 @@ class _FilterPageState extends ConsumerState<FilterPage> {
                     activeColor: const Color.fromARGB(
                         255, 248, 102, 49), // Set the active color to orange
                   ),
+                  const SizedBox(height: 60),
                   const Positioned(
                     left: 20,
                     right: 20,
-                    top: 35,
+                    bottom: 0,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text('- ₱100'),
-                        Text('₱300'),
-                        Text('₱500'),
-                        Text('₱1000 +'),
-                        //Text('500'),
+                        Text(
+                            '₱250'), // Adjusted to the new maximum value of 500
+                        Text('₱500 +'),
                       ],
                     ),
                   ),
@@ -493,7 +323,6 @@ class _FilterPageState extends ConsumerState<FilterPage> {
                 alignment: Alignment.center,
                 children: [
                   Positioned(
-                    //top: 500,
                     child: InkWell(
                       onTap: () {
                         Navigator.pushReplacement(
