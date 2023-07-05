@@ -29,6 +29,49 @@
             {
               "client_id": "85833995389-hsj59qoks3lnsnsui89qfkdg4b6gh1be.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "85833995389-282mehnpmqh45nv3dg7ighoqmcpueljd.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.app"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:85833995389:android:fb8426c9ab0a48e4014d14",
+        "android_client_info": {
+          "package_name": "com.example.hayin_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "85833995389-hsj59qoks3lnsnsui89qfkdg4b6gh1be.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBRyO7kz6JBC7FB9njJWMV29gxqJ2HHGzo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "85833995389-hsj59qoks3lnsnsui89qfkdg4b6gh1be.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "85833995389-282mehnpmqh45nv3dg7ighoqmcpueljd.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.app"
+              }
             }
           ]
         }

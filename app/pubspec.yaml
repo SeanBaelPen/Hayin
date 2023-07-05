@@ -28,19 +28,24 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  cloud_firestore: ^4.8.0
+  collection: 1.17.1
   cupertino_icons: ^1.0.2
-  image_picker: ^0.8.9
+  firebase_auth: ^4.6.2
+  firebase_core: 2.13.1
+  firebase_storage: ^11.2.2
   flutter:
     sdk: flutter
   flutter_polyline_points: ^1.0.0
+  flutter_rating_bar: ^4.0.1
+  flutter_riverpod: ^2.3.6
   flutter_svg: ^2.0.7
+  fluttertoast: ^8.2.2
   geolocator: ^9.0.2
+  google_fonts: ^4.0.0
   google_maps_flutter: ^2.3.1
+  image_picker: ^0.8.9
   location: ^4.4.0
-  firebase_core: 2.13.1
-  cloud_firestore: ^4.8.0
-  firebase_auth: ^4.6.2
-  firebase_storage: ^11.2.2
 
 dev_dependencies:
   flutter_lints: ^2.0.0

@@ -1,22 +1,21 @@
+import 'package:app/ui/home_ui.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class FilterPage extends StatefulWidget {
-  const FilterPage({Key? key}) : super(key: key);
+import '../ViewModels/filterViewModel.dart';
+
+class FilterPage extends ConsumerStatefulWidget {
+  const FilterPage({super.key});
 
   @override
-  State<FilterPage> createState() => _FilterPageState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _FilterPageState();
 }
 
-class _FilterPageState extends State<FilterPage> {
-  int _currentIndex =
-      0; // Current index of the selected item in the bottom navigation bar
-  int _selectedImageIndex = 0; // Index of the selected image
-  RangeValues selectedRange = const RangeValues(100, 300);
-  String _selectedButton =
-      ''; // Declare a variable to track the selected button
-
+class _FilterPageState extends ConsumerState<FilterPage> {
   @override
   Widget build(BuildContext context) {
+    Map<String, dynamic> filterTracker = ref.watch(filterProvider);
+    //filterTracker = ref.watch(filterProvider.notifier).state;
     return Scaffold(
       body: Column(
         children: [
@@ -26,12 +25,16 @@ class _FilterPageState extends State<FilterPage> {
               padding: const EdgeInsets.only(top: 40, left: 10),
               child: Row(
                 children: [
-                  Container(
-                    child: const Icon(
+                  IconButton(
+                    icon: const Icon(
                       Icons.clear_sharp,
                       size: 50,
                       color: Colors.black,
                     ),
+                    onPressed: () {
+                      Navigator.pushReplacement(context,
+                          MaterialPageRoute(builder: (builder) => HomePage()));
+                    },
                   ),
                   const SizedBox(width: 10),
                   const Text(
@@ -46,10 +49,16 @@ class _FilterPageState extends State<FilterPage> {
                       alignment: Alignment.centerRight,
                       child: Container(
                         margin: const EdgeInsets.only(right: 10),
-                        child: const Text(
-                          'Clear all',
-                          style: TextStyle(
-                            fontSize: 18,
+                        child: InkWell(
+                          onTap: () {
+                            ref.read(filterProvider.notifier).clearFilter();
+                            setState(() {});
+                          },
+                          child: const Text(
+                            'Clear all',
+                            style: TextStyle(
+                              fontSize: 18,
+                            ),
                           ),
                         ),
                       ),
@@ -67,13 +76,14 @@ class _FilterPageState extends State<FilterPage> {
                   children: [
                     InkWell(
                       onTap: () {
-                        setState(() {
-                          _selectedImageIndex = 0;
-                        });
+                        ref
+                            .read(filterProvider.notifier)
+                            .changeFilter('drinks', !filterTracker["drinks"]);
+                        setState(() {});
                       },
                       child: Container(
                         decoration: BoxDecoration(
-                          color: _selectedImageIndex == 0
+                          color: filterTracker["drinks"] == true
                               ? const Color.fromARGB(255, 248, 102, 49)
                               : const Color.fromARGB(255, 218, 214, 214),
                           // Change color to orange when selected
@@ -93,13 +103,13 @@ class _FilterPageState extends State<FilterPage> {
                   children: [
                     InkWell(
                       onTap: () {
-                        setState(() {
-                          _selectedImageIndex = 1;
-                        });
+                        ref.read(filterProvider.notifier).changeFilter(
+                            'desserts', !filterTracker["desserts"]);
+                        setState(() {});
                       },
                       child: Container(
                         decoration: BoxDecoration(
-                          color: _selectedImageIndex == 1
+                          color: filterTracker['desserts'] == true
                               ? const Color.fromARGB(255, 248, 102, 49)
                               : const Color.fromARGB(255, 218, 214, 214),
                           // Change color to orange when selected
@@ -119,13 +129,14 @@ class _FilterPageState extends State<FilterPage> {
                   children: [
                     InkWell(
                       onTap: () {
-                        setState(() {
-                          _selectedImageIndex = 2;
-                        });
+                        ref
+                            .read(filterProvider.notifier)
+                            .changeFilter('meal', !filterTracker["meal"]);
+                        setState(() {});
                       },
                       child: Container(
                         decoration: BoxDecoration(
-                          color: _selectedImageIndex == 2
+                          color: filterTracker['meal'] == true
                               ? const Color.fromARGB(255, 248, 102, 49)
                               : const Color.fromARGB(255, 218, 214, 214),
                           // Change color to orange when selected
@@ -338,12 +349,13 @@ class _FilterPageState extends State<FilterPage> {
                     padding: const EdgeInsets.all(8),
                     child: ElevatedButton(
                       onPressed: () {
-                        setState(() {
-                          _selectedButton = 'Open';
-                        });
+                        ref
+                            .read(filterProvider.notifier)
+                            .changeFilter('open', !filterTracker['open']);
+                        setState(() {});
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: _selectedButton == 'Open'
+                        backgroundColor: filterTracker['open'] == true
                             ? const Color.fromARGB(255, 248, 102, 49)
                             : const Color.fromARGB(255, 218, 214, 214),
                         shape: RoundedRectangleBorder(
@@ -365,12 +377,12 @@ class _FilterPageState extends State<FilterPage> {
                     padding: const EdgeInsets.all(8),
                     child: ElevatedButton(
                       onPressed: () {
-                        setState(() {
-                          _selectedButton = 'Preferred';
-                        });
+                        ref.read(filterProvider.notifier).changeFilter(
+                            'preferred', !filterTracker['preferred']);
+                        setState(() {});
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: _selectedButton == 'Preferred'
+                        backgroundColor: filterTracker['preferred'] == true
                             ? const Color.fromARGB(255, 248, 102, 49)
                             : const Color.fromARGB(255, 218, 214, 214),
                         shape: RoundedRectangleBorder(
@@ -392,12 +404,13 @@ class _FilterPageState extends State<FilterPage> {
                     padding: const EdgeInsets.all(8),
                     child: ElevatedButton(
                       onPressed: () {
-                        setState(() {
-                          _selectedButton = 'Sale';
-                        });
+                        ref
+                            .read(filterProvider.notifier)
+                            .changeFilter('sale', !filterTracker['sale']);
+                        setState(() {});
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: _selectedButton == 'Sale'
+                        backgroundColor: filterTracker['sale'] == true
                             ? const Color.fromARGB(255, 248, 102, 49)
                             : const Color.fromARGB(255, 218, 214, 214),
                         shape: RoundedRectangleBorder(
@@ -439,14 +452,21 @@ class _FilterPageState extends State<FilterPage> {
               Stack(
                 children: [
                   RangeSlider(
-                    values: selectedRange,
+                    values: RangeValues(
+                      filterTracker['minPrice'],
+                      filterTracker['maxPrice'],
+                    ),
                     min: 0,
                     max: 1000,
                     divisions: 3,
                     onChanged: (RangeValues values) {
-                      setState(() {
-                        selectedRange = values;
-                      });
+                      ref
+                          .read(filterProvider.notifier)
+                          .changeFilter("minPrice", values.start);
+                      ref
+                          .read(filterProvider.notifier)
+                          .changeFilter("maxPrice", values.end);
+                      setState(() {});
                     },
                     activeColor: const Color.fromARGB(
                         255, 248, 102, 49), // Set the active color to orange
@@ -476,13 +496,10 @@ class _FilterPageState extends State<FilterPage> {
                     //top: 500,
                     child: InkWell(
                       onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (BuildContext context) {
-                            return const FilterPage();
-                          }),
-                        );
-                        print('Apply button tapped');
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (builder) => HomePage()));
                       },
                       child: Image.asset(
                         'assets/applyBtn.jpg',
@@ -497,50 +514,50 @@ class _FilterPageState extends State<FilterPage> {
           )
         ],
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        selectedItemColor: const Color.fromARGB(
-            255, 248, 102, 49), // Set the selected item color to orange
-        unselectedItemColor:
-            Colors.grey, // Set the unselected item color to grey
-        currentIndex: _currentIndex,
-        onTap: (int index) {
-          setState(() {
-            _currentIndex = index;
-          });
-        },
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.home_sharp,
-              size: 50,
-            ),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.search,
-              size: 50,
-            ),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.location_on,
-              size: 50,
-            ),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.account_circle_outlined,
-              size: 50,
-            ),
-            label: '',
-          ),
-        ],
-        type: BottomNavigationBarType
-            .fixed, // make the icons stay in place when you tap on them
-      ),
+      // bottomNavigationBar: BottomNavigationBar(
+      //   selectedItemColor: const Color.fromARGB(
+      //       255, 248, 102, 49), // Set the selected item color to orange
+      //   unselectedItemColor:
+      //       Colors.grey, // Set the unselected item color to grey
+      //   currentIndex: _currentIndex,
+      //   onTap: (int index) {
+      //     setState(() {
+      //       _currentIndex = index;
+      //     });
+      //   },
+      //   items: const [
+      //     BottomNavigationBarItem(
+      //       icon: Icon(
+      //         Icons.home_sharp,
+      //         size: 50,
+      //       ),
+      //       label: '',
+      //     ),
+      //     BottomNavigationBarItem(
+      //       icon: Icon(
+      //         Icons.search,
+      //         size: 50,
+      //       ),
+      //       label: '',
+      //     ),
+      //     BottomNavigationBarItem(
+      //       icon: Icon(
+      //         Icons.location_on,
+      //         size: 50,
+      //       ),
+      //       label: '',
+      //     ),
+      //     BottomNavigationBarItem(
+      //       icon: Icon(
+      //         Icons.account_circle_outlined,
+      //         size: 50,
+      //       ),
+      //       label: '',
+      //     ),
+      //   ],
+      //   type: BottomNavigationBarType
+      //       .fixed, // make the icons stay in place when you tap on them
+      // ),
     );
   }
 }

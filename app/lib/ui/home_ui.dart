@@ -1,347 +1,209 @@
-import 'package:app/ui/catalogue_format.dart';
-import 'package:app/ui/location_ui.dart';
-import 'package:app/ui/profile_ui.dart';
-import 'package:app/ui/restaurant_details.dart';
-import 'package:app/ui/reward_ui.dart';
+import 'package:app/ViewModels/restaurantsViewModel.dart';
+import 'package:app/services/FirestoreService.dart';
+import 'package:app/ui/Home/HomeView.dart';
+import 'package:app/ui/Profile/ProfileView.dart';
+import 'package:app/ui/Rewards/RewardView.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-class HomePage extends StatefulWidget {
+import '../ViewModels/authViewModel.dart';
+import '../services/GeolocatorService.dart';
+import 'Auth/welcome_ui.dart';
+import 'Location/location_ui.dart';
+
+class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage>
-    with SingleTickerProviderStateMixin {
-  late TabController _tabController;
+class _HomePageState extends ConsumerState<HomePage> {
   int _selectedIndex = 0;
-  Position? userLocation;
+  bool isRedeemed = false;
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 2, vsync: this);
-    _getCurrentLocation();
-  }
-
-  Future<void> _getCurrentLocation() async {
-    Position position = await Geolocator.getCurrentPosition(
-      desiredAccuracy: LocationAccuracy.high,
-    );
-    setState(() {
-      userLocation = position;
-    });
-  }
-
-  @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
-  }
-
-  void _onItemTapped(int index) {
-    if (index == 1) {
-      // Home page is tapped
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => ProfilePage(),
-        ),
-      );
-    } else if (index == 2) {
-      if (userLocation != null) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => LocationPage(
-              destination:
-                  LatLng(userLocation!.latitude, userLocation!.longitude),
-            ),
-          ),
-        );
-      }
-    } else if (index == 3) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => RewardPage(),
-        ),
-      );
-    } else {
-      setState(() {
-        _selectedIndex = index;
-      });
-    }
-  }
-
-  final FirebaseFirestore firestore = FirebaseFirestore.instance;
-
-  Stream<QuerySnapshot> getCollectionStream() {
-    return firestore.collection('restaurants').snapshots();
-  }
-
-  Stream<QuerySnapshot> getFoodStallsStream() {
-    return firestore.collection('foodStalls').snapshots();
   }
 
   @override
   Widget build(BuildContext context) {
+    var authState = ref.watch(authStateProvider);
+    var restaurants = ref.watch(streamProvider);
+
+    var location = ref.watch(locationProvider);
+    print(location);
+
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(400.0),
-        child: AppBar(
-          leading: IconButton(
-            icon: const Icon(
-              Icons.filter_list,
-              size: 50,
-            ),
-            onPressed: () {},
-          ),
-          flexibleSpace: Container(
-            height: 430,
-            decoration: const BoxDecoration(
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(17),
-                bottomRight: Radius.circular(17),
-              ),
-              gradient: LinearGradient(
-                colors: [
-                  Color.fromRGBO(255, 133, 74, 1),
-                  Color.fromRGBO(255, 62, 53, 1),
-                ],
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-              ),
-            ),
-            child: Stack(
+      body: authState.when(data: (data) {
+        if (data?.uid == null) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const WelcomePage()));
+          });
+        }
+        return restaurants.when(
+          data: (restauData) {
+            return Column(
               children: [
-                Positioned(
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  child: Image.asset(
-                    'assets/profile_pic_g.png',
-                  ),
-                ),
-                const Positioned(
-                  top: 270,
-                  left: 0,
-                  right: 0,
-                  child: Text(
-                    'Name',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontFamily: 'Sans Serif',
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-                const Positioned(
-                  top: 300,
-                  left: 0,
-                  right: 0,
-                  child: Text(
-                    'Where do you want to eat today?',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontFamily: 'Sans Serif',
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          backgroundColor: Colors.transparent,
-        ),
-      ),
-      body: Container(
-        child: DefaultTabController(
-          length: 2,
-          child: Column(
-            children: [
-              Container(
-                padding: const EdgeInsets.all(10),
-                child: const TextField(
-                  decoration: InputDecoration(
-                    hintText: 'Search...',
-                    prefixIcon: Icon(Icons.search),
-                  ),
-                ),
-              ),
-              TabBar(
-                controller: _tabController,
-                tabs: const [
-                  Tab(
-                    child: Text(
-                      'Restaurants',
-                      style: TextStyle(
-                        fontFamily: 'Monserrat',
-                        fontSize: 20,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ),
-                  Tab(
-                    child: Text(
-                      'Food Stalls',
-                      style: TextStyle(
-                        fontFamily: 'Monserrat',
-                        fontSize: 20,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              // const Text(
-              //   'Popular Resturants',
-              //   textAlign: TextAlign.start,
-              //   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              // ),
-              // StreamBuilder<QuerySnapshot>(
-              //   stream: getCollectionStream(),
-              //   builder: (BuildContext context,
-              //       AsyncSnapshot<QuerySnapshot> snapshot) {
-              //     if (snapshot.connectionState == ConnectionState.waiting) {
-              //       return const CircularProgressIndicator();
-              //     }
-              //     if (snapshot.hasError) {
-              //       return Text('Error: ${snapshot.error}');
-              //     }
-              //     return ListView.builder(
-              //       shrinkWrap: true,
-              //       physics: const NeverScrollableScrollPhysics(),
-              //       itemCount: snapshot.data!.docs.length,
-              //       itemBuilder: (BuildContext context, int index) {
-              //         DocumentSnapshot document = snapshot.data!.docs[index];
-              //         return Catalogue(
-              //           image: document['image'],
-              //           name: document['name'],
-              //           onTap: () {
-              //             Navigator.push(
-              //               context,
-              //               MaterialPageRoute(
-              //                 builder: (context) =>
-              //                     RestaurantDetails(), // Replace NewPage with your desired page
-              //               ),
-              //             );
-              //           },
-              //         );
-              //       },
-              //     );
-              //   },
-              // ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 13.0, left: 5, right: 5),
-                  child: TabBarView(
-                    controller: _tabController,
+                Expanded(
+                  child: IndexedStack(
+                    index: _selectedIndex,
                     children: [
-                      StreamBuilder<QuerySnapshot>(
-                        stream: getCollectionStream(),
-                        builder: (BuildContext context,
-                            AsyncSnapshot<QuerySnapshot> snapshot) {
-                          if (snapshot.connectionState ==
-                              ConnectionState.waiting) {
-                            return const CircularProgressIndicator();
-                          }
-                          if (snapshot.hasError) {
-                            return Text('Error: ${snapshot.error}');
-                          }
-                          return ListView.builder(
-                            itemCount: snapshot.data!.docs.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              DocumentSnapshot document =
-                                  snapshot.data!.docs[index];
-                              return Catalogue(
-                                image: document['image'],
-                                name: document['name'],
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          RestaurantDetails(), // Replace NewPage with your desired page
-                                    ),
-                                  );
-                                },
-                              );
-                            },
-                          );
-                        },
+                      const HomeView(),
+                      const ProfilePage(),
+                      LocationPage(
+                        destination: LatLng(
+                            ref.read(locationProvider)!.latitude,
+                            ref.read(locationProvider)!.longitude),
                       ),
-                      StreamBuilder<QuerySnapshot>(
-                        stream: getFoodStallsStream(),
-                        builder: (BuildContext context,
-                            AsyncSnapshot<QuerySnapshot> snapshot) {
-                          if (snapshot.connectionState ==
-                              ConnectionState.waiting) {
-                            return const CircularProgressIndicator();
-                          }
-                          if (snapshot.hasError) {
-                            return Text('Error: ${snapshot.error}');
-                          }
-                          return ListView.builder(
-                            itemCount: snapshot.data!.docs.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              DocumentSnapshot document =
-                                  snapshot.data!.docs[index];
-                              return Catalogue(
-                                image: document['image'],
-                                name: document['name'],
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          RestaurantDetails(), // Replace NewPage with your desired page
-                                    ),
-                                  );
-                                },
-                              );
-                            },
-                          );
-                        },
-                      ),
+                      //SizedBox(),
+                      const RewardPage(),
                     ],
                   ),
                 ),
-              ),
-            ],
-          ),
-        ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person_pin_circle),
-            label: 'Location',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.star_border_outlined),
-            label: 'Rewards',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        unselectedItemColor: Colors.grey,
-        selectedItemColor: Colors.blue,
-        onTap: _onItemTapped,
-      ),
+                BottomNavigationBar(
+                  items: const <BottomNavigationBarItem>[
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.home),
+                      label: 'Home',
+                    ),
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.person),
+                      label: 'Profile',
+                    ),
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.person_pin_circle),
+                      label: 'Location',
+                    ),
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.star_border_outlined),
+                      label: 'Rewards',
+                    ),
+                  ],
+                  currentIndex: _selectedIndex,
+                  unselectedItemColor: Colors.grey,
+                  selectedItemColor: Colors.blue,
+                  onTap: (index) async {
+                    setState(() {
+                      _selectedIndex = index;
+                    });
+                    await ref
+                        .read(locationProvider.notifier)
+                        .getCurrentLocation();
+                    double minDistance = double.infinity;
+
+                    var closest;
+                    for (var restaurant in restauData.docs) {
+                      var distance = Geolocator.distanceBetween(
+                          location!.latitude,
+                          location.longitude,
+                          restaurant.data()['destinationLocation'].latitude,
+                          restaurant.data()['destinationLocation'].longitude);
+                      if (distance < minDistance) {
+                        minDistance = distance;
+                        closest = restaurant;
+                      }
+                    }
+                    if (minDistance <= 10) {
+                      // ignore: use_build_context_synchronously
+
+                      if (!isRedeemed) {
+                        // ignore: use_build_context_synchronously
+                        showDialog(
+                            context: context,
+                            builder: (builder) {
+                              return Center(
+                                child: Card(
+                                  child: SizedBox(
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.9,
+                                    height: 210,
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 25, vertical: 20),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            "You are near ${closest.data()['name']}",
+                                            style: GoogleFonts.poppins(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                          Text(
+                                            "+5 Points",
+                                            style: GoogleFonts.poppins(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                          ElevatedButton(
+                                            onPressed: () {
+                                              Fluttertoast.showToast(
+                                                  msg: "Points Claimed");
+                                              FirestoreService().claimPoints();
+                                              isRedeemed = true;
+                                              Navigator.pop(builder);
+                                            },
+                                            style: ElevatedButton.styleFrom(
+                                              fixedSize: const Size(
+                                                  double.infinity, 50),
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                              ),
+                                            ),
+                                            child: Text(
+                                              "Claim Points",
+                                              style: GoogleFonts.poppins(
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              );
+                            });
+                      }
+                    }
+                  },
+                ),
+              ],
+            );
+          },
+          error: (error, stack) {
+            return Center(
+              child: Text(error.toString()),
+            );
+          },
+          loading: () {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          },
+        );
+      }, error: (error, stack) {
+        return Center(
+          child: Text(error.toString()),
+        );
+      }, loading: () {
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
+      }),
     );
   }
 }

@@ -1,10 +1,7 @@
 import 'dart:async';
-import 'dart:typed_data';
-import 'package:app/ui/home_ui.dart';
-import 'package:app/ui/profile_ui.dart';
-import 'package:app/ui/reward_ui.dart';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -66,11 +63,14 @@ class _LocationPageState extends State<LocationPage> {
         userLocation = position;
         checkArrival();
         updateLocationMarker();
+        polyLineCoordinates = [];
+        getPolyPoints();
       });
     });
   }
 
   void getPolyPoints() async {
+    polyLineCoordinates = [];
     PolylinePoints polylinePoints = PolylinePoints();
 
     Geolocator.getCurrentPosition().then((value) async {
@@ -136,161 +136,98 @@ class _LocationPageState extends State<LocationPage> {
       );
     }
     _markers.add(
-      Marker(
-        markerId: const MarkerId('2'),
+      const Marker(
+        markerId: MarkerId('2'),
         position: sourceLocation,
-        infoWindow: const InfoWindow(
+        infoWindow: InfoWindow(
           title: 'Kiosk Stuffed Sizzling House',
         ),
       ),
     );
     _markers.add(
-      Marker(
-        markerId: const MarkerId('3'),
+      const Marker(
+        markerId: MarkerId('3'),
         position: LatLng(14.599674023129621, 121.01244949899714),
-        infoWindow: const InfoWindow(
+        infoWindow: InfoWindow(
           title: 'Doña Teresa',
         ),
       ),
     );
     _markers.add(
-      Marker(
-        markerId: const MarkerId('4'),
+      const Marker(
+        markerId: MarkerId('4'),
         position: LatLng(14.59995775278342, 121.01258723128379),
-        infoWindow: const InfoWindow(
+        infoWindow: InfoWindow(
           title: 'Takoyakiks',
         ),
       ),
     );
     _markers.add(
-      Marker(
-        markerId: const MarkerId('5'),
+      const Marker(
+        markerId: MarkerId('5'),
         position: LatLng(14.600039967103752, 121.01251345185655),
-        infoWindow: const InfoWindow(
+        infoWindow: InfoWindow(
           title: 'The Coffee Realm',
         ),
       ),
     );
     _markers.add(
-      Marker(
-        markerId: const MarkerId('6'),
+      const Marker(
+        markerId: MarkerId('6'),
         position: LatLng(14.599400196778275, 121.01193926805622),
-        infoWindow: const InfoWindow(
+        infoWindow: InfoWindow(
           title: 'Pizza Dragon',
         ),
       ),
     );
   }
 
-  int _selectedIndex = 2;
-
-  void _onItemTapped(int index) {
-    if (index == 0) {
-      // Home page is tapped
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => HomePage(),
-        ),
-      );
-    } else if (index == 1) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => ProfilePage(),
-        ),
-      );
-    } else if (index == 3) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => RewardPage(),
-        ),
-      );
-    } else {
-      setState(() {
-        _selectedIndex = index;
-      });
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        child: SafeArea(
-          child: Stack(
-            children: [
-              GoogleMap(
-                initialCameraPosition: const CameraPosition(
-                  target: sourceLocation,
-                  zoom: 14,
-                ),
-                polylines: {
-                  Polyline(
-                    polylineId: const PolylineId("route"),
-                    points: polyLineCoordinates,
-                    color: Colors.blue,
-                    width: 5,
-                  ),
-                },
-                markers: Set<Marker>.of(_markers),
-                mapType: MapType.normal,
-                myLocationEnabled: true,
-                compassEnabled: true,
-                onMapCreated: (GoogleMapController controller) {
-                  _controller.complete(controller);
-                },
+      body: SafeArea(
+        child: Stack(
+          children: [
+            GoogleMap(
+              initialCameraPosition: CameraPosition(
+                target: LatLng(
+                    widget.destination.latitude, widget.destination.longitude),
+                zoom: 14,
               ),
-              Positioned(
-                top: 16,
-                left: 16,
-                child: FloatingActionButton(
-                  onPressed: () {
-                    if (userLocation != null) {
-                      final cameraPosition = CameraPosition(
-                        target: LatLng(
-                            userLocation!.latitude, userLocation!.longitude),
-                        zoom: 20,
-                      );
-
-                      final GoogleMapController controller =
-                          _controller.future.then((controller) {
-                        controller.animateCamera(
-                            CameraUpdate.newCameraPosition(cameraPosition));
-                      }) as GoogleMapController;
-                    }
-                  },
-                  child: const Icon(Icons.location_on),
+              polylines: {
+                Polyline(
+                  polylineId: const PolylineId("route"),
+                  points: polyLineCoordinates,
+                  color: Colors.blue,
+                  width: 5,
                 ),
-              )
-            ],
-          ),
+              },
+              markers: Set<Marker>.of(_markers),
+              mapType: MapType.normal,
+              myLocationEnabled: true,
+              compassEnabled: true,
+              onMapCreated: (GoogleMapController controller) {
+                _controller.complete(controller);
+              },
+            ),
+            Positioned(
+              top: 16,
+              left: 16,
+              child: FloatingActionButton(
+                onPressed: () {
+                  if (userLocation != null) {
+                    final cameraPosition = CameraPosition(
+                      target: LatLng(
+                          userLocation!.latitude, userLocation!.longitude),
+                      zoom: 20,
+                    );
+                  }
+                },
+                child: const Icon(Icons.location_on),
+              ),
+            )
+          ],
         ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person_pin_circle),
-            label: 'Location',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.star_border_outlined),
-            label: 'Rewards',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        unselectedItemColor: Colors.grey,
-        selectedItemColor: Colors.blue,
-        onTap: _onItemTapped,
       ),
     );
   }

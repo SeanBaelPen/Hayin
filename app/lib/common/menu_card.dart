@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import '../MenuModel/menu_model.dart';
+import '../../models/menu_model.dart';
 
 class MenuCard extends StatelessWidget {
-  final PizzaDragon pizza;
+  final MenuItemModel item;
 
-  const MenuCard({required this.pizza});
+  const MenuCard({super.key, required this.item});
 
   @override
   Widget build(BuildContext context) {
-   return Card(
+    return Card(
       elevation: 4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -18,7 +18,7 @@ class MenuCard extends StatelessWidget {
             width: 120,
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: NetworkImage(pizza.image),
+                image: NetworkImage(item.image),
                 fit: BoxFit.cover,
               ),
             ),
@@ -30,21 +30,21 @@ class MenuCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    pizza.menuItem,
-                    style: TextStyle(
+                    item.menuItem,
+                    style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  SizedBox(height: 8),
+                  const SizedBox(height: 8),
                   Text(
-                    pizza.description,
-                    style: TextStyle(fontSize: 16),
+                    item.description,
+                    style: const TextStyle(fontSize: 16),
                   ),
-                  SizedBox(height: 8),
+                  const SizedBox(height: 8),
                   Text(
-                    '\₱${pizza.price}',
-                    style: TextStyle(
+                    '\₱${item.price}',
+                    style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                       color: Colors.green,
