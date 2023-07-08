@@ -18,6 +18,8 @@ class FirestoreService {
       'lastName': lastName,
       'profilePictureUrl': '',
       '_rewardPoints': 0,
+      'favorites': [],
+      "recentlyViewed": [],
     });
   }
 
@@ -76,6 +78,33 @@ class FirestoreService {
         .doc(AuthService().getID())
         .update({
       '_rewardPoints': FieldValue.increment(5),
+    });
+  }
+
+  void addFavorite(restaurantId) {
+    FirebaseFirestore.instance
+        .collection("users")
+        .doc(AuthService().getID())
+        .update({
+      'favorites': FieldValue.arrayUnion([restaurantId]),
+    });
+  }
+
+  void removeFavorite(restaurantId) {
+    FirebaseFirestore.instance
+        .collection("users")
+        .doc(AuthService().getID())
+        .update({
+      'favorites': FieldValue.arrayRemove([restaurantId]),
+    });
+  }
+
+  void addRecentlyViewed(restaurantId) {
+    FirebaseFirestore.instance
+        .collection("users")
+        .doc(AuthService().getID())
+        .update({
+      'recentlyViewed': FieldValue.arrayUnion([restaurantId]),
     });
   }
 }
