@@ -1,3 +1,4 @@
+import 'package:app/ui/Auth/signup_ui.dart';
 import 'package:app/ui/home_ui.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';

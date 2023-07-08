@@ -130,9 +130,17 @@ class _RestaurantDetailsState extends ConsumerState<RestaurantDetails> {
                           ),
                         ),
                         const Text('200+ ratings'),
-                        ElevatedButton(
-                          onPressed: navigateToLocationPage,
-                          child: const Text('Get Location'),
+                        Row(
+                          children: [
+                            ElevatedButton(
+                              onPressed: navigateToLocationPage,
+                              child: const Text('Get Location'),
+                            ),
+                            IconButton(
+                              onPressed: () {},
+                              icon: Icon(Icons.favorite_border_outlined),
+                            ),
+                          ],
                         ),
                       ],
                     ),

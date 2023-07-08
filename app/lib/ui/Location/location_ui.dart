@@ -100,25 +100,25 @@ class _LocationPageState extends State<LocationPage> {
         widget.destination.longitude,
       );
 
-      if (distanceToDestination <= 10) {
-        showDialog(
-          context: context,
-          builder: (context) {
-            return AlertDialog(
-              title: const Text('You have arrived!'),
-              content: const Text('You have reached your destination.'),
-              actions: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: const Text('OK'),
-                ),
-              ],
-            );
-          },
-        );
-      }
+      // if (distanceToDestination <= 10) {
+      //   showDialog(
+      //     context: context,
+      //     builder: (context) {
+      //       return AlertDialog(
+      //         title: const Text('You have arrived!'),
+      //         content: const Text('You have reached your destination.'),
+      //         actions: [
+      //           TextButton(
+      //             onPressed: () {
+      //               Navigator.of(context).pop();
+      //             },
+      //             child: const Text('OK'),
+      //           ),
+      //         ],
+      //       );
+      //     },
+      //   );
+      // }
     }
   }
 
@@ -156,9 +156,9 @@ class _LocationPageState extends State<LocationPage> {
     _markers.add(
       const Marker(
         markerId: MarkerId('4'),
-        position: LatLng(14.59995775278342, 121.01258723128379),
+        position: LatLng(14.600097949555767, 121.01268425331499),
         infoWindow: InfoWindow(
-          title: 'Takoyakiks',
+          title: 'Jakeu Cafe',
         ),
       ),
     );
