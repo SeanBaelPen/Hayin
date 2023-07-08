@@ -1,6 +1,5 @@
 import 'package:app/ViewModels/foodStallViewModel.dart';
 import 'package:app/ViewModels/userViewModel.dart';
-import 'package:app/services/FirestoreService.dart';
 import 'package:app/ui/Auth/welcome_ui.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -280,8 +279,6 @@ class _HomeViewState extends ConsumerState<HomeView> {
                               name: document['name'],
                               categories: document['categories'],
                               onTap: () {
-                                FirestoreService()
-                                    .addRecentlyViewed(document.id);
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -312,7 +309,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
                             return Catalogue(
                               image: document['image'],
                               name: document['name'],
-                              categories: [],
+                              categories: document['categories'],
                               onTap: () {
                                 Navigator.push(
                                   context,
