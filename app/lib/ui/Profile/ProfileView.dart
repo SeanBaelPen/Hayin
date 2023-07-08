@@ -1,5 +1,7 @@
 import 'package:app/services/AuthService.dart';
 import 'package:app/services/FirestoreService.dart';
+import 'package:app/ui/Profile/FavoritesView.dart';
+import 'package:app/ui/Profile/RecenlyView.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -294,7 +296,12 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                   width: double.infinity,
                   height: 55,
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (builder) => RecentlyView()));
+                    },
                     style: ElevatedButton.styleFrom(
                       padding: EdgeInsets.zero,
                       primary: Colors.white,
@@ -327,7 +334,14 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                   width: double.infinity,
                   height: 55,
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const FavoritesView(),
+                        ),
+                      );
+                    },
                     style: ElevatedButton.styleFrom(
                       padding: EdgeInsets.zero,
                       primary: Colors.white,

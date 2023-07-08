@@ -1,5 +1,6 @@
 import 'package:app/common/ratingDialog.dart';
 import 'package:app/models/review_model..dart';
+import 'package:app/services/FirestoreService.dart';
 import 'package:app/ui/Location/location_ui.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +12,7 @@ import 'dart:math' as math;
 
 import '../../ViewModels/menuViewModel.dart';
 import '../../ViewModels/ratingsViewModel.dart';
+import '../ViewModels/userViewModel.dart';
 import 'menu_card.dart';
 import '../../models/menu_model.dart';
 
@@ -72,6 +74,7 @@ class _RestaurantDetailsState extends ConsumerState<RestaurantDetails> {
   Widget build(BuildContext context) {
     var menuDetails = ref.watch(menuProvider);
     var ratingDetails = ref.watch(ratingsProvider);
+    var userDetails = ref.watch(userProvider);
     return Scaffold(
         body: DefaultTabController(
       length: 2,
@@ -136,9 +139,40 @@ class _RestaurantDetailsState extends ConsumerState<RestaurantDetails> {
                               onPressed: navigateToLocationPage,
                               child: const Text('Get Location'),
                             ),
-                            IconButton(
-                              onPressed: () {},
-                              icon: Icon(Icons.favorite_border_outlined),
+                            userDetails.when(
+                              data: (data) {
+                                return IconButton(
+                                  onPressed: () {
+                                    if (data
+                                        .data()!["favorites"]
+                                        .contains(widget.restaurantID)) {
+                                      FirestoreService()
+                                          .removeFavorite(widget.restaurantID);
+                                    } else {
+                                      FirestoreService()
+                                          .addFavorite(widget.restaurantID);
+                                    }
+                                  },
+                                  color: data
+                                          .data()!["favorites"]
+                                          .contains(widget.restaurantID)
+                                      ? Colors.red
+                                      : Colors.black,
+                                  icon: Icon(
+                                    data
+                                            .data()!["favorites"]
+                                            .contains(widget.restaurantID)
+                                        ? Icons.favorite
+                                        : Icons.favorite_border,
+                                  ),
+                                );
+                              },
+                              error: (error, stack) {
+                                return Text(error.toString());
+                              },
+                              loading: () {
+                                return const CircularProgressIndicator();
+                              },
                             ),
                           ],
                         ),
