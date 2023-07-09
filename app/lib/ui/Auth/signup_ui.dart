@@ -93,180 +93,222 @@ class _SignUpPageState extends State<SignUpPage> {
             fit: BoxFit.fill,
           ),
         ),
-        child: Column(
-          children: [
-            Row(
-              children: [
-                IconButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (BuildContext context) {
-                        return const WelcomePage();
-                      }),
-                    );
-                    print('Icon btn is tapped');
-                  },
-                  icon: const Icon(
-                    Icons.arrow_back_ios_rounded,
-                    size: 50,
-                    color: Colors.white,
-                  ),
-                ),
-              ],
-            ),
-            Row(
-              children: [
-                Container(
-                  margin: const EdgeInsets.only(left: 45, top: 20),
-                  child: const Text(
-                    'Create \nAccount',
-                    style: TextStyle(
-                      fontSize: 40,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(top: 25),
+                    child: IconButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (BuildContext context) {
+                            return const WelcomePage();
+                          }),
+                        );
+                        print('Icon btn is tapped');
+                      },
+                      icon: const Icon(
+                        Icons.arrow_back_ios_rounded,
+                        size: 50,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
-                ),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  margin: const EdgeInsets.only(top: 50),
-                  width: 345,
-                  height: 443,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(8),
+                ],
+              ),
+              Row(
+                children: [
+                  Container(
+                    margin: const EdgeInsets.only(left: 45),
+                    child: const Text(
+                      'Create \nAccount',
+                      style: TextStyle(
+                        fontSize: 40,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
                   ),
-                  child: Column(
-                    children: [
-                      TextField(
-                        controller: _firstNameController,
-                        decoration: const InputDecoration(
-                          hintText: 'Enter your first name',
-                        ),
-                      ),
-                      TextField(
-                        controller: _lastNameController,
-                        decoration: const InputDecoration(
-                          hintText: 'Enter your last name',
-                        ),
-                      ),
-                      TextField(
-                        controller: _emailController,
-                        decoration: const InputDecoration(
-                          hintText: 'Enter your email',
-                        ),
-                      ),
-                      TextField(
-                        controller: _passwordController,
-                        obscureText: !_passwordVisible,
-                        decoration: InputDecoration(
-                          hintText: 'Enter your password',
-                          suffixIcon: IconButton(
-                            onPressed: () {
-                              setState(() {
-                                _passwordVisible = !_passwordVisible;
-                              });
-                            },
-                            icon: Icon(
-                              _passwordVisible
-                                  ? Icons.visibility
-                                  : Icons.visibility_off,
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    margin: const EdgeInsets.only(top: 10),
+                    padding: const EdgeInsets.only(top: 20),
+                    width: 345,
+                    height: 435,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Column(
+                      children: [
+                        Container(
+                          alignment: Alignment.center,
+                          margin: const EdgeInsets.symmetric(
+                              horizontal: 40, vertical: 10),
+                          child: TextField(
+                            controller: _firstNameController,
+                            decoration: const InputDecoration(
+                              hintText: 'Enter your first name',
+                              isCollapsed: true,
+                              labelStyle: TextStyle(fontSize: 18),
                             ),
                           ),
                         ),
-                      ),
-                      TextField(
-                        controller: _confirmPasswordController,
-                        obscureText: !_passwordVisible,
-                        decoration: const InputDecoration(
-                          hintText: 'Confirm your password',
+                        Container(
+                          alignment: Alignment.center,
+                          margin: const EdgeInsets.symmetric(
+                              horizontal: 40, vertical: 10),
+                          child: TextField(
+                            controller: _lastNameController,
+                            decoration: const InputDecoration(
+                              hintText: 'Enter your last name',
+                              isCollapsed: true,
+                              labelStyle: TextStyle(fontSize: 18),
+                            ),
+                          ),
                         ),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          GestureDetector(
-                            onTap: () async {
-                              if (!_validateEmail(_emailController.text)) {
-                                setState(() {
-                                  _emailError = "Invalid email address.";
-                                });
-                                return;
-                              }
-                              if (_passwordController.text !=
-                                  _confirmPasswordController.text) {
-                                setState(() {
-                                  _passwordError = "Passwords do not match.";
-                                });
-                                return;
-                              }
-                              _register();
-                            },
-                            child: Container(
-                              child: Image.asset(
-                                'assets/signUpButton.png',
-                                width: 200,
-                                height: 170,
+                        Container(
+                          alignment: Alignment.center,
+                          margin: const EdgeInsets.symmetric(
+                              horizontal: 40, vertical: 10),
+                          child: TextField(
+                            controller: _emailController,
+                            decoration: const InputDecoration(
+                              hintText: 'Enter your email',
+                              isCollapsed: true,
+                              labelStyle: TextStyle(fontSize: 18),
+                            ),
+                          ),
+                        ),
+                        Container(
+                          alignment: Alignment.center,
+                          margin: const EdgeInsets.symmetric(
+                              horizontal: 40, vertical: 10),
+                          child: TextField(
+                            controller: _passwordController,
+                            obscureText: !_passwordVisible,
+                            decoration: InputDecoration(
+                              isCollapsed: true,
+                              hintText: 'Enter your password',
+                              labelStyle: TextStyle(fontSize: 18),
+                              suffix: GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    _passwordVisible = !_passwordVisible;
+                                  });
+                                },
+                                child: Icon(
+                                  _passwordVisible
+                                      ? Icons.visibility
+                                      : Icons.visibility_off,
+                                ),
                               ),
                             ),
                           ),
-                        ],
-                      ),
-                      if (_passwordError != null)
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
-                          child: Text(
-                            _passwordError!,
-                            style: const TextStyle(color: Colors.red),
-                          ),
                         ),
-                      if (_emailError != null)
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
-                          child: Text(
-                            _emailError!,
-                            style: const TextStyle(color: Colors.red),
-                          ),
-                        ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Text(
-                            "Already have an account?",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.green,
+                        Container(
+                          alignment: Alignment.center,
+                          margin: const EdgeInsets.symmetric(
+                              horizontal: 40, vertical: 10),
+                          child: TextField(
+                            controller: _confirmPasswordController,
+                            obscureText: !_passwordVisible,
+                            decoration: const InputDecoration(
+                              hintText: 'Confirm your password',
+                              isCollapsed: true,
+                              labelStyle: TextStyle(fontSize: 18),
                             ),
                           ),
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const ProfilePage()),
-                              );
-                            },
-                            child: const Text(
-                              "Login",
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            GestureDetector(
+                              onTap: () async {
+                                if (!_validateEmail(_emailController.text)) {
+                                  setState(() {
+                                    _emailError = "Invalid email address.";
+                                  });
+                                  return;
+                                }
+                                if (_passwordController.text !=
+                                    _confirmPasswordController.text) {
+                                  setState(() {
+                                    _passwordError = "Passwords do not match.";
+                                  });
+                                  return;
+                                }
+                                _register();
+                              },
+                              child: Container(
+                                child: Image.asset(
+                                  'assets/signUpButton.png',
+                                  width: 200,
+                                  height: 130,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        if (_passwordError != null)
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 16),
+                            child: Text(
+                              _passwordError!,
+                              style: const TextStyle(color: Colors.red),
+                            ),
+                          ),
+                        if (_emailError != null)
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 16),
+                            child: Text(
+                              _emailError!,
+                              style: const TextStyle(color: Colors.red),
+                            ),
+                          ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Text(
+                              "Already have an account?",
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 color: Colors.green,
                               ),
                             ),
-                          ),
-                        ],
-                      )
-                    ],
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const ProfilePage()),
+                                );
+                              },
+                              child: const Text(
+                                "Login",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.green,
+                                ),
+                              ),
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
                   ),
-                ),
-              ],
-            ),
-          ],
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
