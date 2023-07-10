@@ -180,6 +180,51 @@ class _LocationPageState extends State<LocationPage> {
         ),
       ),
     );
+    _markers.add(
+      const Marker(
+        markerId: MarkerId('7'),
+        position: LatLng(14.597258, 121.010275),
+        infoWindow: InfoWindow(
+          title: 'Varda',
+        ),
+      ),
+    );
+    _markers.add(
+      const Marker(
+        markerId: MarkerId('8'),
+        position: LatLng(14.597982, 121.010563),
+        infoWindow: InfoWindow(
+          title: 'GO...GO HEALTHY FRESHLY SQUEEZED LEMON',
+        ),
+      ),
+    );
+    _markers.add(
+      const Marker(
+        markerId: MarkerId('9'),
+        position: LatLng(14.597872, 121.010672),
+        infoWindow: InfoWindow(
+          title: 'Mojacko Donuts',
+        ),
+      ),
+    );
+    _markers.add(
+      const Marker(
+        markerId: MarkerId('10'),
+        position: LatLng(14.597392, 121.01058),
+        infoWindow: InfoWindow(
+          title: 'Good Food Good Mood',
+        ),
+      ),
+    );
+    _markers.add(
+      const Marker(
+        markerId: MarkerId('11'),
+        position: LatLng(14.597477, 121.010646),
+        infoWindow: InfoWindow(
+          title: 'Sige sa Fewa ni Virgin',
+        ),
+      ),
+    );
   }
 
   @override
@@ -210,22 +255,22 @@ class _LocationPageState extends State<LocationPage> {
                 _controller.complete(controller);
               },
             ),
-            Positioned(
-              top: 16,
-              left: 16,
-              child: FloatingActionButton(
-                onPressed: () {
-                  if (userLocation != null) {
-                    final cameraPosition = CameraPosition(
-                      target: LatLng(
-                          userLocation!.latitude, userLocation!.longitude),
-                      zoom: 20,
-                    );
-                  }
-                },
-                child: const Icon(Icons.location_on),
-              ),
-            )
+            // Positioned(
+            //   top: 16,
+            //   left: 16,
+            //   child: FloatingActionButton(
+            //     onPressed: () {
+            //       if (userLocation != null) {
+            //         final cameraPosition = CameraPosition(
+            //           target: LatLng(
+            //               userLocation!.latitude, userLocation!.longitude),
+            //           zoom: 20,
+            //         );
+            //       }
+            //     },
+            //     child: const Icon(Icons.location_on),
+            //   ),
+            // )
           ],
         ),
       ),

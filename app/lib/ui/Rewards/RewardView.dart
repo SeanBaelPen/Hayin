@@ -123,27 +123,17 @@ class _RewardPageState extends ConsumerState<RewardPage> {
                               ],
                             ),
                           ),
-                          Positioned(
-                            right: 10,
-                            bottom: 10,
-                            child: Image.asset(
-                              'assets/point_history_btn.png',
-                            ),
-                          ),
                         ],
                       ),
                     ),
                     const SizedBox(height: 18),
                     Container(
+                      width: double.infinity,
+                      height: 200,
+                      color: Colors.grey[350],
                       child: Stack(
                         alignment: Alignment.center,
                         children: [
-                          Padding(
-                            padding: const EdgeInsets.only(left: 12),
-                            child: Image.asset(
-                              'assets/grey_rectangle.png',
-                            ),
-                          ),
                           const Positioned(
                             top: 0,
                             left: 20,
@@ -160,7 +150,7 @@ class _RewardPageState extends ConsumerState<RewardPage> {
                             ),
                           ),
                           Positioned(
-                            bottom: 90,
+                            bottom: 120,
                             left: 25,
                             child: Row(
                               children: [
@@ -171,7 +161,7 @@ class _RewardPageState extends ConsumerState<RewardPage> {
                                 ),
                                 const SizedBox(width: 15),
                                 const Text(
-                                  'Image 1 Text',
+                                  'You can earn points by arriving at your \ndestination.',
                                   style: TextStyle(
                                     fontSize: 14,
                                     color: Colors.black,
@@ -181,7 +171,7 @@ class _RewardPageState extends ConsumerState<RewardPage> {
                             ),
                           ),
                           Positioned(
-                            bottom: 50,
+                            bottom: 70,
                             left: 25,
                             child: Row(
                               children: [
@@ -192,7 +182,7 @@ class _RewardPageState extends ConsumerState<RewardPage> {
                                 ),
                                 const SizedBox(width: 15),
                                 const Text(
-                                  'Image 2 Text',
+                                  'Use your points to redeem exciting deals and \npromotions.',
                                   style: TextStyle(
                                     fontSize: 14,
                                     color: Colors.black,
@@ -202,7 +192,7 @@ class _RewardPageState extends ConsumerState<RewardPage> {
                             ),
                           ),
                           Positioned(
-                            bottom: 10,
+                            bottom: 20,
                             left: 25,
                             child: Row(
                               children: [
@@ -213,7 +203,7 @@ class _RewardPageState extends ConsumerState<RewardPage> {
                                 ),
                                 const SizedBox(width: 15),
                                 const Text(
-                                  'Image 3 Text',
+                                  'Earn more points by picking out locations from \nrestaurants or food stalls.',
                                   style: TextStyle(
                                     fontSize: 14,
                                     color: Colors.black,
