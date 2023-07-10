@@ -8,6 +8,7 @@ import '../../ViewModels/filterViewModel.dart';
 import '../../ViewModels/restaurantsViewModel.dart';
 import '../../common/catalogue_format.dart';
 import '../../common/restaurant_details.dart';
+import '../../services/FirestoreService.dart';
 import '../filter_ui.dart';
 
 
@@ -271,6 +272,8 @@ class _HomeViewState extends ConsumerState<HomeView> {
                               name: document['name'],
                               categories: document['categories'],
                               onTap: () {
+                                FirestoreService()
+                                    .addRecentlyViewed(document.id);
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -293,16 +296,84 @@ class _HomeViewState extends ConsumerState<HomeView> {
                     ),
                     foodStallsStream.when(
                       data: (data) {
+                        Iterable<MapEntry<String, dynamic>> booleanFilters =
+                            filterTracker.entries
+                                .where((entry) => entry.value is bool)
+                                .map((entry) => entry);
+
+                        List<dynamic> trueValues = booleanFilters
+                            .where((entry) => entry.value == true)
+                            .map((entry) => entry.key)
+                            .toList();
+
+                        print("ENABLED FILTERS: ${trueValues}");
+
+                        var filteredData = data.docs.where((element) {
+                          bool passesFilter = true;
+                          for (int i = 0; i < trueValues.length; i++) {
+                            print(element[trueValues[i]]);
+                            if (element[trueValues[i]] != true) {
+                              passesFilter = false;
+                            }
+                          }
+
+                          print(
+                              "${element.data()["minPrice"]} : ${filterTracker["minPrice"]}");
+
+                          if (element.data()["minPrice"] <
+                              filterTracker["minPrice"]) {
+                            passesFilter = false;
+                          }
+
+                          print(
+                              "${element.data()["maxPrice"]} : ${filterTracker["maxPrice"]}");
+
+                          if (element.data()["maxPrice"] >
+                              filterTracker["maxPrice"]) {
+                            passesFilter = false;
+                          }
+
+                          return passesFilter;
+                        }).toList();
+
+                        var filteredPrice = data.docs.where((element) {
+                          bool passesFilter = true;
+
+                          print(
+                              "${element.data()["minPrice"]} : ${filterTracker["minPrice"]}");
+
+                          if (element.data()["minPrice"] <
+                              filterTracker["minPrice"]) {
+                            passesFilter = false;
+                          }
+
+                          print(
+                              "${element.data()["maxPrice"]} : ${filterTracker["maxPrice"]}");
+
+                          if (element.data()["maxPrice"] >
+                              filterTracker["maxPrice"]) {
+                            passesFilter = false;
+                          }
+
+                          return passesFilter;
+                        }).toList();
+
                         return ListView.builder(
-                          itemCount: data.docs.length,
+                          itemCount: trueValues.isEmpty
+                              ? filteredPrice.length
+                              : filteredData.length,
                           itemBuilder: (BuildContext context, int index) {
-                            DocumentSnapshot document = data.docs[index];
+                            DocumentSnapshot document = trueValues.isEmpty
+                                ? filteredPrice[index]
+                                : filteredData[index];
                             //List<dynamic> categories = document['categories'];
                             return Catalogue(
                               image: document['image'],
                               name: document['name'],
                               categories: document['categories'],
                               onTap: () {
+                                FirestoreService()
+                                    .addRecentlyViewed(document.id);
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
