@@ -138,7 +138,6 @@ class _FoodStallDetailsState extends ConsumerState<FoodStallDetails> {
                             );
                           }).toList(),
                         ),
-                        const Text('200+ ratings'),
                         Row(
                           children: [
                             ElevatedButton(
