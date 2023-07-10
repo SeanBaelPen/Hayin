@@ -138,7 +138,6 @@ class _RestaurantDetailsState extends ConsumerState<RestaurantDetails> {
                             );
                           }).toList(),
                         ),
-                        const Text('200+ ratings'),
                         Row(
                           children: [
                             ElevatedButton(
