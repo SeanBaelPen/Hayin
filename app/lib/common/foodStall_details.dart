@@ -16,11 +16,11 @@ import '../ViewModels/userViewModel.dart';
 import 'menu_card.dart';
 import '../../models/menu_model.dart';
 
-class RestaurantDetails extends ConsumerStatefulWidget {
+class FoodStallDetails extends ConsumerStatefulWidget {
   final String restaurantName;
   final String restaurantImage;
   final String restaurantID;
-  const RestaurantDetails({
+  const FoodStallDetails({
     super.key,
     required this.restaurantName,
     required this.restaurantImage,
@@ -29,10 +29,10 @@ class RestaurantDetails extends ConsumerStatefulWidget {
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
-      _RestaurantDetailsState();
+      _FoodStallDetailsState();
 }
 
-class _RestaurantDetailsState extends ConsumerState<RestaurantDetails> {
+class _FoodStallDetailsState extends ConsumerState<FoodStallDetails> {
   double? destinationLatitude;
   double? destinationLongitude;
   List<String> categories = [];
@@ -45,7 +45,7 @@ class _RestaurantDetailsState extends ConsumerState<RestaurantDetails> {
 
   Future<void> fetchDestinationCoordinates() async {
     DocumentSnapshot restaurantSnapshot = await FirebaseFirestore.instance
-        .collection('restaurants')
+        .collection('foodStalls')
         .doc(widget.restaurantID)
         .get();
 

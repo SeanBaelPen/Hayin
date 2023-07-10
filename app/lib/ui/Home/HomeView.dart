@@ -1,17 +1,15 @@
 import 'package:app/ViewModels/foodStallViewModel.dart';
 import 'package:app/ViewModels/userViewModel.dart';
-import 'package:app/ui/Auth/welcome_ui.dart';
+import 'package:app/common/foodStall_details.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../../ViewModels/authViewModel.dart';
 import '../../ViewModels/filterViewModel.dart';
 import '../../ViewModels/restaurantsViewModel.dart';
 import '../../common/catalogue_format.dart';
 import '../../common/restaurant_details.dart';
 import '../filter_ui.dart';
-import 'package:collection/collection.dart';
+
 
 class HomeView extends ConsumerStatefulWidget {
   const HomeView({super.key});
@@ -166,12 +164,6 @@ class _HomeViewState extends ConsumerState<HomeView> {
           children: [
             Container(
               padding: const EdgeInsets.all(10),
-              child: const TextField(
-                decoration: InputDecoration(
-                  hintText: 'Search...',
-                  prefixIcon: Icon(Icons.search),
-                ),
-              ),
             ),
             const TabBar(
               tabs: [
@@ -286,7 +278,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
                                       restaurantName: document['name'],
                                       restaurantImage: document['image'],
                                       restaurantID: document.id,
-                                    ), // Replace NewPage with your desired page
+                                    ),
                                   ),
                                 );
                               },
@@ -314,11 +306,11 @@ class _HomeViewState extends ConsumerState<HomeView> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => RestaurantDetails(
+                                    builder: (context) => FoodStallDetails(
                                       restaurantName: document['name'],
                                       restaurantImage: document['image'],
                                       restaurantID: document.id,
-                                    ), // Replace NewPage with your desired page
+                                    ),
                                   ),
                                 );
                               },
