@@ -9,8 +9,8 @@ class FilterNotifier extends StateNotifier<Map<String, dynamic>> {
           "open": false,
           "preferred": false,
           "sale": false,
-          "minPrice": 100.0,
-          "maxPrice": 300.0,
+          "minPrice": 0.0,
+          "maxPrice": 500.0,
         });
 
   void changeFilter(key, value) {
@@ -28,8 +28,8 @@ class FilterNotifier extends StateNotifier<Map<String, dynamic>> {
       "open": false,
       "preferred": false,
       "sale": false,
-      "minPrice": 100.0,
-      "maxPrice": 300.0,
+      "minPrice": 0.0,
+      "maxPrice": 500.0,
     };
   }
 }
