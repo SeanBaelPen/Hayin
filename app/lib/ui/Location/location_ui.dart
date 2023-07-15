@@ -10,9 +10,13 @@ const LatLng sourceLocation = LatLng(14.599824160787243, 121.0125234295981);
 
 class LocationPage extends StatefulWidget {
   final LatLng destination;
+  final String? establishmentName;
+  final bool hideFloatingActionButton;
   const LocationPage({
     super.key,
     required this.destination,
+    this.establishmentName,
+    this.hideFloatingActionButton = false,
   });
 
   @override
@@ -24,6 +28,8 @@ class _LocationPageState extends State<LocationPage> {
   final Completer<GoogleMapController> _controller = Completer();
   StreamSubscription<Position>? _positionStream;
   Position? userLocation;
+  bool _showRestaurants = false;
+  bool _showFloatingActionButton = true;
 
   final List<Marker> _markers = <Marker>[];
 
@@ -34,6 +40,8 @@ class _LocationPageState extends State<LocationPage> {
     super.initState();
     _startTracking();
     getPolyPoints();
+    updateLocationMarker();
+    _showFloatingActionButton = !widget.hideFloatingActionButton;
   }
 
   @override
@@ -51,7 +59,6 @@ class _LocationPageState extends State<LocationPage> {
             (Position position) {
       setState(() {
         userLocation = position;
-        checkArrival();
         updateLocationMarker();
       });
     }, onError: (error) {
@@ -61,7 +68,6 @@ class _LocationPageState extends State<LocationPage> {
     Geolocator.getCurrentPosition().then((position) {
       setState(() {
         userLocation = position;
-        checkArrival();
         updateLocationMarker();
         polyLineCoordinates = [];
         getPolyPoints();
@@ -91,37 +97,6 @@ class _LocationPageState extends State<LocationPage> {
     });
   }
 
-  void checkArrival() {
-    if (userLocation != null) {
-      final double distanceToDestination = Geolocator.distanceBetween(
-        userLocation!.latitude,
-        userLocation!.longitude,
-        widget.destination.latitude,
-        widget.destination.longitude,
-      );
-
-      // if (distanceToDestination <= 10) {
-      //   showDialog(
-      //     context: context,
-      //     builder: (context) {
-      //       return AlertDialog(
-      //         title: const Text('You have arrived!'),
-      //         content: const Text('You have reached your destination.'),
-      //         actions: [
-      //           TextButton(
-      //             onPressed: () {
-      //               Navigator.of(context).pop();
-      //             },
-      //             child: const Text('OK'),
-      //           ),
-      //         ],
-      //       );
-      //     },
-      //   );
-      // }
-    }
-  }
-
   void updateLocationMarker() {
     _markers.clear();
     if (userLocation != null) {
@@ -135,51 +110,100 @@ class _LocationPageState extends State<LocationPage> {
         ),
       );
     }
-    _markers.add(
-      const Marker(
-        markerId: MarkerId('2'),
-        position: sourceLocation,
-        infoWindow: InfoWindow(
-          title: 'Kiosk Stuffed Sizzling House',
+    if (!_showRestaurants) {
+      _markers.add(
+        Marker(
+          markerId: MarkerId('2'),
+          position: widget.destination,
+          infoWindow: InfoWindow(
+            title: widget.establishmentName,
+          ),
         ),
-      ),
-    );
-    _markers.add(
-      const Marker(
-        markerId: MarkerId('3'),
-        position: LatLng(14.599674023129621, 121.01244949899714),
-        infoWindow: InfoWindow(
-          title: 'Doña Teresa',
-        ),
-      ),
-    );
-    _markers.add(
-      const Marker(
-        markerId: MarkerId('4'),
-        position: LatLng(14.600097949555767, 121.01268425331499),
-        infoWindow: InfoWindow(
-          title: 'Jakeu Cafe',
-        ),
-      ),
-    );
-    _markers.add(
-      const Marker(
-        markerId: MarkerId('5'),
-        position: LatLng(14.600039967103752, 121.01251345185655),
-        infoWindow: InfoWindow(
-          title: 'The Coffee Realm',
-        ),
-      ),
-    );
-    _markers.add(
-      const Marker(
-        markerId: MarkerId('6'),
-        position: LatLng(14.599400196778275, 121.01193926805622),
-        infoWindow: InfoWindow(
-          title: 'Pizza Dragon',
-        ),
-      ),
-    );
+      );
+    }
+  }
+
+  void showRestaurantsNearMe() {
+    setState(() {
+      _showRestaurants = !_showRestaurants;
+
+      if (_showRestaurants) {
+        _markers.addAll([
+          const Marker(
+            markerId: MarkerId('3'),
+            position: sourceLocation,
+            infoWindow: InfoWindow(
+              title: 'Kiosk Stuffed Sizzling House',
+            ),
+          ),
+          const Marker(
+            markerId: MarkerId('4'),
+            position: LatLng(14.599674023129621, 121.01244949899714),
+            infoWindow: InfoWindow(
+              title: 'Doña Teresa',
+            ),
+          ),
+          const Marker(
+            markerId: MarkerId('5'),
+            position: LatLng(14.600097949555767, 121.01268425331499),
+            infoWindow: InfoWindow(
+              title: 'Jakeu Cafe',
+            ),
+          ),
+          const Marker(
+            markerId: MarkerId('6'),
+            position: LatLng(14.600039967103752, 121.01251345185655),
+            infoWindow: InfoWindow(
+              title: 'The Coffee Realm',
+            ),
+          ),
+          const Marker(
+            markerId: MarkerId('7'),
+            position: LatLng(14.599400196778275, 121.01193926805622),
+            infoWindow: InfoWindow(
+              title: 'Pizza Dragon',
+            ),
+          ),
+          const Marker(
+            markerId: MarkerId('8'),
+            position: LatLng(14.597258, 121.010275),
+            infoWindow: InfoWindow(
+              title: 'Varda',
+            ),
+          ),
+          const Marker(
+            markerId: MarkerId('9'),
+            position: LatLng(14.597982, 121.010563),
+            infoWindow: InfoWindow(
+              title: 'GO...GO HEALTHY FRESHLY SQUEEZED LEMON',
+            ),
+          ),
+          const Marker(
+            markerId: MarkerId('10'),
+            position: LatLng(14.597872, 121.010672),
+            infoWindow: InfoWindow(
+              title: 'Mojacko Donuts',
+            ),
+          ),
+          const Marker(
+            markerId: MarkerId('11'),
+            position: LatLng(14.597392, 121.01058),
+            infoWindow: InfoWindow(
+              title: 'Good Food Good Mood',
+            ),
+          ),
+          const Marker(
+            markerId: MarkerId('12'),
+            position: LatLng(14.597477, 121.010646),
+            infoWindow: InfoWindow(
+              title: 'Sige sa Fewa ni Virgin',
+            ),
+          ),
+        ]);
+      } else {
+        _markers.removeWhere((marker) => marker.markerId.value != '1');
+      }
+    });
   }
 
   @override
@@ -191,7 +215,7 @@ class _LocationPageState extends State<LocationPage> {
             GoogleMap(
               initialCameraPosition: CameraPosition(
                 target: LatLng(
-                    widget.destination.latitude, widget.destination.longitude),
+                    userLocation!.latitude, userLocation!.longitude),
                 zoom: 14,
               ),
               polylines: {
@@ -210,22 +234,15 @@ class _LocationPageState extends State<LocationPage> {
                 _controller.complete(controller);
               },
             ),
-            Positioned(
-              top: 16,
-              left: 16,
-              child: FloatingActionButton(
-                onPressed: () {
-                  if (userLocation != null) {
-                    final cameraPosition = CameraPosition(
-                      target: LatLng(
-                          userLocation!.latitude, userLocation!.longitude),
-                      zoom: 20,
-                    );
-                  }
-                },
-                child: const Icon(Icons.location_on),
-              ),
-            )
+            if (_showFloatingActionButton)
+              Positioned(
+                bottom: 16,
+                right: 185,
+                child: FloatingActionButton(
+                  onPressed: showRestaurantsNearMe,
+                  child: Icon(Icons.restaurant),
+                ),
+              )
           ],
         ),
       ),

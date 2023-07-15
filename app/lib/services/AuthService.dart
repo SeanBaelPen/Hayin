@@ -49,4 +49,18 @@ class AuthService {
   String getID() {
     return FirebaseAuth.instance.currentUser!.uid;
   }
+
+  void sendEmailVerification() {
+    User? user = FirebaseAuth.instance.currentUser;
+
+    if (user != null) {
+      user.sendEmailVerification().then((_) {
+        Fluttertoast.showToast(
+            msg: 'Verification email sent. Please check your inbox.');
+      }).catchError((error) {
+        Fluttertoast.showToast(
+            msg: 'Failed to send verification email. ${error.toString()}');
+      });
+    }
+  }
 }

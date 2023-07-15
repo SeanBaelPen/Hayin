@@ -16,11 +16,11 @@ import '../ViewModels/userViewModel.dart';
 import 'menu_card.dart';
 import '../../models/menu_model.dart';
 
-class RestaurantDetails extends ConsumerStatefulWidget {
+class FoodStallDetails extends ConsumerStatefulWidget {
   final String restaurantName;
   final String restaurantImage;
   final String restaurantID;
-  const RestaurantDetails({
+  const FoodStallDetails({
     super.key,
     required this.restaurantName,
     required this.restaurantImage,
@@ -29,10 +29,10 @@ class RestaurantDetails extends ConsumerStatefulWidget {
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
-      _RestaurantDetailsState();
+      _FoodStallDetailsState();
 }
 
-class _RestaurantDetailsState extends ConsumerState<RestaurantDetails> {
+class _FoodStallDetailsState extends ConsumerState<FoodStallDetails> {
   double? destinationLatitude;
   double? destinationLongitude;
   List<String> categories = [];
@@ -45,16 +45,19 @@ class _RestaurantDetailsState extends ConsumerState<RestaurantDetails> {
   }
 
   Future<void> fetchDestinationCoordinates() async {
-    DocumentSnapshot snapshot = await FirebaseFirestore.instance
-        .collection('restaurants')
+    DocumentSnapshot restaurantSnapshot = await FirebaseFirestore.instance
+        .collection('foodStalls')
         .doc(widget.restaurantID)
         .get();
 
-    if (snapshot.exists) {
-      GeoPoint destinationLocation = snapshot['destinationLocation'];
+    if (restaurantSnapshot.exists) {
+      GeoPoint destinationLocation = restaurantSnapshot['destinationLocation'];
+      List<dynamic> categoryList = restaurantSnapshot['categories'];
+      List<String> restaurantCategories = categoryList.cast<String>().toList();
       setState(() {
         destinationLatitude = destinationLocation.latitude;
         destinationLongitude = destinationLocation.longitude;
+        categories = restaurantCategories;
       });
     }
   }
@@ -74,7 +77,7 @@ class _RestaurantDetailsState extends ConsumerState<RestaurantDetails> {
       ).then((_) {
         _hideFloatingActionButton = false;
       });
-    }
+    } else {}
   }
 
   @override
@@ -132,14 +135,15 @@ class _RestaurantDetailsState extends ConsumerState<RestaurantDetails> {
                               fontFamily: 'Montserrat',
                               fontWeight: FontWeight.w500),
                         ),
-                        const Text(
-                          '100-200 · Desserts, Drinks, Pastries',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontFamily: 'Montserrat',
-                          ),
+                        const SizedBox(height: 8),
+                        Wrap(
+                          spacing: 8,
+                          children: categories.map((category) {
+                            return Chip(
+                              label: Text(category),
+                            );
+                          }).toList(),
                         ),
-                        const Text('200+ ratings'),
                         Row(
                           children: [
                             ElevatedButton(

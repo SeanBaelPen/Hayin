@@ -40,10 +40,6 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
           appBar: PreferredSize(
             preferredSize: const Size.fromHeight(400.0),
             child: AppBar(
-              leading: IconButton(
-                icon: const Icon(Icons.arrow_back_ios_outlined),
-                onPressed: () {},
-              ),
               flexibleSpace: Container(
                 height: 430,
                 decoration: const BoxDecoration(
@@ -256,6 +252,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                           actions: [
                             ElevatedButton(
                               onPressed: () {
+                                AuthService().sendEmailVerification();
                                 Navigator.pop(context);
                               },
                               child: const Text('Verify'),
