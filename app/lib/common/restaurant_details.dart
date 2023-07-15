@@ -45,16 +45,19 @@ class _RestaurantDetailsState extends ConsumerState<RestaurantDetails> {
   }
 
   Future<void> fetchDestinationCoordinates() async {
-    DocumentSnapshot snapshot = await FirebaseFirestore.instance
+    DocumentSnapshot restaurantSnapshot = await FirebaseFirestore.instance
         .collection('restaurants')
         .doc(widget.restaurantID)
         .get();
 
-    if (snapshot.exists) {
-      GeoPoint destinationLocation = snapshot['destinationLocation'];
+    if (restaurantSnapshot.exists) {
+      GeoPoint destinationLocation = restaurantSnapshot['destinationLocation'];
+      List<dynamic> categoryList = restaurantSnapshot['categories'];
+      List<String> restaurantCategories = categoryList.cast<String>().toList();
       setState(() {
         destinationLatitude = destinationLocation.latitude;
         destinationLongitude = destinationLocation.longitude;
+        categories = restaurantCategories;
       });
     }
   }
@@ -132,14 +135,15 @@ class _RestaurantDetailsState extends ConsumerState<RestaurantDetails> {
                               fontFamily: 'Montserrat',
                               fontWeight: FontWeight.w500),
                         ),
-                        const Text(
-                          '100-200 · Desserts, Drinks, Pastries',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontFamily: 'Montserrat',
-                          ),
+                        const SizedBox(height: 8),
+                        Wrap(
+                          spacing: 8,
+                          children: categories.map((category) {
+                            return Chip(
+                              label: Text(category),
+                            );
+                          }).toList(),
                         ),
-                        const Text('200+ ratings'),
                         Row(
                           children: [
                             ElevatedButton(

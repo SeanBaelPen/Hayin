@@ -1,3 +1,4 @@
+import 'package:app/services/FirestoreService.dart';
 import 'package:app/ui/Auth/signup_ui.dart';
 import 'package:app/ui/home_ui.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -7,6 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  FirestoreService().clearRecentlyViewed();
   runApp(const ProviderScope(child: MyApp()));
 }
 

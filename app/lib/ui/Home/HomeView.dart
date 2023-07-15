@@ -1,17 +1,16 @@
 import 'package:app/ViewModels/foodStallViewModel.dart';
 import 'package:app/ViewModels/userViewModel.dart';
-import 'package:app/ui/Auth/welcome_ui.dart';
+import 'package:app/common/foodStall_details.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../../ViewModels/authViewModel.dart';
 import '../../ViewModels/filterViewModel.dart';
 import '../../ViewModels/restaurantsViewModel.dart';
 import '../../common/catalogue_format.dart';
 import '../../common/restaurant_details.dart';
+import '../../services/FirestoreService.dart';
 import '../filter_ui.dart';
-import 'package:collection/collection.dart';
+
 
 class HomeView extends ConsumerStatefulWidget {
   const HomeView({super.key});
@@ -166,12 +165,6 @@ class _HomeViewState extends ConsumerState<HomeView> {
           children: [
             Container(
               padding: const EdgeInsets.all(10),
-              child: const TextField(
-                decoration: InputDecoration(
-                  hintText: 'Search...',
-                  prefixIcon: Icon(Icons.search),
-                ),
-              ),
             ),
             const TabBar(
               tabs: [
@@ -279,6 +272,8 @@ class _HomeViewState extends ConsumerState<HomeView> {
                               name: document['name'],
                               categories: document['categories'],
                               onTap: () {
+                                FirestoreService()
+                                    .addRecentlyViewed(document.id);
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -286,7 +281,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
                                       restaurantName: document['name'],
                                       restaurantImage: document['image'],
                                       restaurantID: document.id,
-                                    ), // Replace NewPage with your desired page
+                                    ),
                                   ),
                                 );
                               },
@@ -301,24 +296,92 @@ class _HomeViewState extends ConsumerState<HomeView> {
                     ),
                     foodStallsStream.when(
                       data: (data) {
+                        Iterable<MapEntry<String, dynamic>> booleanFilters =
+                            filterTracker.entries
+                                .where((entry) => entry.value is bool)
+                                .map((entry) => entry);
+
+                        List<dynamic> trueValues = booleanFilters
+                            .where((entry) => entry.value == true)
+                            .map((entry) => entry.key)
+                            .toList();
+
+                        print("ENABLED FILTERS: ${trueValues}");
+
+                        var filteredData = data.docs.where((element) {
+                          bool passesFilter = true;
+                          for (int i = 0; i < trueValues.length; i++) {
+                            print(element[trueValues[i]]);
+                            if (element[trueValues[i]] != true) {
+                              passesFilter = false;
+                            }
+                          }
+
+                          print(
+                              "${element.data()["minPrice"]} : ${filterTracker["minPrice"]}");
+
+                          if (element.data()["minPrice"] <
+                              filterTracker["minPrice"]) {
+                            passesFilter = false;
+                          }
+
+                          print(
+                              "${element.data()["maxPrice"]} : ${filterTracker["maxPrice"]}");
+
+                          if (element.data()["maxPrice"] >
+                              filterTracker["maxPrice"]) {
+                            passesFilter = false;
+                          }
+
+                          return passesFilter;
+                        }).toList();
+
+                        var filteredPrice = data.docs.where((element) {
+                          bool passesFilter = true;
+
+                          print(
+                              "${element.data()["minPrice"]} : ${filterTracker["minPrice"]}");
+
+                          if (element.data()["minPrice"] <
+                              filterTracker["minPrice"]) {
+                            passesFilter = false;
+                          }
+
+                          print(
+                              "${element.data()["maxPrice"]} : ${filterTracker["maxPrice"]}");
+
+                          if (element.data()["maxPrice"] >
+                              filterTracker["maxPrice"]) {
+                            passesFilter = false;
+                          }
+
+                          return passesFilter;
+                        }).toList();
+
                         return ListView.builder(
-                          itemCount: data.docs.length,
+                          itemCount: trueValues.isEmpty
+                              ? filteredPrice.length
+                              : filteredData.length,
                           itemBuilder: (BuildContext context, int index) {
-                            DocumentSnapshot document = data.docs[index];
+                            DocumentSnapshot document = trueValues.isEmpty
+                                ? filteredPrice[index]
+                                : filteredData[index];
                             //List<dynamic> categories = document['categories'];
                             return Catalogue(
                               image: document['image'],
                               name: document['name'],
                               categories: document['categories'],
                               onTap: () {
+                                FirestoreService()
+                                    .addRecentlyViewed(document.id);
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => RestaurantDetails(
+                                    builder: (context) => FoodStallDetails(
                                       restaurantName: document['name'],
                                       restaurantImage: document['image'],
                                       restaurantID: document.id,
-                                    ), // Replace NewPage with your desired page
+                                    ),
                                   ),
                                 );
                               },

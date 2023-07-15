@@ -192,7 +192,7 @@ class _FilterPageState extends ConsumerState<FilterPage> {
                       ),
                     ),
                     child: const Text(
-                      'Open',
+                      'Halal',
                       style: TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
@@ -249,7 +249,7 @@ class _FilterPageState extends ConsumerState<FilterPage> {
                       ),
                     ),
                     child: const Text(
-                      'Sale',
+                      'Promo',
                       style: TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.bold,

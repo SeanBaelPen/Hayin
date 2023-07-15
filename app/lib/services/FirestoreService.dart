@@ -107,4 +107,13 @@ class FirestoreService {
       'recentlyViewed': FieldValue.arrayUnion([restaurantId]),
     });
   }
+
+  void clearRecentlyViewed() {
+    FirebaseFirestore.instance
+        .collection("users")
+        .doc(AuthService().getID())
+        .update({
+      'recentlyViewed': FieldValue.delete(),
+    });
+  }
 }
