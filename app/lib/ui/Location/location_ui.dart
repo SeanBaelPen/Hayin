@@ -6,8 +6,6 @@ import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-const LatLng sourceLocation = LatLng(14.599824160787243, 121.0125234295981);
-
 class LocationPage extends StatefulWidget {
   final LatLng destination;
   final String? establishmentName;
@@ -76,7 +74,6 @@ class _LocationPageState extends State<LocationPage> {
   }
 
   void getPolyPoints() async {
-    polyLineCoordinates = [];
     PolylinePoints polylinePoints = PolylinePoints();
 
     Geolocator.getCurrentPosition().then((value) async {
@@ -87,12 +84,16 @@ class _LocationPageState extends State<LocationPage> {
       );
 
       if (result.points.isNotEmpty) {
-        for (var point in result.points) {
-          polyLineCoordinates.add(
-            LatLng(point.latitude, point.longitude),
-          );
-        }
-        setState(() {});
+        // for (var point in result.points) {
+        //   polyLineCoordinates.add(
+        //     LatLng(point.latitude, point.longitude),
+        //   );
+        // }
+        setState(() {
+          polyLineCoordinates = result.points
+            .map((point) => LatLng(point.latitude, point.longitude))
+            .toList();
+        });
       }
     });
   }
@@ -131,7 +132,7 @@ class _LocationPageState extends State<LocationPage> {
         _markers.addAll([
           const Marker(
             markerId: MarkerId('3'),
-            position: sourceLocation,
+            position: LatLng(14.599824160787243, 121.0125234295981),
             infoWindow: InfoWindow(
               title: 'Kiosk Stuffed Sizzling House',
             ),
