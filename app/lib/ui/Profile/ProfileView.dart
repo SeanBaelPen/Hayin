@@ -40,11 +40,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
           appBar: PreferredSize(
             preferredSize: const Size.fromHeight(400.0),
             child: AppBar(
-<<<<<<< HEAD
               flexibleSpace: Container(
-=======
-               flexibleSpace: Container(
->>>>>>> 4cb4fecb300d3fdb326cba66a9991118199cd8d3
                 height: 430,
                 decoration: const BoxDecoration(
                   borderRadius: BorderRadius.only(
