@@ -8,7 +8,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  FirestoreService().clearRecentlyViewed();
   runApp(const ProviderScope(child: MyApp()));
 }
 

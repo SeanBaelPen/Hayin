@@ -182,7 +182,7 @@ class _RewardPageState extends ConsumerState<RewardPage> {
                                 ),
                                 const SizedBox(width: 15),
                                 const Text(
-                                  'Use your points to redeem exciting deals and \npromotions.',
+                                  'Use your points to redeem exciting deals \nand promotions.',
                                   style: TextStyle(
                                     fontSize: 14,
                                     color: Colors.black,
@@ -203,7 +203,7 @@ class _RewardPageState extends ConsumerState<RewardPage> {
                                 ),
                                 const SizedBox(width: 15),
                                 const Text(
-                                  'Earn more points by picking out locations from \nrestaurants or food stalls.',
+                                  'Earn more points by picking out locations \nfrom restaurants or food stalls.',
                                   style: TextStyle(
                                     fontSize: 14,
                                     color: Colors.black,
