@@ -42,7 +42,7 @@ class _PointsHistoryPageState extends State<PointsHistoryPage> {
             ),
             title: Text(entry.description),
             subtitle: Text(
-              '${entry.date.year}-${entry.date.month.toString().padLeft(2, '0')}-${entry.date.day.toString().padLeft(2, '0')}',
+              '${entry.date.year}-${entry.date.month.toString().padLeft(2, '0')}-${entry.date.day.toString().padLeft(2, '0')}', //for date
             ),
           );
         },
