@@ -6,6 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 
 class FirestoreService {
   void createUser(firstName, lastName) {
@@ -114,6 +115,24 @@ class FirestoreService {
         .doc(AuthService().getID())
         .update({
       'recentlyViewed': FieldValue.delete(),
+    });
+  }
+
+  void addPointsHistory() {
+    String customString = "Earned 5 points on ";
+    DateTime now = DateTime.now();
+
+    String formattedTime = DateFormat('yyyy-MM-dd hh:mm a').format(now);
+
+    FirebaseFirestore.instance
+        .collection("users")
+        .doc(AuthService().getID())
+        .update({
+      'pointsHistory': FieldValue.arrayUnion([
+        {
+          'message': customString + formattedTime,
+        }
+      ])
     });
   }
 }
