@@ -86,6 +86,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                                 await SharedPreferences.getInstance();
                             Fluttertoast.showToast(msg: "Points Claimed");
                             FirestoreService().claimPoints();
+                            FirestoreService().addPointsHistory();
                             await prefs.setString(
                                 'currentDateTime', DateTime.now().toString());
                             Navigator.pop(builder);
