@@ -1,6 +1,7 @@
 import 'package:app/common/reward_item_format.dart';
 import 'package:app/ui/Location/location_ui.dart';
 import 'package:app/ui/Profile/ProfileView.dart';
+import 'package:app/ui/Rewards/PointsHistory.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -123,6 +124,21 @@ class _RewardPageState extends ConsumerState<RewardPage> {
                               ],
                             ),
                           ),
+                          Positioned(
+                            left: 200,
+                            top: 65,
+                            child: ElevatedButton(
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            PointsHistoryPage()));
+                              },
+                              style: ElevatedButton.styleFrom(),
+                              child: const Text('Points History'),
+                            ),
+                          )
                         ],
                       ),
                     ),
